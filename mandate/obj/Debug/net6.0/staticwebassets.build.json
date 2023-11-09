@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "q94eyconKF3eCkka7kFPkPSt5VZ+F6BAIihkIjoedKA=",
+  "Source": "mandate.api",
+  "BasePath": "_content/mandate.api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
