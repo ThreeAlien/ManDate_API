@@ -11,4 +11,8 @@
     <Folder Include="Constants\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Google.Ads.GoogleAds" Version="17.1.0" />
+  </ItemGroup>
+
 </Project>

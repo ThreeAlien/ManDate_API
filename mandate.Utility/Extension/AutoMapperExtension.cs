@@ -7,6 +7,13 @@ namespace mandate.Utility.Extension;
 /// </summary>
 public static class AutoMapperExtension
 {
+    /// <summary>
+    /// 略過Mapping
+    /// </summary>
+    /// <typeparam name="TSourse"></typeparam>
+    /// <typeparam name="TDestination"></typeparam>
+    /// <param name="expr"></param>
+    /// <returns></returns>
     public static IMappingExpression<TSourse, TDestination> IgnoreAllMember<TSourse, TDestination>(this IMappingExpression<TSourse, TDestination> expr)
     {
         Type destinationType = typeof(TDestination);

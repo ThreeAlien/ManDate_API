@@ -12,8 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\mandate.Business\mandate.Business.csproj" />
     <ProjectReference Include="..\mandate.Domain\mandate.Domain.csproj" />
     <ProjectReference Include="..\mandate.Infrastructure\mandate.Infrastructure.csproj" />
+    <ProjectReference Include="..\mandate.Utility\mandate.Utility.csproj" />
   </ItemGroup>
 
 </Project>
