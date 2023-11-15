@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = mandate.Infrastructure
-build_property.ProjectDir = C:\Users\dunca\source\mandate_BackEnd\mandate\mandate.Infrastructure\
+build_property.ProjectDir = C:\Users\dunca\source\repos\mandate.Infrastructure\

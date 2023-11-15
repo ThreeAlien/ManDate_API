@@ -5,12 +5,12 @@ using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace mandate.Application.QueryCustInfo;
+namespace mandate.Application.CustomerInfo;
 
 /// <summary>
 /// 取得顧客資料
 /// </summary>
-public class QueryCustInfoCommandHandler : IRequestHandler<GetCustomerRequest, GetCustomerResponse>
+public class GetCustomerCommandHandler : IRequestHandler<GetCustomerRequest, GetCustomerResponse>
 {
     /// <summary>
     /// Db Context
@@ -25,7 +25,7 @@ public class QueryCustInfoCommandHandler : IRequestHandler<GetCustomerRequest, G
     /// <summary>
     /// 建構子
     /// </summary>
-    public QueryCustInfoCommandHandler(IMapper mapper, ManDateDBContext context)
+    public GetCustomerCommandHandler(IMapper mapper, ManDateDBContext context)
     {
         _mapper = mapper;
         _context = context;

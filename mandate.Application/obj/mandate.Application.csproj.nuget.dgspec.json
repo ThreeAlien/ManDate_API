@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Application\\mandate.Application.csproj": {}
+    "C:\\Users\\dunca\\source\\repos\\mandate.Application\\mandate.Application.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Application\\mandate.Application.csproj": {
+    "C:\\Users\\dunca\\source\\repos\\mandate.Application\\mandate.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Application\\mandate.Application.csproj",
+        "projectUniqueName": "C:\\Users\\dunca\\source\\repos\\mandate.Application\\mandate.Application.csproj",
         "projectName": "mandate.Application",
-        "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Application\\mandate.Application.csproj",
+        "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Application\\mandate.Application.csproj",
         "packagesPath": "C:\\Users\\dunca\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Application\\obj\\",
+        "outputPath": "C:\\Users\\dunca\\source\\repos\\mandate.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dunca\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,11 +28,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj": {
-                "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj"
+              "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj": {
+                "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj"
               },
-              "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Infrastructure\\mandate.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Infrastructure\\mandate.Infrastructure.csproj"
+              "C:\\Users\\dunca\\source\\repos\\mandate.Infrastructure\\mandate.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Infrastructure\\mandate.Infrastructure.csproj"
               }
             }
           }
@@ -76,14 +76,14 @@
         }
       }
     },
-    "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj": {
+    "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj",
         "projectName": "mandate.Domain",
-        "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj",
+        "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj",
         "packagesPath": "C:\\Users\\dunca\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\obj\\",
+        "outputPath": "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dunca\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -100,8 +100,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj": {
-                "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj"
+              "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj": {
+                "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj"
               }
             }
           }
@@ -141,14 +141,14 @@
         }
       }
     },
-    "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj": {
+    "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj",
+        "projectUniqueName": "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj",
         "projectName": "mandate.Helper",
-        "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj",
+        "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj",
         "packagesPath": "C:\\Users\\dunca\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\obj\\",
+        "outputPath": "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dunca\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -218,14 +218,14 @@
         }
       }
     },
-    "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Infrastructure\\mandate.Infrastructure.csproj": {
+    "C:\\Users\\dunca\\source\\repos\\mandate.Infrastructure\\mandate.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Infrastructure\\mandate.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\dunca\\source\\repos\\mandate.Infrastructure\\mandate.Infrastructure.csproj",
         "projectName": "mandate.Infrastructure",
-        "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Infrastructure\\mandate.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Infrastructure\\mandate.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\dunca\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\dunca\\source\\repos\\mandate.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dunca\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -242,8 +242,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj": {
-                "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj"
+              "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj": {
+                "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj"
               }
             }
           }

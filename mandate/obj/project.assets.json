@@ -3411,11 +3411,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate\\mandate.api.csproj",
+      "projectUniqueName": "C:\\Users\\dunca\\source\\repos\\mandate\\mandate.api.csproj",
       "projectName": "mandate.api",
-      "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate\\mandate.api.csproj",
+      "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate\\mandate.api.csproj",
       "packagesPath": "C:\\Users\\dunca\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate\\obj\\",
+      "outputPath": "C:\\Users\\dunca\\source\\repos\\mandate\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\dunca\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3432,14 +3432,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Application\\mandate.Application.csproj": {
-              "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Application\\mandate.Application.csproj"
+            "C:\\Users\\dunca\\source\\repos\\mandate.Application\\mandate.Application.csproj": {
+              "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Application\\mandate.Application.csproj"
             },
-            "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj": {
-              "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Domain\\mandate.Domain.csproj"
+            "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj": {
+              "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Domain\\mandate.Domain.csproj"
             },
-            "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj": {
-              "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj"
+            "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj": {
+              "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj"
             }
           }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj": {}
+    "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj": {
+    "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj",
+        "projectUniqueName": "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj",
         "projectName": "mandate.Helper",
-        "projectPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\mandate.Helper.csproj",
+        "projectPath": "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\mandate.Helper.csproj",
         "packagesPath": "C:\\Users\\dunca\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate.Helper\\obj\\",
+        "outputPath": "C:\\Users\\dunca\\source\\repos\\mandate.Helper\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dunca\\AppData\\Roaming\\NuGet\\NuGet.Config",

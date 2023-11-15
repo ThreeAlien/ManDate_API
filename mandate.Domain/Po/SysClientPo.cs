@@ -6,69 +6,67 @@ namespace mandate.Domain.Po;
 /// <summary>
 /// 待註解
 /// </summary>
-[Table("sys_client")]
+[Table("SysClient")]
 public class SysClientPo
 {
     /// <summary>
     /// 待註解
     /// </summary>
     [Key]
-    public int client_no { get; set; }
+    public int ClientNo { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string client_id { get; set; } = null!;
+    public string ClientId { get; set; } = null!;
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string client_name { get; set; } = null!;
+    public string ClientName { get; set; } = null!;
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? client_taxID { get; set; }
+    public string? ClientTaxID { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? client_phone { get; set; }
+    public string? ClientPhone { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? client_address { get; set; }
+    public string? ClientAddress { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? client_contact { get; set; }
+    public string? ClientContact { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? edit_cname { get; set; }
+    public string? Editer { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public DateTime? edit_date { get; set; }
+    public DateTime? EditDate { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? creat_cname { get; set; }
+    public string? Creater { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public DateTime? creat_date { get; set; }
+    public DateTime? CreatDate { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? client_status { get; set; }
-
-
+    public string? ClientStatus { get; set; }
 }

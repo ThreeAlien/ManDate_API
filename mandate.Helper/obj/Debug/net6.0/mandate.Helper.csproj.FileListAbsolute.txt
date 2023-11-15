@@ -10,3 +10,15 @@ C:\Users\dunca\source\mandate_BackEnd\mandate\mandate.Helper\obj\Debug\net6.0\ma
 C:\Users\dunca\source\mandate_BackEnd\mandate\mandate.Helper\obj\Debug\net6.0\refint\mandate.Helper.dll
 C:\Users\dunca\source\mandate_BackEnd\mandate\mandate.Helper\obj\Debug\net6.0\mandate.Helper.pdb
 C:\Users\dunca\source\mandate_BackEnd\mandate\mandate.Helper\obj\Debug\net6.0\ref\mandate.Helper.dll
+C:\Users\dunca\source\repos\mandate.Helper\bin\Debug\net6.0\mandate.Helper.deps.json
+C:\Users\dunca\source\repos\mandate.Helper\bin\Debug\net6.0\mandate.Helper.dll
+C:\Users\dunca\source\repos\mandate.Helper\bin\Debug\net6.0\mandate.Helper.pdb
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\mandate.Helper.csproj.AssemblyReference.cache
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\mandate.Helper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\mandate.Helper.AssemblyInfoInputs.cache
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\mandate.Helper.AssemblyInfo.cs
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\mandate.Helper.csproj.CoreCompileInputs.cache
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\mandate.Helper.dll
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\refint\mandate.Helper.dll
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\mandate.Helper.pdb
+C:\Users\dunca\source\repos\mandate.Helper\obj\Debug\net6.0\ref\mandate.Helper.dll

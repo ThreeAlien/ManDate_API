@@ -1,0 +1,20 @@
+﻿using AutoMapper;
+
+namespace mandate.Utility.Extension;
+
+/// <summary>
+/// AutoMapper擴充功能
+/// </summary>
+public static class AutoMapperExtension
+{
+    public static IMappingExpression<TSourse, TDestination> IgnoreAllMember<TSourse, TDestination>(this IMappingExpression<TSourse, TDestination> expr)
+    {
+        Type destinationType = typeof(TDestination);
+
+        foreach (System.Reflection.PropertyInfo property in destinationType.GetProperties())
+        {
+            expr.ForMember(property.Name, map => map.Ignore());
+        }
+        return expr;
+    }
+}

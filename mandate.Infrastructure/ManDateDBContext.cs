@@ -27,6 +27,6 @@ public class ManDateDBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<SysClientPo>().HasKey(c => c.client_no);
+        modelBuilder.Entity<SysClientPo>().HasKey(c => c.ClientId);
     }
 }

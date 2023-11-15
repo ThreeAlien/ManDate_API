@@ -34,7 +34,7 @@ public class GetCustInfo : IMapFrom<SysClientPo>
     void IMapFrom<SysClientPo>.Mapping(Profile profile)
     {
         profile.CreateMap<SysClientPo, GetCustInfo>()
-            .ForMember(d => d.ClientId, map => map.MapFrom(s => s.client_id))
-            .ForMember(d => d.ClientName, map => map.MapFrom(s => s.client_name));
+            .ForMember(d => d.ClientId, map => map.MapFrom(s => s.ClientId))
+            .ForMember(d => d.ClientName, map => map.MapFrom(s => s.ClientName));
     }
 }

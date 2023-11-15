@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "es4E6GNQvSTUF+s9WXHG/iheRWbknE9McDaZfPLH2z0bahHp1FIMsC1DDpbIgUYUSRcG6ZCioD3Q8UvR/hzGgw==",
+  "dgSpecHash": "3xpyDWVBclOId7w7dVZTX9Si7blvBgjVpuxG1pnbCaf7xoJzWdZJmzHjt524JVUWlOWKYf7FgMUBGhmeGp68/Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dunca\\source\\mandate_BackEnd\\mandate\\mandate\\mandate.api.csproj",
+  "projectFilePath": "C:\\Users\\dunca\\source\\repos\\mandate\\mandate.api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dunca\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\dunca\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
