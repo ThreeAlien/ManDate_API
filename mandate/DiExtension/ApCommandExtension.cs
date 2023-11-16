@@ -1,5 +1,6 @@
 ﻿using mandate.Application.Auth;
 using mandate.Application.CustomerInfo;
+using mandate.Business.Service;
 using mandate.Domain.Models;
 using MediatR;
 using System.Reflection;
@@ -11,6 +12,8 @@ public static class ApCommandExtension
     public static IServiceCollection AddApCommands(this IServiceCollection service)
     {
         service.AddMediatR(cf => cf.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+        service.AddScoped<IGoogleAdsService, GoogleAdsService>();
 
         service.AddScoped<IRequestHandler<GetCustomerRequest, GetCustomerResponse>, GetCustomerCommandHandler>();
 

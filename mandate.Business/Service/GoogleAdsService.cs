@@ -3,22 +3,88 @@ using Google.Ads.GoogleAds.Config;
 using Google.Ads.GoogleAds.Lib;
 using Google.Ads.GoogleAds.V15.Errors;
 using Google.Ads.GoogleAds.V15.Services;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Util.Store;
+using Microsoft.Extensions.Configuration;
 
 namespace mandate.Business.Service;
 
-public class GoogleAdsService
+/// <summary>
+/// Google ADS服務
+/// </summary>
+public class GoogleAdsService : IGoogleAdsService
 {
-    public static void FetchAdsApi(string refreshToken)
+    /// <summary>
+    /// Config設定檔
+    /// </summary>
+    private readonly IConfiguration _configuration;
+
+    /// <summary>
+    /// 建構子
+    /// </summary>
+    /// <param name="configuration"></param>
+    public GoogleAdsService(IConfiguration configuration)
     {
-        long customerId = 6749631325;
+        _configuration = configuration;
+    }
+
+    /// <summary>
+    /// 產生RefreshToken
+    /// </summary>
+    /// <returns></returns>
+    public Task<string?> GenerateRefreshToken()
+    {
+        string? refreshToken = null;
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        ClientSecrets secrets = new()
+        {
+            ClientId = option.ClientId,
+            ClientSecret = option.ClientSecret
+        };
+
+        try
+        {
+            GoogleAuthorizationCodeFlow.Initializer initializer = new GoogleAuthorizationCodeFlow.Initializer
+            {
+                ClientSecrets = secrets,
+                Prompt = "consent",
+            };
+
+            Task<UserCredential> task = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                initializer,
+                new string[] { option.Scope },
+                string.Empty,
+                CancellationToken.None,
+                new NullDataStore()
+            );
+            UserCredential credential = task.Result;
+
+            refreshToken = credential.Token.RefreshToken;
+        }
+        catch (AggregateException)
+        {
+            Console.WriteLine("An error occured while authorizing the user.");
+        }
+
+        return Task.FromResult(refreshToken);
+    }
+
+    /// <summary>
+    /// 取得Ads Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public void FetchAdsApi(string refreshToken)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
         GoogleAdsConfig config = new GoogleAdsConfig()
         {
-            DeveloperToken = "Gfds_Yqxe_aj9bTuNa2wIQ",
+            DeveloperToken = option.DeveloperToken,
             OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
-            OAuth2ClientId = "732004983478-a26k8c3a5piuedeekitriknhcihirvtg.apps.googleusercontent.com",
-            OAuth2ClientSecret = "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",
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
             OAuth2RefreshToken = refreshToken,
-            LoginCustomerId = "6749631325"
+            LoginCustomerId = option.LoginCustomerId
         };
         GoogleAdsClient client = new GoogleAdsClient(config);
 
@@ -35,7 +101,7 @@ public class GoogleAdsService
         try
         {
             // Issue a search request.
-            googleAdsService.SearchStream(customerId.ToString(), query,
+            googleAdsService.SearchStream(option.LoginCustomerId, query,
                 delegate (SearchGoogleAdsStreamResponse resp)
                 {
                     var test = resp.Results;

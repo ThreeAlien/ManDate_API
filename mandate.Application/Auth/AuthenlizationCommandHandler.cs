@@ -1,8 +1,6 @@
 ﻿using mandate.Business.Service;
 using mandate.Domain.Models;
-using mandate.Utility.Oauth;
 using MediatR;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace mandate.Application.Auth;
 
@@ -11,18 +9,21 @@ namespace mandate.Application.Auth;
 /// </summary>
 public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationRequest, AuthenlizationResponse>
 {
+    private readonly IGoogleAdsService _googleAdsService;
+
     /// <summary>
     /// 建構子
     /// </summary>
-    public AuthenlizationCommandHandler()
+    public AuthenlizationCommandHandler(IGoogleAdsService googleAdsService)
     {
+        _googleAdsService = googleAdsService;
     }
 
     public async Task<AuthenlizationResponse> Handle(AuthenlizationRequest request, CancellationToken cancellationToken)
     {
-        string? refreshToken = GenerateUserCredentials.GenerateRefreshToken();
+        string? refreshToken = await _googleAdsService.GenerateRefreshToken();
 
-        GoogleAdsService.FetchAdsApi(refreshToken);
+        _googleAdsService.FetchAdsApi(refreshToken);
 
         return new() { RefreshToken = refreshToken };
     }
