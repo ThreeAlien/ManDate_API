@@ -23,7 +23,11 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
     {
         string? refreshToken = await _googleAdsService.GenerateRefreshToken();
 
-        _googleAdsService.FetchAdsApi(refreshToken);
+        _googleAdsService.FetchAdsSubAccountApi(refreshToken);
+
+        //_googleAdsService.FetchAdsAccountApi(refreshToken);
+
+        //_googleAdsService.FetchAdsReportApi(refreshToken);
 
         return new() { RefreshToken = refreshToken };
     }

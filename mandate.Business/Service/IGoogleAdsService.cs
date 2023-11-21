@@ -12,8 +12,16 @@ public interface IGoogleAdsService
     public Task<string?> GenerateRefreshToken();
 
     /// <summary>
-    /// 取得Ads Api
+    /// 取得Ads報表 Api
     /// </summary>
     /// <param name="refreshToken"></param>
-    public void FetchAdsApi(string refreshToken);
+    public void FetchAdsReportApi(string refreshToken);
+
+    /// <summary>
+    /// 取得Ads帳戶 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public void FetchAdsAccountApi(string refreshToken);
+
+    public void FetchAdsSubAccountApi(string? refreshToken);
 }

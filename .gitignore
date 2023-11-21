@@ -37,6 +37,9 @@ x64/
 *.vssscc
 .builds
 
+# Visual Studio
+.vs/
+
 # Visual C++ cache files
 ipch/
 *.aps
