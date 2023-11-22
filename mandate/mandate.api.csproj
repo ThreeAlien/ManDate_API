@@ -8,11 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\mandate.Application\mandate.Application.csproj" />
+    <ProjectReference Include="..\mandate.Cache\mandate.Cache.csproj" />
     <ProjectReference Include="..\mandate.Domain\mandate.Domain.csproj" />
     <ProjectReference Include="..\mandate.Helper\mandate.Helper.csproj" />
     <ProjectReference Include="..\mandate.Utility\mandate.Utility.csproj" />

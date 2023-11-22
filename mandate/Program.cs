@@ -1,7 +1,7 @@
 using mandate.api.DiExtension;
-using mandate.Infrastructure;
-using System.Reflection;
+using mandate.Cache.DiExtension;
 using mandate.Helper.Mapper;
+using mandate.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc();
@@ -10,6 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApCommands();
 builder.Services.AddDbContext<ManDateDBContext>();
 builder.Services.AddAutoMapping();
+builder.Services.AddCache(builder.Configuration);
 WebApplication app = builder.Build();
 app.MapControllers();
 app.MapControllers();
