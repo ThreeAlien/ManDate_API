@@ -1,9 +1,8 @@
 ﻿using mandate.Business.Service;
 using mandate.Domain.Models;
+using mandate.Utility.Extension;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using System.Text;
 
 namespace mandate.Application.Auth;
 
@@ -12,14 +11,20 @@ namespace mandate.Application.Auth;
 /// </summary>
 public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationRequest, AuthenlizationResponse>
 {
+    /// <summary>
+    /// Google Ads服務
+    /// </summary>
     private readonly IGoogleAdsService _googleAdsService;
 
+    /// <summary>
+    /// Session存取服務
+    /// </summary>
     private readonly IHttpContextAccessor _httpContextAccessor;
 
     /// <summary>
     /// 建構子
     /// </summary>
-    public AuthenlizationCommandHandler(IHttpContextAccessor httpContextAccessor,IGoogleAdsService googleAdsService)
+    public AuthenlizationCommandHandler(IHttpContextAccessor httpContextAccessor, IGoogleAdsService googleAdsService)
     {
         _httpContextAccessor = httpContextAccessor;
         _googleAdsService = googleAdsService;
@@ -28,10 +33,11 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
     public async Task<AuthenlizationResponse> Handle(AuthenlizationRequest request, CancellationToken cancellationToken)
     {
         string? refreshToken = await _googleAdsService.GenerateRefreshToken();
-        _httpContextAccessor.HttpContext.Session.Set("token", Encoding.UTF8.GetBytes(refreshToken));
-
-        _httpContextAccessor.HttpContext.Session.TryGetValue("token", out var token);
-        string? a = Encoding.UTF8.GetString(token);
+        // 設定session範例
+        _httpContextAccessor.HttpContext.Session.Set("refreshToken", refreshToken);
+        // 取得Session範例
+        string? sessionRefreshToken = _httpContextAccessor.HttpContext.Session.Get<string>("refreshToken");
+        // 執行GoogleAds Api範例
         _googleAdsService.FetchAdsSubAccountApi(refreshToken);
 
         //_googleAdsService.FetchAdsAccountApi(refreshToken);
