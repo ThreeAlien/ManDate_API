@@ -1,5 +1,4 @@
 using mandate.api.DiExtension;
-using mandate.Cache.DiExtension;
 using mandate.Helper.Mapper;
 using mandate.Infrastructure;
 
@@ -10,8 +9,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApCommands();
 builder.Services.AddDbContext<ManDateDBContext>();
 builder.Services.AddAutoMapping();
-builder.Services.AddCache(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(1); // Set session timeout
+});
 WebApplication app = builder.Build();
+app.UseSession();
 app.MapControllers();
 app.MapControllers();
 app.UseSwagger();

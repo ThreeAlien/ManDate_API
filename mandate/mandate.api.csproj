@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\mandate.Application\mandate.Application.csproj" />
-    <ProjectReference Include="..\mandate.Cache\mandate.Cache.csproj" />
     <ProjectReference Include="..\mandate.Domain\mandate.Domain.csproj" />
     <ProjectReference Include="..\mandate.Helper\mandate.Helper.csproj" />
     <ProjectReference Include="..\mandate.Utility\mandate.Utility.csproj" />
