@@ -39,7 +39,7 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
         string? sessionRefreshToken = _httpContextAccessor.HttpContext.Session.Get<string>("refreshToken");
         // 執行GoogleAds Api範例
         _googleAdsService.FetchAdsSubAccountApi(refreshToken);
-
+        // 測試PR
         //_googleAdsService.FetchAdsAccountApi(refreshToken);
 
         //_googleAdsService.FetchAdsReportApi(refreshToken);
