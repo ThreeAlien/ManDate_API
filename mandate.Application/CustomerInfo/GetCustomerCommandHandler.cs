@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using mandate.Domain.Models;
+using mandate.Domain.Models.Customer;
 using mandate.Domain.Po;
 using mandate.Infrastructure;
 using MediatR;
@@ -33,13 +33,28 @@ public class GetCustomerCommandHandler : IRequestHandler<GetCustomerRequest, Get
 
     public async Task<GetCustomerResponse> Handle(GetCustomerRequest request, CancellationToken cancellationToken)
     {
-        List<SysClientPo> respData = await _context.SysClient.ToListAsync();
+        GetCustomerResponse response = new();
+        if (request.CustomerID == null){
+            List<SysClientPo> respData = await _context.SysClient.ToListAsync();
 
-        GetCustomerResponse response = new()
+             response = new()
+            {
+                Data = _mapper.Map<List<GetCustInfo>>(respData)
+            };
+        }
+        else
         {
-            Data = _mapper.Map<List<GetCustInfo>>(respData)
-        };
+            List<SysClientPo> respDatas = await _context.SysClient.ToListAsync();
+            var respData = respDatas.Where(x => x.ClientId == request.CustomerID);
+
+             response = new()
+            {
+                Data = _mapper.Map<List<GetCustInfo>>(respData)
+            };
+        }
+
 
         return response;
     }
+
 }
