@@ -6,67 +6,65 @@ namespace mandate.Domain.Po;
 /// <summary>
 /// 待註解
 /// </summary>
-[Table("SysClient")]
-public class SysClientPo
+[Table("SysReport")]
+public class SysReportPo
 {
     /// <summary>
-    /// 待註解
+    /// 報表內容流水編號
     /// </summary>
     [Key]
-    public int ClientNo { get; set; }
+    public int ReportNo { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 報表ID
     /// </summary>
-    public string ClientId { get; set; } = null!;
+    public string ReportID { get; set; } = null!;
 
     /// <summary>
-    /// 待註解
+    /// 報表名稱
     /// </summary>
-    public string ClientName { get; set; } = null!;
+    public string ReportName { get; set; } = null!;
 
     /// <summary>
-    /// 待註解
+    /// 報表目標
     /// </summary>
-    public string? ClientTaxID { get; set; }
+    public string? ReportGoalAds { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 報表媒體
     /// </summary>
-    public string? ClientPhone { get; set; }
+    public string ReportMedia { get; set; } = null!;
 
     /// <summary>
-    /// 待註解
+    /// 報表內容ID(Join)
     /// </summary>
-    public string? ClientAddress { get; set; }
+    public string? ContentID { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 子帳戶UD
     /// </summary>
-    public string? ClientContact { get; set; }
+    public string SubID { get; set; } = null!;
 
     /// <summary>
-    /// 待註解
+    /// 編輯者
     /// </summary>
     public string? Editer { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 編輯日期
     /// </summary>
-    public DateTime? EditDate { get; set; }
+    public DateTime EditDate { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 建立者
     /// </summary>
     public string? Creater { get; set; }
-
     /// <summary>
-    /// 待註解
+    /// 建立日期
     /// </summary>
     public DateTime? CreateDate { get; set; }
-
     /// <summary>
-    /// 待註解
+    /// 報表是否使用
     /// </summary>
-    public Boolean? ClientStatus { get; set; }
+    public Boolean? ReportStatus { get; set; }
 }

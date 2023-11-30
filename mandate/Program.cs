@@ -1,6 +1,6 @@
 using mandate.api.DiExtension;
-using mandate.Helper.Mapper;
 using mandate.Infrastructure;
+using mandate.Helper.Mapper;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc();

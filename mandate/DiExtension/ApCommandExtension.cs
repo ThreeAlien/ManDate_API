@@ -1,7 +1,11 @@
 ﻿using mandate.Application.Auth;
 using mandate.Application.CustomerInfo;
+using mandate.Application.ReportContentInfo;
+using mandate.Application.ReportInfo;
 using mandate.Business.Service;
 using mandate.Domain.Models;
+using mandate.Domain.Models.Customer;
+using mandate.Domain.Models.ReportContent;
 using MediatR;
 using System.Reflection;
 
@@ -16,6 +20,11 @@ public static class ApCommandExtension
         service.AddScoped<IGoogleAdsService, GoogleAdsService>();
 
         service.AddScoped<IRequestHandler<GetCustomerRequest, GetCustomerResponse>, GetCustomerCommandHandler>();
+
+        service.AddScoped<IRequestHandler<GetReportContentRequest, GetReportContentResponse>, GetReportContentCommandHandler>();
+
+        service.AddScoped<IRequestHandler<GetReportRequest, GetReportResponse>, GetReportCommandHandler>();
+        service.AddScoped<IRequestHandler<CreateReportRequest, CreateReportResponse>, CreateReportCommandHandler>();
 
         service.AddScoped<IRequestHandler<AuthenlizationRequest, AuthenlizationResponse>, AuthenlizationCommandHandler>();
 
