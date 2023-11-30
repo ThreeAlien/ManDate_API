@@ -40,16 +40,9 @@ namespace mandate.Application.ReportInfo
                 {
                     ReportID = request.ReportID,
                     ReportName = request.ReportName,
-                    ReportGoalAds = request.ReportGoalAds,
-                    ReportMedia = request.ReportMedia,
-                    ContentID = request.ContentID,
                     SubID = request.SubID,
-                    Editer = request.Editer,
-                    EditDate = request.EditDate,
-                    Creater = request.Creater,
-                    CreateDate = request.CreateDate,
-                    ReportStatus = request.ReportStatus
-
+                    CreateDate = DateTime.Now,
+                    EditDate = DateTime.Now,
                 };
                 _context.Add(CreateReport);
                 await _context.SaveChangesAsync();
