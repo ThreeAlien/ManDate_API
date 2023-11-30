@@ -13,6 +13,7 @@ public class SysReportPo
     /// 報表內容流水編號
     /// </summary>
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ReportNo { get; set; }
 
     /// <summary>
@@ -53,7 +54,7 @@ public class SysReportPo
     /// <summary>
     /// 編輯日期
     /// </summary>
-    public DateTime EditDate { get; set; }
+    public DateTime? EditDate { get; set; }
 
     /// <summary>
     /// 建立者
@@ -66,5 +67,5 @@ public class SysReportPo
     /// <summary>
     /// 報表是否使用
     /// </summary>
-    public Boolean? ReportStatus { get; set; }
+    public bool? ReportStatus { get; set; }
 }
