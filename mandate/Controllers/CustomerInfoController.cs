@@ -1,4 +1,4 @@
-﻿using mandate.Domain.Models;
+﻿using mandate.Domain.Models.Customer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace mandate.Controllers;
