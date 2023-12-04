@@ -68,5 +68,5 @@ public class SysClientPo
     /// <summary>
     /// 待註解
     /// </summary>
-    public Boolean? ClientStatus { get; set; }
+    public bool? ClientStatus { get; set; }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using mandate.Domain.Models;
 using mandate.Domain.Models.ReportContent;
 using mandate.Domain.Po;
 using mandate.Infrastructure;
@@ -34,12 +33,20 @@ namespace mandate.Application.ReportContentInfo
 
         public async Task<GetReportContentResponse> Handle(GetReportContentRequest request, CancellationToken cancellationToken)
         {
-            List<SysReportContentPo> respData = await _context.SysReportContent.ToListAsync();
-
-            GetReportContentResponse response = new()
+            GetReportContentResponse response = new();
+            try
             {
-                Data = _mapper.Map<List<GetReportContentInfo>>(respData)
-            };
+                List<SysReportContentPo> respData = await _context.SysReportContent.ToListAsync();
+
+                response = new()
+                {
+                    Data = _mapper.Map<List<GetReportContentInfo>>(respData)
+                };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
             return response;
         }

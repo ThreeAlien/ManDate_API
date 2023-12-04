@@ -31,10 +31,16 @@ public class GetCustInfo : IMapFrom<SysClientPo>
     /// </summary>
     public string? ClientName { get; set; }
 
+    /// <summary>
+    /// 顧客狀態
+    /// </summary>
+    public bool? ClientStatus { get; set; }
+
     void IMapFrom<SysClientPo>.Mapping(Profile profile)
     {
         profile.CreateMap<SysClientPo, GetCustInfo>()
             .ForMember(d => d.ClientId, map => map.MapFrom(s => s.ClientId))
-            .ForMember(d => d.ClientName, map => map.MapFrom(s => s.ClientName));
+            .ForMember(d => d.ClientName, map => map.MapFrom(s => s.ClientName))
+            .ForMember(d => d.ClientStatus, map => map.MapFrom(s => s.ClientStatus));
     }
 }
