@@ -25,7 +25,7 @@ public class GetReportInfo : IMapFrom<SysReportPo>
     /// <summary>
     /// 顧客ID
     /// </summary>
-    public string ReportNo { get; set; } = null!;
+    public string ReportID { get; set; } = null!;
 
     /// <summary>
     /// 顧客姓名
@@ -35,7 +35,7 @@ public class GetReportInfo : IMapFrom<SysReportPo>
     void IMapFrom<SysReportPo>.Mapping(Profile profile)
     {
         profile.CreateMap<SysReportPo, GetReportInfo>()
-            .ForMember(d => d.ReportNo, map => map.MapFrom(s => s.ReportNo))
+            .ForMember(d => d.ReportID, map => map.MapFrom(s => s.ReportID))
             .ForMember(d => d.ReportName, map => map.MapFrom(s => s.ReportName));
     }
 }

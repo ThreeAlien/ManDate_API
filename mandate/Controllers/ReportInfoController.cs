@@ -18,4 +18,16 @@ public class ReportInfoController : BaseApiController
     public Task<CreateReportResponse> CreateReport(CreateReportRequest request) => Mediator!.Send(request);
 
 
+    /// <summary>
+    /// 取得顧客資料
+    /// </summary>
+    [HttpPost]
+    public Task<UpdateReportResponse> UpdateReport(UpdateReportRequest request) => Mediator!.Send(request);
+
+    /// <summary>
+    /// 取得顧客資料
+    /// </summary>
+    [HttpPost]
+    public Task<DeleteReportResponse> DeleteReport(DeleteReportRequest request) => Mediator!.Send(request);
+
 }

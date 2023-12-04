@@ -60,5 +60,7 @@ public class CreateReportRequest : IRequest<CreateReportResponse>
     /// <summary>
     /// 報表是否使用
     /// </summary>
-    public Boolean? ReportStatus { get; set; }
+    public bool? ReportStatus { get; set; }
+
+    public CreateReportColumnRequest? ColumnData { get; set; }
 }
