@@ -18,24 +18,24 @@ public class GetReportContentResponse
 }
 
 /// <summary>
-/// 取得顧客資料
+/// 取得報表內容
 /// </summary>
 public class GetReportContentInfo : IMapFrom<SysReportContentPo>
 {
     /// <summary>
-    /// 顧客ID
+    /// 報表內容ID
     /// </summary>
-    public string ContentNo { get; set; } = null!;
+    public string ContentID { get; set; } = null!;
 
     /// <summary>
-    /// 顧客姓名
+    /// 報表內容名稱
     /// </summary>
-    public string? ContentName { get; set; }
+    public string ContentName { get; set; } = null!;
 
     void IMapFrom<SysReportContentPo>.Mapping(Profile profile)
     {
         profile.CreateMap<SysReportContentPo, GetReportContentInfo>()
-            .ForMember(d => d.ContentNo, map => map.MapFrom(s => s.ContentNo))
+            .ForMember(d => d.ContentID, map => map.MapFrom(s => s.ContentID))
             .ForMember(d => d.ContentName, map => map.MapFrom(s => s.ContentName));
     }
 }

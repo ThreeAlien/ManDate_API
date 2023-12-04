@@ -34,25 +34,33 @@ public class GetCustomerCommandHandler : IRequestHandler<GetCustomerRequest, Get
     public async Task<GetCustomerResponse> Handle(GetCustomerRequest request, CancellationToken cancellationToken)
     {
         GetCustomerResponse response = new();
-        if (request.CustomerID == null){
-            List<SysClientPo> respData = await _context.SysClient.ToListAsync();
 
-             response = new()
-            {
-                Data = _mapper.Map<List<GetCustInfo>>(respData)
-            };
-        }
-        else
+        try
         {
-            List<SysClientPo> respDatas = await _context.SysClient.ToListAsync();
-            var respData = respDatas.Where(x => x.ClientId == request.CustomerID);
-
-             response = new()
+            if (request.CustomerID == string.Empty)
             {
-                Data = _mapper.Map<List<GetCustInfo>>(respData)
-            };
-        }
+                List<SysClientPo> respData = await _context.SysClient.ToListAsync();
 
+                response = new()
+                {
+                    Data = _mapper.Map<List<GetCustInfo>>(respData)
+                };
+            }
+            else
+            {
+                List<SysClientPo> respDatas = await _context.SysClient.ToListAsync();
+                IEnumerable<SysClientPo> respData = respDatas.Where(x => x.ClientId == request.CustomerID);
+
+                response = new()
+                {
+                    Data = _mapper.Map<List<GetCustInfo>>(respData)
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
 
         return response;
     }
