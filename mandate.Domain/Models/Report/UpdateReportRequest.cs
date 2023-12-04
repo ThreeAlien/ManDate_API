@@ -1,25 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using MediatR;
+using System.ComponentModel.DataAnnotations;
 
-namespace mandate.Domain.Po;
+namespace mandate.Domain.Models;
 
 /// <summary>
-/// 待註解
+/// 取得報表資料 Request
 /// </summary>
-[Table("SysReport")]
-public class SysReportPo
+public class UpdateReportRequest : IRequest<UpdateReportResponse>
 {
-    /// <summary>
-    /// 報表內容流水編號
-    /// </summary>
-
-    //public int ReportNo { get; set; }
 
     /// <summary>
     /// 報表ID
     /// </summary>
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string ReportID { get; set; } = null!;
 
     /// <summary>
@@ -55,7 +47,7 @@ public class SysReportPo
     /// <summary>
     /// 編輯日期
     /// </summary>
-    public DateTime? EditDate { get; set; }
+    public DateTime EditDate { get; set; }
 
     /// <summary>
     /// 建立者
@@ -69,4 +61,6 @@ public class SysReportPo
     /// 報表是否使用
     /// </summary>
     public bool? ReportStatus { get; set; }
+
+    public UpdateReportColumnRequest ColumnData { get; set; }
 }

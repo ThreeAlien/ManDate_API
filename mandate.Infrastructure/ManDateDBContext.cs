@@ -19,12 +19,10 @@ public class ManDateDBContext : DbContext
     ///客戶基本資料表(SysClient)
     /// </summary>
     public DbSet<SysClientPo> SysClient { get; set; }
-
     /// <summary>
     ///報表內容表(SysReportContent)
     /// </summary>
     public DbSet<SysReportContentPo> SysReportContent { get; set; }
-
     /// <summary>
     ///報表(SysReportContent)
     /// </summary>
@@ -34,6 +32,10 @@ public class ManDateDBContext : DbContext
     ///子客戶資料表(SysSubClient)
     /// </summary>
     public DbSet<SysSubClientPo> SysSubClient { get; set; }
+    /// <summary>
+    ///報表(SysReportColumn)
+    /// </summary>
+    public DbSet<SysReportColumnPo> SysReportColumn { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -49,6 +51,8 @@ public class ManDateDBContext : DbContext
         modelBuilder.Entity<SysReportPo>().HasKey(c => c.ReportID);
 
         modelBuilder.Entity<SysSubClientPo>().HasKey(c => c.SubNo);
+
+        modelBuilder.Entity<SysReportColumnPo>().HasKey(c => c.ColumnId);
 
 
     }

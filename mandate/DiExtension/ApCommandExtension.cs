@@ -27,11 +27,12 @@ public static class ApCommandExtension
 
         service.AddScoped<IRequestHandler<GetReportRequest, GetReportResponse>, GetReportCommandHandler>();
         service.AddScoped<IRequestHandler<CreateReportRequest, CreateReportResponse>, CreateReportCommandHandler>();
+        service.AddScoped<IRequestHandler<UpdateReportRequest, UpdateReportResponse>, UpdateReportCommandHandler>();
+        service.AddScoped<IRequestHandler<DeleteReportRequest, DeleteReportResponse>, DeleteReportCommandHandler>();
 
         service.AddScoped<IRequestHandler<AuthenlizationRequest, AuthenlizationResponse>, AuthenlizationCommandHandler>();
 
         service.AddScoped<IRequestHandler<GetSubClientRequest, GetSubClientResponse>, GetSubClientCommandHandler>();
-
         return service;
     }
 }
