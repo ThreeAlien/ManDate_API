@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using mandate.Business.Models;
 using mandate.Domain.Po;
 using mandate.Helper.Mapper;
 
@@ -7,14 +8,8 @@ namespace mandate.Domain.Models.ReportContent;
 /// <summary>
 /// 取得顧客資料 Response
 /// </summary>
-public class GetReportContentResponse
+public class GetReportContentResponse : BaseResponse<GetReportContentInfo>
 {
-    public string? Code { get; set; }
-
-    public List<GetReportContentInfo>? Data { get; set; }
-
-    public string? Msg { get; set; }
-
 }
 
 /// <summary>

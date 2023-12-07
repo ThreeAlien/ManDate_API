@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using mandate.Business.Models;
 using mandate.Domain.Po;
 using mandate.Helper.Mapper;
 
@@ -7,13 +8,8 @@ namespace mandate.Domain.Models.SubClient;
 /// <summary>
 /// 取得子帳戶基本資料 Response
 /// </summary>
-public class GetSubClientResponse
+public class GetSubClientResponse : BaseResponse<GetSubClientInfo>
 {
-    public string? Code { get; set; }
-
-    public List<GetSubClientInfo>? Data { get; set; }
-
-    public string? Msg { get; set; }
 }
 
 /// <summary>
