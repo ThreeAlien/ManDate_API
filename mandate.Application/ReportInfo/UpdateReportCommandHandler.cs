@@ -39,21 +39,22 @@ namespace mandate.Application.ReportInfo
             UpdateReportResponse response = new();
             try
             {
-                var objUpdateData = await _context.SysReport.Where(s => s.ReportID == request.ReportID).FirstOrDefaultAsync();
-                var objUpdateColumnData = await _context.SysReportColumn.Where(s => s.ColumnId == request.ColumnData.ColumnId).FirstOrDefaultAsync();
+                SysReportPo? objUpdateData = await _context.SysReport.Where(s => s.ReportID == request.ReportID).FirstOrDefaultAsync();
+                SysReportColumnPo? objUpdateColumnData = await _context.SysReportColumn.Where(s => s.ColumnId == request.ColumnData.ColumnId).FirstOrDefaultAsync();
 
                 if (objUpdateData != null)
                 {
                     objUpdateData.ReportName = request.ReportName;
                     objUpdateData.ReportGoalAds = request.ReportGoalAds;
                     objUpdateData.ReportMedia = request.ReportMedia;
-                    objUpdateData.ContentID = request.ContentID;
                     objUpdateData.SubID = request.SubID;
                     objUpdateData.Editer = request.Editer;
                     objUpdateData.EditDate = DateTime.Now;
                     objUpdateData.Creater = request.Creater;
                     objUpdateData.CreateDate = DateTime.Now;
                     objUpdateData.ReportStatus = request.ReportStatus;
+
+                    _context.Update(objUpdateData);
 
                     if (objUpdateColumnData != null)
                     {
@@ -94,12 +95,12 @@ namespace mandate.Application.ReportInfo
                         objUpdateColumnData.ColAge = request.ColumnData.ColAge;
                         objUpdateColumnData.ColSex = request.ColumnData.ColSex;
                         objUpdateColumnData.ColRegion = request.ColumnData.ColRegion;
+
+                        _context.Update(objUpdateColumnData);
                     }
 
                     _context.SaveChanges();
                 }
-                //_context.Add(objUpdateData);
-
 
                 response = new()
                 {

@@ -13,7 +13,7 @@ public class SysReportPo
     /// 報表內容流水編號
     /// </summary>
 
-    //public int ReportNo { get; set; }
+    public int ReportNo { get; set; }
 
     /// <summary>
     /// 報表ID
@@ -36,11 +36,6 @@ public class SysReportPo
     /// 報表媒體
     /// </summary>
     public string ReportMedia { get; set; } = null!;
-
-    /// <summary>
-    /// 報表內容ID(Join)
-    /// </summary>
-    public string? ContentID { get; set; }
 
     /// <summary>
     /// 子帳戶UD

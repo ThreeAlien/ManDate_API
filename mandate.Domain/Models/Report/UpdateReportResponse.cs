@@ -1,19 +1,10 @@
-﻿using AutoMapper;
-using mandate.Domain.Po;
-using mandate.Helper.Mapper;
+﻿using mandate.Business.Models;
 
 namespace mandate.Domain.Models;
 
 /// <summary>
-/// 取得顧客資料 Response
+/// 更新報表資料 Response
 /// </summary>
-public class UpdateReportResponse
+public class UpdateReportResponse : BaseResponse<string>
 {
-    public string? Code { get; set; }
-
-    public string? Data { get; set; }
-
-    public string? Msg { get; set; }
-
 }
-

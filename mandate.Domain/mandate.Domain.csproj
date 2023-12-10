@@ -11,10 +11,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Vo\" />
-	</ItemGroup>
-
-	<ItemGroup>
     <ProjectReference Include="..\mandate.Business\mandate.Business.csproj" />
     <ProjectReference Include="..\mandate.Helper\mandate.Helper.csproj" />
   </ItemGroup>
