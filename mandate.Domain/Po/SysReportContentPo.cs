@@ -25,9 +25,4 @@ public class SysReportContentPo
     /// </summary>
     public string ContentName { get; set; } = null!;
 
-    /// <summary>
-    /// 報表內容排序
-    /// </summary>
-    public string? ContentSort { get; set; }
-
 }
