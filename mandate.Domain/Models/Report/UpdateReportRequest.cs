@@ -1,10 +1,10 @@
-﻿using MediatR;
-using System.ComponentModel.DataAnnotations;
+﻿using mandate.Domain.Vo;
+using MediatR;
 
 namespace mandate.Domain.Models;
 
 /// <summary>
-/// 取得報表資料 Request
+/// 更新報表資料 Request
 /// </summary>
 public class UpdateReportRequest : IRequest<UpdateReportResponse>
 {
@@ -28,11 +28,6 @@ public class UpdateReportRequest : IRequest<UpdateReportResponse>
     /// 報表媒體
     /// </summary>
     public string ReportMedia { get; set; } = null!;
-
-    /// <summary>
-    /// 報表內容ID(Join)
-    /// </summary>
-    public string? ContentID { get; set; }
 
     /// <summary>
     /// 子帳戶UD
@@ -62,5 +57,5 @@ public class UpdateReportRequest : IRequest<UpdateReportResponse>
     /// </summary>
     public bool? ReportStatus { get; set; }
 
-    public UpdateReportColumnRequest ColumnData { get; set; }
+    public ReportColumnVo? ColumnData { get; set; }
 }

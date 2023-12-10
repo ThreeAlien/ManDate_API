@@ -1,5 +1,5 @@
-﻿using MediatR;
-using System.ComponentModel.DataAnnotations;
+﻿using mandate.Domain.Vo;
+using MediatR;
 
 namespace mandate.Domain.Models;
 
@@ -10,9 +10,9 @@ public class CreateReportRequest : IRequest<CreateReportResponse>
 {
 
     /// <summary>
-    /// 報表ID
+    /// 報表內容流水編號
     /// </summary>
-    public string ReportID { get; set; } = null!;
+    public int ReportNo { get; set; }
 
     /// <summary>
     /// 報表名稱
@@ -28,11 +28,6 @@ public class CreateReportRequest : IRequest<CreateReportResponse>
     /// 報表媒體
     /// </summary>
     public string ReportMedia { get; set; } = null!;
-
-    /// <summary>
-    /// 報表內容ID(Join)
-    /// </summary>
-    public string? ContentID { get; set; }
 
     /// <summary>
     /// 子帳戶UD
@@ -62,5 +57,5 @@ public class CreateReportRequest : IRequest<CreateReportResponse>
     /// </summary>
     public bool? ReportStatus { get; set; }
 
-    public CreateReportColumnRequest? ColumnData { get; set; }
+    public ReportColumnVo? ColumnData { get; set; }
 }

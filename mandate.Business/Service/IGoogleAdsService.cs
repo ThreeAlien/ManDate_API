@@ -23,5 +23,8 @@ public interface IGoogleAdsService
     /// <param name="refreshToken"></param>
     public void FetchAdsAccountApi(string refreshToken);
 
+    /// <summary>
+    /// 取得Ads子帳戶 Api
+    /// </summary>
     public void FetchAdsSubAccountApi(string? refreshToken);
 }
