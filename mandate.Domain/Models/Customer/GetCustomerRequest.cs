@@ -10,5 +10,5 @@ public class GetCustomerRequest : IRequest<GetCustomerResponse>
     /// <summary>
     /// 顧客ID
     /// </summary>
-    public string? CustomerID { get; set; }
+    public string? ClientId { get; set; }
 }

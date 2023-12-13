@@ -25,4 +25,6 @@ public class SysReportContentPo
     /// </summary>
     public string ContentName { get; set; } = null!;
 
+
+
 }
