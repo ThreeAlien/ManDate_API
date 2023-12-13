@@ -37,7 +37,7 @@ public class GetCustomerCommandHandler : IRequestHandler<GetCustomerRequest, Get
 
         try
         {
-            if (request.CustomerID == string.Empty)
+            if (request.ClientId == string.Empty)
             {
                 List<SysClientPo> respData = await _context.SysClient.ToListAsync();
 
@@ -49,7 +49,7 @@ public class GetCustomerCommandHandler : IRequestHandler<GetCustomerRequest, Get
             else
             {
                 List<SysClientPo> respDatas = await _context.SysClient.ToListAsync();
-                IEnumerable<SysClientPo> respData = respDatas.Where(x => x.ClientId == request.CustomerID);
+                IEnumerable<SysClientPo> respData = respDatas.Where(x => x.ClientId == request.ClientId);
 
                 response = new()
                 {

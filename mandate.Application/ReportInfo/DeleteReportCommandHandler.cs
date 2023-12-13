@@ -37,14 +37,15 @@ namespace mandate.Application.ReportInfo
             DeleteReportResponse response = new();
             try
             {
-                SysReportPo? objUpdateData = await _context.SysReport.Where(s => s.ReportID == request.ReportID).FirstOrDefaultAsync();
+                var objUpdateData = await _context.SysReport.Where(s => s.ReportID == request.ReportID).FirstOrDefaultAsync();
 
                 if (objUpdateData != null)
                 {
-                    objUpdateData.ReportStatus = request.ReportStatus; // 這行要幹嘛?
-                    _context.Remove(objUpdateData);
+                    objUpdateData.ReportStatus = request.ReportStatus;
+
                     _context.SaveChanges();
                 }
+                //_context.Add(objUpdateData);
                
 
                  response = new()

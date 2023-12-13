@@ -10,5 +10,5 @@ public class GetReportContentRequest : IRequest<GetReportContentResponse>
     /// <summary>
     /// 報表內容流水編號
     /// </summary>
-    public string? ContentNo { get; set; }
+    public string? ContentID { get; set; }
 }

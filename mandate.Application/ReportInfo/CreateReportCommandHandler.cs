@@ -37,7 +37,6 @@ namespace mandate.Application.ReportInfo
             {
                 SysReportPo CreateReport = new()
                 {
-                    ReportNo = request.ReportNo,
                     ReportName = request.ReportName,
                     ReportGoalAds = request.ReportGoalAds,
                     ReportMedia = request.ReportMedia,

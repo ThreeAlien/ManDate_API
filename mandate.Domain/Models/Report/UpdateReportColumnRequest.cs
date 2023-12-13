@@ -1,13 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MediatR;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace mandate.Domain.Po;
+namespace mandate.Domain.Models;
 
 /// <summary>
-/// 報表欄位是否執行
+/// 取得報表資料 Request
 /// </summary>
-[Table("SysReportColumn")]
-public class SysReportColumnPo
+public class UpdateReportColumnRequest : IRequest<UpdateReportResponse>
 {
 
     public bool? ColAccount { get; set; } 
@@ -43,12 +43,10 @@ public class SysReportColumnPo
     public bool? ColCPC { get; set; } 
     public bool? ColCost { get; set; } 
     public string ContentId { get; set; } = null!;
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
     public string ColumnId { get; set; } = null!;
     public bool? ColAge { get; set; } 
     public bool? ColSex { get; set; } 
     public bool? ColRegion { get; set; } 
 
-   
 }
