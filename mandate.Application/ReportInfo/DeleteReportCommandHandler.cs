@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using mandate.Business.Constants;
 using mandate.Domain.Models;
 using mandate.Domain.Po;
 using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace mandate.Application.ReportInfo
 {
@@ -37,7 +37,7 @@ namespace mandate.Application.ReportInfo
             DeleteReportResponse response = new();
             try
             {
-                var objUpdateData = await _context.SysReport.Where(s => s.ReportID == request.ReportID).FirstOrDefaultAsync();
+                SysReportPo? objUpdateData = await _context.SysReport.Where(s => s.ReportID == request.ReportID).FirstOrDefaultAsync();
 
                 if (objUpdateData != null)
                 {
@@ -45,26 +45,23 @@ namespace mandate.Application.ReportInfo
 
                     _context.SaveChanges();
                 }
-                //_context.Add(objUpdateData);
-               
 
-                 response = new()
+                response = new()
                 {
-                    Code = "200",
+                    Code = ResponseCode.Error,
                     Data = null,
-                    Msg = "Success"
+                    Msg = ResponseMsg.Success
                 };
             }
             catch (Exception ex)
             {
                 response = new()
                 {
-                    Code = "404",
+                    Code = ResponseCode.Error,
                     Data = null,
                     Msg = ex.ToString()
-                 };
+                };
             }
-
 
             return response;
         }

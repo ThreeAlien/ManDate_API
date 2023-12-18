@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using mandate.Business.Constants;
 using mandate.Domain.Models;
 using mandate.Domain.Po;
 using mandate.Infrastructure;
@@ -55,21 +56,20 @@ namespace mandate.Application.ReportInfo
 
                 response = new()
                 {
-                    Code = "200",
+                    Code = ResponseCode.Success,
                     Data = null,
-                    Msg = "Success"
+                    Msg = ResponseMsg.Success
                 };
             }
             catch (Exception ex)
             {
                 response = new()
                 {
-                    Code = "404",
+                    Code = ResponseCode.Error,
                     Data = null,
                     Msg = ex.ToString()
                 };
             }
-
 
             return response;
         }

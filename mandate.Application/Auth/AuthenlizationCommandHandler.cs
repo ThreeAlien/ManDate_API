@@ -38,11 +38,11 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
         // 取得Session範例
         //string? sessionRefreshToken = _httpContextAccessor.HttpContext.Session.Get<string>("refreshToken");
         // 執行GoogleAds Api範例
-        _googleAdsService.FetchAdsSubAccountApi(refreshToken);
+        //_googleAdsService.FetchAdsSubAccountApi(refreshToken);
 
         //_googleAdsService.FetchAdsAccountApi(refreshToken);
 
-        //_googleAdsService.FetchAdsReportApi(refreshToken);
+        _googleAdsService.FetchAdsReportApi(refreshToken);
 
         return new() { RefreshToken = refreshToken };
     }

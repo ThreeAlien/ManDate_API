@@ -12,20 +12,20 @@ public class SysReportPo
     /// <summary>
     /// 報表內容流水編號
     /// </summary>
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-    //public int ReportNo { get; set; }
+    public int ReportNo { get; set; }
 
     /// <summary>
     /// 報表ID
     /// </summary>
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string ReportID { get; set; } = null!;
+    public string? ReportID { get; set; }
 
     /// <summary>
     /// 報表名稱
     /// </summary>
-    public string ReportName { get; set; } = null!;
+    public string? ReportName { get; set; }
 
     /// <summary>
     /// 報表目標
@@ -35,7 +35,7 @@ public class SysReportPo
     /// <summary>
     /// 報表媒體
     /// </summary>
-    public string ReportMedia { get; set; } = null!;
+    public string? ReportMedia { get; set; }
 
     /// <summary>
     /// 報表內容ID(Join)
@@ -45,7 +45,7 @@ public class SysReportPo
     /// <summary>
     /// 子帳戶UD
     /// </summary>
-    public string SubID { get; set; } = null!;
+    public string? SubID { get; set; }
 
     /// <summary>
     /// 編輯者

@@ -93,24 +93,18 @@ public class GoogleAdsService : IGoogleAdsService
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
-        string query = @"SELECT ad_group_ad.ad.expanded_text_ad.headline_part1,
-  ad_group_ad.ad.expanded_text_ad.headline_part2,
-  ad_group_ad.ad.expanded_text_ad.headline_part3,
-  ad_group_ad.ad.final_urls,
-  ad_group_ad.ad.expanded_text_ad.description,
-  ad_group_ad.ad.expanded_text_ad.description2,
-  campaign.name,
-  ad_group.name,
-  ad_group_ad.policy_summary.approval_status,
-  ad_group_ad.ad.type,
-  metrics.clicks,
-  metrics.impressions,
-  metrics.ctr,
-  metrics.average_cpc,
-  metrics.cost_micros
-FROM ad_group_ad
-WHERE segments.date DURING LAST_7_DAYS
-  AND ad_group_ad.status != 'REMOVED'";
+        string query = @"SELECT 
+  campaign.name, 
+  metrics.clicks, 
+  metrics.ctr, 
+  metrics.average_cpc, 
+  metrics.cost_micros, 
+  segments.date, 
+  segments.week, 
+  ad_group.name 
+FROM ad_group_ad 
+WHERE 
+  segments.date BETWEEN '2000-01-01' AND '2023-12-31'";
 
         try
         {

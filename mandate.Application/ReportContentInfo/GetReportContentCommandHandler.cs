@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using mandate.Business.Constants;
 using mandate.Domain.Models.ReportContent;
 using mandate.Domain.Po;
 using mandate.Infrastructure;
@@ -40,12 +41,19 @@ namespace mandate.Application.ReportContentInfo
 
                 response = new()
                 {
-                    Data = _mapper.Map<List<GetReportContentInfo>>(respData)
+                    Code = ResponseCode.Success,
+                    Data = _mapper.Map<List<GetReportContentInfo>>(respData),
+                    Msg = ResponseMsg.Success
                 };
             }
             catch (Exception ex)
             {
-                throw ex;
+                response = new()
+                {
+                    Code = ResponseCode.Error,
+                    Data = null,
+                    Msg = ex.ToString()
+                };
             }
 
             return response;
