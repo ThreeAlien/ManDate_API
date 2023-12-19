@@ -20,7 +20,7 @@ public class SysReportPo
     /// <summary>
     /// 報表ID
     /// </summary>
-    public string? ReportID { get; set; }
+    public string ReportID { get; set; } = null!;
 
     /// <summary>
     /// 報表名稱
