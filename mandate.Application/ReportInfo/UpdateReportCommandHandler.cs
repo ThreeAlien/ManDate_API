@@ -120,7 +120,6 @@ namespace mandate.Application.ReportInfo
                 };
             }
 
-
             return response;
         }
     }

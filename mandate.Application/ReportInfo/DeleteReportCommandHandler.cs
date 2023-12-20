@@ -42,8 +42,8 @@ namespace mandate.Application.ReportInfo
                 if (objUpdateData != null)
                 {
                     objUpdateData.ReportStatus = request.ReportStatus;
-
-                    _context.SaveChanges();
+                    _context.Update(objUpdateData);
+                    _context.SaveChangesAsync();
                 }
 
                 response = new()

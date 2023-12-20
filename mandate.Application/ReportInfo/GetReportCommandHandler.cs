@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using mandate.Business.Constants;
 using mandate.Domain.Models;
 using mandate.Domain.Po;
 using mandate.Infrastructure;
@@ -37,7 +38,9 @@ namespace mandate.Application.ReportInfo
 
             GetReportResponse response = new()
             {
-                Data = _mapper.Map<List<GetReportInfo>>(respData)
+                Code = ResponseCode.Success,
+                Data = _mapper.Map<List<GetReportInfo>>(respData),
+                Msg = ResponseMsg.Success
             };
 
             return response;
