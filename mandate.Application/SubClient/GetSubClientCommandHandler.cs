@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using mandate.Business.Constants;
 using mandate.Domain.Models.SubClient;
 using mandate.Domain.Po;
 using mandate.Infrastructure;
@@ -37,12 +38,19 @@ public class GetSubClientCommandHandler : IRequestHandler<GetSubClientRequest, G
 
             response = new()
             {
-                Data = _mapper.Map<List<GetSubClientInfo>>(respData)
+                Code = ResponseCode.Success,
+                Data = _mapper.Map<List<GetSubClientInfo>>(respData),
+                Msg = ResponseMsg.Success
             };
         }
         catch (Exception ex)
         {
-            throw ex;
+            response = new()
+            {
+                Code = ResponseCode.Error,
+                Data = null,
+                Msg = ResponseMsg.Error
+            };
         }
 
         return response;

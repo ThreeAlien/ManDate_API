@@ -34,14 +34,28 @@ namespace mandate.Application.ReportInfo
 
         public async Task<GetReportResponse> Handle(GetReportRequest request, CancellationToken cancellationToken)
         {
-            List<SysReportPo> respData = await _context.SysReport.ToListAsync();
-
-            GetReportResponse response = new()
+            List<SysReportPo> respData = new();
+            GetReportResponse response = new();
+            try
             {
-                Code = ResponseCode.Success,
-                Data = _mapper.Map<List<GetReportInfo>>(respData),
-                Msg = ResponseMsg.Success
-            };
+                respData = request.ReportID != string.Empty ? await _context.SysReport.Where(x => x.ReportID == request.ReportID).ToListAsync() : await _context.SysReport.ToListAsync();
+
+                response = new()
+                {
+                    Code = ResponseCode.Success,
+                    Data = _mapper.Map<List<GetReportInfo>>(respData),
+                    Msg = ResponseMsg.Success
+                };
+            }
+            catch (Exception ex)
+            {
+                response = new()
+                {
+                    Code = ResponseCode.Error,
+                    Data = null,
+                    Msg = ex.ToString()
+                };
+            }
 
             return response;
         }
