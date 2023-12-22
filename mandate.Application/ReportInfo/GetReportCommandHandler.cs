@@ -17,7 +17,6 @@ namespace mandate.Application.ReportInfo
         /// </summary>
         private readonly ManDateDBContext _context;
 
-
         /// <summary>
         /// mapper
         /// </summary>
