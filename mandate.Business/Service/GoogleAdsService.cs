@@ -218,12 +218,8 @@ WHERE segments.date DURING LAST_7_DAYS
         }
 
         string query = @"SELECT
-                                    customer_client.client_customer,
-                                    customer_client.level,
-                                    customer_client.manager,
-                                    customer_client.descriptive_name,
-                                    customer_client.currency_code,
-                                    customer_client.time_zone,
+                                    customer_client.client_customer,                                   
+                                    customer_client.manager,                                   
                                     customer_client.id
                                 FROM customer_client
                                 WHERE
@@ -233,12 +229,13 @@ WHERE segments.date DURING LAST_7_DAYS
                 new Dictionary<long, List<CustomerClient>>();
 
         long? managerCustomerId = 0;
+        //這個Gmail帳號底下有幾個帳戶(權限控管可以用)
         foreach (long seedCustomerId in seedCustomerIds)
         {
             Queue<long> unprocessedCustomerIds = new Queue<long>();
             unprocessedCustomerIds.Enqueue(seedCustomerId);
             CustomerClient rootCustomerClient = null;
-
+            //這隻帳號底下有幾個MCC(就是汎古客戶名稱)
             while (unprocessedCustomerIds.Count > 0)
             {
                 managerCustomerId = unprocessedCustomerIds.Dequeue();
