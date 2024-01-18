@@ -9,7 +9,7 @@ namespace mandate.Application.CustomerInfo
     /// <summary>
     /// 新增顧客資料(from Google)
     /// </summary>
-    public class AddCustomerCommandHandler : IRequestHandler<CreatCustomerRequest, CreatCustomerResponse>
+    public class AddCustomerCommandHandler : IRequestHandler<AddCustomerRequest, AddCustomerResponse>
     {
         #region DI
         /// <summary>
@@ -37,17 +37,18 @@ namespace mandate.Application.CustomerInfo
             _googleAdsService = googleAdsService;
         }
 
-        public async Task<CreatCustomerResponse> Handle(CreatCustomerRequest request, CancellationToken cancellationToken)
+        public async Task<AddCustomerResponse> Handle(AddCustomerRequest request, CancellationToken cancellationToken)
         {
             
             string? refreshToken = await _googleAdsService.GenerateRefreshToken();
 
-            // 執行GoogleAds Api範例
-            _googleAdsService.FetchAdsSubAccountApi(refreshToken);
+            AddCustomerResponse response = new();
+            response = new()
+            {
+                // 執行GoogleAds Api範例
+                Data = _googleAdsService.FetchAdsSubAccountApi(refreshToken)
+            };
 
-            CreatCustomerResponse response = new();
-
-            
 
             return response;
         }

@@ -26,5 +26,25 @@ public interface IGoogleAdsService
     /// <summary>
     /// 取得Ads子帳戶 Api
     /// </summary>
-    public void FetchAdsSubAccountApi(string? refreshToken);
+    public List<SysClientPo> FetchAdsSubAccountApi(string? refreshToken);
 }
+
+#region 汎古的客戶資料
+public class SysClientPo
+{
+    /// <summary>
+    /// 待註解
+    /// </summary>
+    public long ClientNo { get; set; }
+
+    /// <summary>
+    /// 客戶ID
+    /// </summary>
+    public string? ClientId { get; set; }
+
+    /// <summary>
+    /// 客戶名稱
+    /// </summary>
+    public string? ClientName { get; set; }
+}
+#endregion

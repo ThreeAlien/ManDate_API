@@ -10,4 +10,10 @@ public class CustomerInfoController : BaseApiController
     /// </summary>
     [HttpPost]
     public Task<GetCustomerResponse> GetCustomer(GetCustomerRequest request) => Mediator!.Send(request);
+
+    /// <summary>
+    /// 新增顧客資料 (FeomGoogle)
+    /// </summary>
+    [HttpPost]
+    public Task<AddCustomerResponse> AddCustomer(AddCustomerRequest request) => Mediator!.Send(request);
 }
