@@ -1,4 +1,5 @@
 ﻿using mandate.Business.Models;
+using mandate.Business.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace mandate.Domain.Models.Customer
     /// <summary>
     /// 新增顧客資料(from Google) Response
     /// </summary>
-    public class CreatCustomerResponse : BaseResponse<string>
+    public class AddCustomerResponse : BaseResponse<SysClientPo>
     {
     }
 }

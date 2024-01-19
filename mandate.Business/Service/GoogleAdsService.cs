@@ -185,8 +185,9 @@ WHERE segments.date DURING LAST_7_DAYS
     /// 取得子帳號
     /// </summary>
     /// <param name="refreshToken"></param>
-    public void FetchAdsSubAccountApi(string? refreshToken)
+    public List<SysClientPo> FetchAdsSubAccountApi(string? refreshToken)
     {
+        var result = new List<SysClientPo>();
         GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
         GoogleAdsConfig config = new GoogleAdsConfig()
         {
@@ -218,20 +219,26 @@ WHERE segments.date DURING LAST_7_DAYS
         }
 
         string query = @"SELECT
-                                    customer_client.client_customer,                                   
-                                    customer_client.manager,                                   
+                                    customer_client.client_customer,
+                                    customer_client.level,
+                                    customer_client.manager,
+                                    customer_client.descriptive_name,
+                                    customer_client.currency_code,
+                                    customer_client.time_zone,
                                     customer_client.id
                                 FROM customer_client
                                 WHERE
-                                    customer_client.level <= 1 AND customer_client.manager = FALSE";
+                                    customer_client.level <= 1 and customer_client.manager = true";
 
         Dictionary<long, List<CustomerClient>> customerIdsToChildAccounts =
                 new Dictionary<long, List<CustomerClient>>();
 
         long? managerCustomerId = 0;
+        int index = 0;
         //這個Gmail帳號底下有幾個帳戶(權限控管可以用)
         foreach (long seedCustomerId in seedCustomerIds)
         {
+            index++;
             Queue<long> unprocessedCustomerIds = new Queue<long>();
             unprocessedCustomerIds.Enqueue(seedCustomerId);
             CustomerClient rootCustomerClient = null;
@@ -259,9 +266,18 @@ WHERE segments.date DURING LAST_7_DAYS
                         continue;
                     }
                     if (!customerIdsToChildAccounts.ContainsKey(managerCustomerId.Value))
-                        customerIdsToChildAccounts.Add(managerCustomerId.Value,
-                            new List<CustomerClient>());
-
+                        customerIdsToChildAccounts.Add(managerCustomerId.Value, new List<CustomerClient>());
+                    if (managerCustomerId.Value == 3255036910)
+                    {
+                        string temp = customerClient.ResourceName;
+                        temp = temp.Split('/')[3];
+                        result.Add(new SysClientPo
+                        {
+                            ClientId = temp,
+                            ClientNo = customerClient.Id,
+                            ClientName = customerClient.DescriptiveName
+                        });
+                    }
                     customerIdsToChildAccounts[managerCustomerId.Value].Add(customerClient);
 
                     if (customerClient.Manager)
@@ -271,8 +287,11 @@ WHERE segments.date DURING LAST_7_DAYS
                 }
             }
             var a = rootCustomerClient;
-            var b = customerIdsToChildAccounts;
+            //for(var i=0;i< customerIdsToChildAccounts.Count;i++){
+            
+            var b = customerIdsToChildAccounts;            
             var c = 0;
         }
+        return result;
     }
 }

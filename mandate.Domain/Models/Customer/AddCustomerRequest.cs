@@ -10,7 +10,11 @@ namespace mandate.Domain.Models.Customer
     /// <summary>
     /// 新增顧客資料(from Google) Request
     /// </summary>
-    public class CreatCustomerRequest : IRequest<CreatCustomerResponse>
+    public class AddCustomerRequest : IRequest<AddCustomerResponse>
     {
+        /// <summary>
+        /// 顧客ID
+        /// </summary>
+        public string? ClientId { get; set; }
     }
 }
