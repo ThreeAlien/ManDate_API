@@ -1,4 +1,6 @@
-﻿namespace mandate.Business.Service;
+﻿using Google.Ads.GoogleAds.V15.Services;
+
+namespace mandate.Business.Service;
 
 /// <summary>
 /// Google ADS服務 介面
@@ -12,10 +14,35 @@ public interface IGoogleAdsService
     public Task<string?> GenerateRefreshToken();
 
     /// <summary>
-    /// 取得Ads報表 Api
+    /// 取得AdsDataCampaign報表 Api
     /// </summary>
     /// <param name="refreshToken"></param>
-    public void FetchAdsReportApi(string refreshToken);
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaign(string refreshToken, string custId);
+
+    /// <summary>
+    /// 取得AdsDataAdGroupAd報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataAdGroupAd(string refreshToken, string custId);
+
+    /// <summary>
+    /// 取得CampaignAction報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsCampaignAction(string refreshToken, string custId);
+
+    /// <summary>
+    /// 取得AdGroupCriterion報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsAdGroupCriterion(string refreshToken, string custId);
+
+    /// <summary>
+    /// 取得AdsDataCampaignCon報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaignCon(string refreshToken, string custId);
+
 
     /// <summary>
     /// 取得Ads帳戶 Api

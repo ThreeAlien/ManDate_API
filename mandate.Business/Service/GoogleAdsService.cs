@@ -73,10 +73,10 @@ public class GoogleAdsService : IGoogleAdsService
     }
 
     /// <summary>
-    /// 取得Ads報表 Api
+    /// 取得AdsDataCampaign報表 Api
     /// </summary>
     /// <param name="refreshToken"></param>
-    public void FetchAdsReportApi(string refreshToken)
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaign(string refreshToken, string custId)
     {
         GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
         GoogleAdsConfig config = new GoogleAdsConfig()
@@ -93,38 +93,32 @@ public class GoogleAdsService : IGoogleAdsService
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
-        string query = @"SELECT ad_group_ad.ad.expanded_text_ad.headline_part1,
-  ad_group_ad.ad.expanded_text_ad.headline_part2,
-  ad_group_ad.ad.expanded_text_ad.headline_part3,
-  ad_group_ad.ad.final_urls,
-  ad_group_ad.ad.expanded_text_ad.description,
-  ad_group_ad.ad.expanded_text_ad.description2,
-  campaign.name,
-  ad_group.name,
-  ad_group_ad.policy_summary.approval_status,
-  ad_group_ad.ad.type,
-  metrics.clicks,
-  metrics.impressions,
-  metrics.ctr,
-  metrics.average_cpc,
-  metrics.cost_micros
-FROM ad_group_ad
-WHERE segments.date DURING LAST_7_DAYS
-  AND ad_group_ad.status != 'REMOVED'";
+        string query = @"SELECT campaign.id
+                        , campaign.name
+                        , metrics.conversions
+                        , metrics.conversions_from_interactions_rate
+                        , metrics.cost_per_conversion
+                        , metrics.conversions_by_conversion_date
+                        , metrics.clicks
+                        , metrics.impressions
+                        , metrics.ctr
+                        , metrics.average_cpc
+                        , metrics.cost_micros
+                        , metrics.average_target_cpa_micros
+                        , metrics.conversions_value
+                        , metrics.all_conversions_value
+                        , customer.id
+                        , customer.resource_name 
+                        FROM campaign";
 
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
         {
-            string custId = "5133521829";
             // Issue a search request.
             googleAdsService.SearchStream(custId, query,
                 delegate (SearchGoogleAdsStreamResponse resp)
                 {
-                    var test = resp.Results;
-                    foreach (GoogleAdsRow googleAdsRow in resp.Results)
-                    {
-                        Console.WriteLine("Campaign with ID {0} and name '{1}' was found.",
-                            googleAdsRow.Campaign.Id, googleAdsRow.Campaign.Name);
-                    }
+                    results = resp.Results;
                 }
             );
         }
@@ -136,6 +130,211 @@ WHERE segments.date DURING LAST_7_DAYS
             Console.WriteLine($"Request ID: {e.RequestId}");
             throw;
         }
+
+        return Task.FromResult(results);
+    }
+
+    /// <summary>
+    /// 取得AdsDataAdGroupAd報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataAdGroupAd(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        string query = @"SELECT campaign.id
+                            , ad_group_ad.ad.final_urls
+                            , ad_group.name
+                            , ad_group_ad.ad.expanded_text_ad.headline_part1
+                            , ad_group_ad.ad.expanded_text_ad.headline_part2
+                            , ad_group_ad.ad.expanded_text_ad.headline_part3
+                            , ad_group_ad.ad.expanded_text_ad.description
+                            , ad_group_ad.ad.expanded_text_ad.description2
+                            , customer.id
+                            , customer.resource_name
+                             FROM ad_group_ad";
+
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, query,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
+    }
+
+    /// <summary>
+    /// 取得CampaignAction報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsCampaignAction(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        string query = @"SELECT customer.id, conversion_action.name, customer.resource_name FROM conversion_action";
+
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, query,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
+    }
+
+    /// <summary>
+    /// 取得AdGroupCriterion報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsAdGroupCriterion(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        string query = @"SELECT campaign.id
+                                    ,customer.id
+                                    ,customer.resource_name
+                                    ,ad_group_criterion.keyword.text
+                                    ,ad_group_criterion.age_range.type
+                                    ,ad_group_criterion.gender.type
+                                     FROM ad_group_criterion";
+
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, query,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
+    }
+
+    /// <summary>
+    /// 取得AdsDataCampaignCon報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaignCon(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        string query = @"SELECT campaign.id
+                                        , campaign_conversion_goal.resource_name
+                                        , customer.id
+                                        , customer.resource_name FROM campaign_conversion_goal";
+
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, query,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
     }
 
     /// <summary>

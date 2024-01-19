@@ -32,10 +32,38 @@ public class ManDateDBContext : DbContext
     ///子客戶資料表(SysSubClient)
     /// </summary>
     public DbSet<SysSubClientPo> SysSubClient { get; set; }
+
     /// <summary>
     ///報表(SysReportColumn)
     /// </summary>
     public DbSet<SysReportColumnPo> SysReportColumn { get; set; }
+
+    #region GCP 資料導入
+    /// <summary>
+    ///報表(SysAdsDataAdGroupAd)
+    /// </summary>
+    public DbSet<SysAdsDataAdGroupAdPo> SysAdsDataAdGroupAd { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataCampaign)
+    /// </summary>
+    public DbSet<SysAdsDataCampaignPo> SysAdsDataCampaign { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataCampaignAction)
+    /// </summary>
+    public DbSet<SysAdsDataCampaignActionPo> SysAdsDataCampaignAction { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataAdGroupCriterion)
+    /// </summary>
+    public DbSet<SysAdsDataAdGroupCriterionPo> SysAdsDataAdGroupCriterion { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataCriterionCon)
+    /// </summary>
+    public DbSet<SysAdsDataCampaignConPo> SysAdsDataCampaignCon { get; set; }
+    #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -53,6 +81,14 @@ public class ManDateDBContext : DbContext
         modelBuilder.Entity<SysSubClientPo>().HasKey(c => c.SubNo);
 
         modelBuilder.Entity<SysReportColumnPo>().HasKey(c => c.ColumnId);
+
+        #region GCP 資料導入
+        modelBuilder.Entity<SysAdsDataAdGroupAdPo>().HasNoKey();
+        modelBuilder.Entity<SysAdsDataCampaignPo>().HasNoKey();
+        modelBuilder.Entity<SysAdsDataCampaignActionPo>().HasNoKey();
+        modelBuilder.Entity<SysAdsDataAdGroupCriterionPo>().HasNoKey();
+        modelBuilder.Entity<SysAdsDataCampaignConPo>().HasNoKey();
+        #endregion
 
 
     }
