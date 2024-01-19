@@ -1,10 +1,12 @@
 ﻿using mandate.Application.Auth;
 using mandate.Application.CustomerInfo;
+using mandate.Application.InsertAdsData;
 using mandate.Application.ReportContentInfo;
 using mandate.Application.ReportInfo;
 using mandate.Application.SubClient;
 using mandate.Business.Service;
 using mandate.Domain.Models;
+using mandate.Domain.Models.AdsData;
 using mandate.Domain.Models.Customer;
 using mandate.Domain.Models.ReportContent;
 using mandate.Domain.Models.SubClient;
@@ -34,6 +36,13 @@ public static class ApCommandExtension
 
         service.AddScoped<IRequestHandler<GetSubClientRequest, GetSubClientResponse>, GetSubClientCommandHandler>();
         service.AddScoped<IRequestHandler<AddCustomerRequest, AddCustomerResponse>, AddCustomerCommandHandler>();
+        #region Ads 資料導入
+        service.AddScoped<IRequestHandler<InsertSysAdsDataCampaignActionRequest, InsertSysAdsDataCampaignActionResponse>, InsertSysAdsDataCampaignActionCommandHandler>();
+        service.AddScoped<IRequestHandler<InsertSysAdsDataAdGroupCriterionRequest, InsertSysAdsDataAdGroupCriterionResponse>, InsertSysAdsDataAdGroupCriterionCommandHandler>();
+        service.AddScoped<IRequestHandler<InsertSysAdsDataCampaignConRequest, InsertSysAdsDataCampaignConResponse>, InsertSysAdsDataCampaignConCommandHandler>();
+        service.AddScoped<IRequestHandler<InsertSysAdsDataCampaignRequest, InsertSysAdsDataCampaignResponse>, InsertSysAdsDataCampaignCommandHandler>();
+        service.AddScoped<IRequestHandler<InsertSysAdsDataAdGroupAdRequest, InsertSysAdsDataAdGroupAdResponse>, InsertSysAdsDataAdGroupAdCommandHandler>();
+        #endregion
         return service;
     }
 }
