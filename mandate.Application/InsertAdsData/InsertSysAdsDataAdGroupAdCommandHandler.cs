@@ -41,18 +41,32 @@ public class InsertSysAdsDataAdGroupAdCommandHandler : IRequestHandler<InsertSys
             Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> adsDataAdGroupAdResult = await _googleAdsService.FetchAdsDataAdGroupAd(refreshToken, subAccount.ClientId);
             foreach (GoogleAdsRow googleAdsRow in adsDataAdGroupAdResult)
             {
+                //long customerId = googleAdsRow.Customer.Id;
+                //string ColAdGroupName = googleAdsRow.AdGroup.Name;
+                //string ColAdFinalURL = googleAdsRow.AdGroupAd.Ad.FinalUrls.ToString();
+
+                //string ColHeadLine_1 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart1;
+                //string ColHeadLine_2 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart2;
+                //string ColHeadLine = string.Join("|", new[] { ColHeadLine_1, ColHeadLine_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
+                //string ColHeadLine_3 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart3;
+                //string ColDirections_1 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description;
+                //string ColDirections_2 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description2;
+                //string ColDirections = string.Join("|", new[] { ColDirections_1, ColDirections_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
+                //string ColAdName = string.Join("|", new[] { ColHeadLine_1, ColHeadLine_2, ColHeadLine_3, ColAdFinalURL, ColDirections_1, ColDirections_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
+
                 long customerId = googleAdsRow.Customer.Id;
                 string ColAdGroupName = googleAdsRow.AdGroup.Name;
-                string ColAdFinalURL = googleAdsRow.AdGroupAd.Ad.FinalUrls.ToString();
+                string ColAdFinalURL = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.FinalUrls.ToString()) ? " " : googleAdsRow.AdGroupAd.Ad.FinalUrls.ToString();
 
-                string ColHeadLine_1 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart1;
-                string ColHeadLine_2 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart2;
+                string ColHeadLine_1 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart1) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart1;
+                string ColHeadLine_2 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart2) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart2;
                 string ColHeadLine = string.Join("|", new[] { ColHeadLine_1, ColHeadLine_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
-                string ColHeadLine_3 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart3;
-                string ColDirections_1 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description;
-                string ColDirections_2 = googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description2;
+                string ColHeadLine_3 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart3) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart3;
+                string ColDirections_1 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description;
+                string ColDirections_2 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description2) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description2;
                 string ColDirections = string.Join("|", new[] { ColDirections_1, ColDirections_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
                 string ColAdName = string.Join("|", new[] { ColHeadLine_1, ColHeadLine_2, ColHeadLine_3, ColAdFinalURL, ColDirections_1, ColDirections_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
+
                 // 寫入DB SysAdsDataAdGroupAd
 
                 try

@@ -43,15 +43,33 @@ public class InsertSysAdsDataAdGroupCriterionCommandHandler : IRequestHandler<In
             {
                 try
                 {
-                    string AdGroupCriterion = googleAdsRow.AdGroupCriterion.Keyword.Text;
+                    //string AdGroupCriterion = string.IsNullOrEmpty(googleAdsRow.AdGroupCriterion.Keyword.ToString()) ? " " : googleAdsRow.AdGroupCriterion.Keyword.Text.ToString(); 
+                    string AdGroupCriterion =
+                                        googleAdsRow.AdGroupCriterion.Keyword != null &&
+                                        !string.IsNullOrEmpty(googleAdsRow.AdGroupCriterion.Keyword.Text)
+                                        ? googleAdsRow.AdGroupCriterion.Keyword.Text
+                                        : " ";
+
+                    string AdGroupCriterionAgeRange =
+                                        googleAdsRow.AdGroupCriterion.AgeRange != null &&
+                                        !string.IsNullOrEmpty(googleAdsRow.AdGroupCriterion.AgeRange.Type.ToString())
+                                        ? googleAdsRow.AdGroupCriterion.AgeRange.Type.ToString()
+                                        : " ";
+
+                    string AdGroupCriterionGender =
+                                        googleAdsRow.AdGroupCriterion.Gender != null &&
+                                        !string.IsNullOrEmpty(googleAdsRow.AdGroupCriterion.Gender.Type.ToString())
+                                        ? googleAdsRow.AdGroupCriterion.Gender.Type.ToString()
+                                        : " ";
+
                     // 寫入DB SysAdsDataAdGroupCriterion
                     SysAdsDataAdGroupCriterionPo sysAdsDataAdGroupCriterionPo = new()
                     {
                         CustomerID = googleAdsRow.Customer.Id.ToString(),
                         CampaignID = googleAdsRow.Campaign.Id.ToString(),
                         ColSrchKeyWord = AdGroupCriterion,
-                        ColAge = googleAdsRow.AdGroupCriterion.AgeRange.Type.ToString(),
-                        ColGender = googleAdsRow.AdGroupCriterion.Gender.Type.ToString(),
+                        ColAge = AdGroupCriterionAgeRange,
+                        ColGender = AdGroupCriterionGender,
                     };
                     _context.SysAdsDataAdGroupCriterion.Add(sysAdsDataAdGroupCriterionPo);
                     await _context.SaveChangesAsync();

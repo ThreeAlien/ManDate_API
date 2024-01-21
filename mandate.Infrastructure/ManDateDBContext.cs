@@ -83,11 +83,11 @@ public class ManDateDBContext : DbContext
         modelBuilder.Entity<SysReportColumnPo>().HasKey(c => c.ColumnId);
 
         #region GCP 資料導入
-        modelBuilder.Entity<SysAdsDataAdGroupAdPo>().HasNoKey();
-        modelBuilder.Entity<SysAdsDataCampaignPo>().HasNoKey();
-        modelBuilder.Entity<SysAdsDataCampaignActionPo>().HasNoKey();
-        modelBuilder.Entity<SysAdsDataAdGroupCriterionPo>().HasNoKey();
-        modelBuilder.Entity<SysAdsDataCampaignConPo>().HasNoKey();
+        modelBuilder.Entity<SysAdsDataAdGroupAdPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataCampaignPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataCampaignActionPo>().HasKey(c => new { c.CustomerID, c.ActionID });
+        modelBuilder.Entity<SysAdsDataAdGroupCriterionPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataCampaignConPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
         #endregion
 
 

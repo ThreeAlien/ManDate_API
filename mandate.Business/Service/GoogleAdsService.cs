@@ -93,23 +93,8 @@ public class GoogleAdsService : IGoogleAdsService
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
-        string query = @"SELECT campaign.id
-                        , campaign.name
-                        , metrics.conversions
-                        , metrics.conversions_from_interactions_rate
-                        , metrics.cost_per_conversion
-                        , metrics.conversions_by_conversion_date
-                        , metrics.clicks
-                        , metrics.impressions
-                        , metrics.ctr
-                        , metrics.average_cpc
-                        , metrics.cost_micros
-                        , metrics.average_target_cpa_micros
-                        , metrics.conversions_value
-                        , metrics.all_conversions_value
-                        , customer.id
-                        , customer.resource_name 
-                        FROM campaign";
+        string query = @"SELECT campaign.id, campaign.name, metrics.conversions, metrics.conversions_from_interactions_rate, metrics.cost_per_conversion, metrics.conversions_by_conversion_date, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, metrics.average_target_cpa_micros, metrics.conversions_value, metrics.all_conversions_value, customer.id, customer.resource_name, customer.status FROM campaign
+WHERE customer.status = 'ENABLED'";
 
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
@@ -174,7 +159,7 @@ public class GoogleAdsService : IGoogleAdsService
             googleAdsService.SearchStream(custId, query,
                 delegate (SearchGoogleAdsStreamResponse resp)
                 {
-                    results = resp.Results;
+                        results = resp.Results;                 
                 }
             );
         }
@@ -211,7 +196,7 @@ public class GoogleAdsService : IGoogleAdsService
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
-        string query = @"SELECT customer.id, conversion_action.name, customer.resource_name FROM conversion_action";
+        string query = @"SELECT customer.id, conversion_action.name, customer.resource_name, conversion_action.id FROM conversion_action";
 
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
@@ -220,7 +205,11 @@ public class GoogleAdsService : IGoogleAdsService
             googleAdsService.SearchStream(custId, query,
                 delegate (SearchGoogleAdsStreamResponse resp)
                 {
-                    results = resp.Results;
+                    if (resp.Results != null && resp.Results.Count > 0)
+                    {
+                        results = resp.Results;
+                    }
+                    //results = resp.Results;
                 }
             );
         }
@@ -418,16 +407,16 @@ public class GoogleAdsService : IGoogleAdsService
         }
 
         string query = @"SELECT
-                                    customer_client.client_customer,
-                                    customer_client.level,
-                                    customer_client.manager,
-                                    customer_client.descriptive_name,
-                                    customer_client.currency_code,
-                                    customer_client.time_zone,
-                                    customer_client.id
-                                FROM customer_client
-                                WHERE
-                                    customer_client.level <= 1 and customer_client.manager = true";
+                            customer_client.client_customer,
+                            customer_client.level,
+                            customer_client.manager,
+                            customer_client.descriptive_name,
+                            customer_client.currency_code,
+                            customer_client.time_zone,
+                            customer_client.id
+                        FROM customer_client
+                        WHERE
+                            customer_client.level <= 2";
 
         Dictionary<long, List<CustomerClient>> customerIdsToChildAccounts =
                 new Dictionary<long, List<CustomerClient>>();
@@ -466,16 +455,25 @@ public class GoogleAdsService : IGoogleAdsService
                     }
                     if (!customerIdsToChildAccounts.ContainsKey(managerCustomerId.Value))
                         customerIdsToChildAccounts.Add(managerCustomerId.Value, new List<CustomerClient>());
-                    if (managerCustomerId.Value == 3255036910)
+
+                    if (customerClient.Id == 2040415562)
                     {
-                        string temp = customerClient.ResourceName;
-                        temp = temp.Split('/')[3];
-                        result.Add(new SysClientPo
+                        var s = 0;
+                    }
+                    if (managerCustomerId.Value == 3255036910 && !customerClient.Manager)
+                    {
+                        if (customerClient.Level == 2)
                         {
-                            ClientId = temp,
-                            ClientNo = customerClient.Id,
-                            ClientName = customerClient.DescriptiveName
-                        });
+                            string temp = customerClient.ResourceName;
+                            temp = temp.Split('/')[3];
+                            result.Add(new SysClientPo
+                            {
+                                ClientId = temp,
+                                ClientNo = customerClient.Id,
+                                ClientName = customerClient.DescriptiveName
+                            });
+                        }
+
                     }
                     customerIdsToChildAccounts[managerCustomerId.Value].Add(customerClient);
 
@@ -486,10 +484,9 @@ public class GoogleAdsService : IGoogleAdsService
                 }
             }
             var a = rootCustomerClient;
-            //for(var i=0;i< customerIdsToChildAccounts.Count;i++){
-            
-            var b = customerIdsToChildAccounts;            
-            var c = 0;
+
+            var b = customerIdsToChildAccounts;
+            var c = unprocessedCustomerIds;
         }
         return result;
     }
