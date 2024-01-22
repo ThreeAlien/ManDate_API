@@ -33,7 +33,7 @@ public class InsertSysAdsDataAdGroupCriterionCommandHandler : IRequestHandler<In
         InsertSysAdsDataAdGroupCriterionResponse response = new();
         string? refreshToken = await _googleAdsService.GenerateRefreshToken();
         // 1.取得子帳戶
-        List<Business.Service.SysClientPo> subAccountList = _googleAdsService.FetchAdsSubAccountApi(refreshToken);
+        List<Business.Service.SysClientPo> subAccountList = _googleAdsService.FetchAdsAdvertiseAccount(refreshToken);
 
         foreach (Business.Service.SysClientPo subAccount in subAccountList)
         {
@@ -63,16 +63,16 @@ public class InsertSysAdsDataAdGroupCriterionCommandHandler : IRequestHandler<In
                                         : " ";
 
                     // 寫入DB SysAdsDataAdGroupCriterion
-                    SysAdsDataAdGroupCriterionPo sysAdsDataAdGroupCriterionPo = new()
-                    {
-                        CustomerID = googleAdsRow.Customer.Id.ToString(),
-                        CampaignID = googleAdsRow.Campaign.Id.ToString(),
-                        ColSrchKeyWord = AdGroupCriterion,
-                        ColAge = AdGroupCriterionAgeRange,
-                        ColGender = AdGroupCriterionGender,
-                    };
-                    _context.SysAdsDataAdGroupCriterion.Add(sysAdsDataAdGroupCriterionPo);
-                    await _context.SaveChangesAsync();
+                    //SysAdsDataAdGroupCriterionPo sysAdsDataAdGroupCriterionPo = new()
+                    //{
+                    //    CustomerID = googleAdsRow.Customer.Id.ToString(),
+                    //    CampaignID = googleAdsRow.Campaign.Id.ToString(),
+                    //    ColSrchKeyWord = AdGroupCriterion,
+                    //    ColAge = AdGroupCriterionAgeRange,
+                    //    ColGender = AdGroupCriterionGender,
+                    //};
+                    //_context.SysAdsDataAdGroupCriterion.Add(sysAdsDataAdGroupCriterionPo);
+                    //await _context.SaveChangesAsync();
 
                     response = new()
                     {

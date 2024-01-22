@@ -252,7 +252,8 @@ WHERE customer.status = 'ENABLED'";
                                     ,ad_group_criterion.keyword.text
                                     ,ad_group_criterion.age_range.type
                                     ,ad_group_criterion.gender.type
-                                     FROM ad_group_criterion";
+                                     FROM ad_group_criterion
+                                     WHERE customer.status = 'ENABLED'";
 
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
@@ -370,10 +371,10 @@ WHERE customer.status = 'ENABLED'";
     }
 
     /// <summary>
-    /// 取得子帳號
+    /// 取得廣告帳戶
     /// </summary>
     /// <param name="refreshToken"></param>
-    public List<SysClientPo> FetchAdsSubAccountApi(string? refreshToken)
+    public List<SysClientPo> FetchAdsAdvertiseAccount(string? refreshToken)
     {
         var result = new List<SysClientPo>();
         GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
@@ -456,10 +457,6 @@ WHERE customer.status = 'ENABLED'";
                     if (!customerIdsToChildAccounts.ContainsKey(managerCustomerId.Value))
                         customerIdsToChildAccounts.Add(managerCustomerId.Value, new List<CustomerClient>());
 
-                    if (customerClient.Id == 2040415562)
-                    {
-                        var s = 0;
-                    }
                     if (managerCustomerId.Value == 3255036910 && !customerClient.Manager)
                     {
                         if (customerClient.Level == 2)
@@ -487,6 +484,120 @@ WHERE customer.status = 'ENABLED'";
 
             var b = customerIdsToChildAccounts;
             var c = unprocessedCustomerIds;
+        }
+        return result;
+    }
+
+    /// <summary>
+    /// 取得子帳號
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public List<SysClientPo> FetchAdsSubAccountApi(string? refreshToken)
+    {
+        var result = new List<SysClientPo>();
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+        client.Config.LoginCustomerId = option.LoginCustomerId;
+
+        GoogleAdsServiceClient googleAdsServiceClient =
+                client.GetService(Services.V15.GoogleAdsService);
+
+        CustomerServiceClient customerServiceClient =
+                client.GetService(Services.V15.CustomerService);
+
+        // List of Customer IDs to handle.
+        List<long> seedCustomerIds = new List<long>();
+
+        string[] customerResourceNames = customerServiceClient.ListAccessibleCustomers();
+
+        foreach (string customerResourceName in customerResourceNames)
+        {
+            CustomerName customerName = CustomerName.Parse(customerResourceName);
+            seedCustomerIds.Add(long.Parse(customerName.CustomerId));
+        }
+
+        string query = @"SELECT
+                                    customer_client.client_customer,
+                                    customer_client.level,
+                                    customer_client.manager,
+                                    customer_client.descriptive_name,
+                                    customer_client.currency_code,
+                                    customer_client.time_zone,
+                                    customer_client.id
+                                FROM customer_client
+                                WHERE
+                                    customer_client.level <= 1 and customer_client.manager = true";
+
+        Dictionary<long, List<CustomerClient>> customerIdsToChildAccounts =
+                new Dictionary<long, List<CustomerClient>>();
+
+        long? managerCustomerId = 0;
+        int index = 0;
+        //這個Gmail帳號底下有幾個帳戶(權限控管可以用)
+        foreach (long seedCustomerId in seedCustomerIds)
+        {
+            index++;
+            Queue<long> unprocessedCustomerIds = new Queue<long>();
+            unprocessedCustomerIds.Enqueue(seedCustomerId);
+            CustomerClient rootCustomerClient = null;
+            //這隻帳號底下有幾個MCC(就是汎古客戶名稱)
+            while (unprocessedCustomerIds.Count > 0)
+            {
+                managerCustomerId = unprocessedCustomerIds.Dequeue();
+                PagedEnumerable<SearchGoogleAdsResponse, GoogleAdsRow> response =
+                    googleAdsServiceClient.Search(
+                        managerCustomerId.ToString(),
+                        query,
+                        pageSize: 40
+                    );
+                foreach (GoogleAdsRow googleAdsRow in response)
+                {
+                    CustomerClient customerClient = googleAdsRow.CustomerClient;
+
+                    if (customerClient.Level == 0)
+                    {
+                        if (rootCustomerClient == null)
+                        {
+                            rootCustomerClient = customerClient;
+                        }
+
+                        continue;
+                    }
+                    if (!customerIdsToChildAccounts.ContainsKey(managerCustomerId.Value))
+                        customerIdsToChildAccounts.Add(managerCustomerId.Value, new List<CustomerClient>());
+                    if (managerCustomerId.Value == 3255036910)
+                    {
+                        string temp = customerClient.ResourceName;
+                        temp = temp.Split('/')[3];
+                        result.Add(new SysClientPo
+                        {
+                            ClientId = temp,
+                            ClientNo = customerClient.Id,
+                            ClientName = customerClient.DescriptiveName
+                        });
+                    }
+                    customerIdsToChildAccounts[managerCustomerId.Value].Add(customerClient);
+
+                    if (customerClient.Manager)
+                        if (!customerIdsToChildAccounts.ContainsKey(customerClient.Id) &&
+                            customerClient.Level == 1)
+                            unprocessedCustomerIds.Enqueue(customerClient.Id);
+                }
+            }
+            var a = rootCustomerClient;
+            //for(var i=0;i< customerIdsToChildAccounts.Count;i++){
+
+            var b = customerIdsToChildAccounts;
+            var c = 0;
         }
         return result;
     }

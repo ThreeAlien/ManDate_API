@@ -51,6 +51,11 @@ public interface IGoogleAdsService
     public void FetchAdsAccountApi(string refreshToken);
 
     /// <summary>
+    /// 取得廣告帳戶 Api
+    /// </summary>
+    public List<SysClientPo> FetchAdsAdvertiseAccount(string? refreshToken);
+
+    /// <summary>
     /// 取得Ads子帳戶 Api
     /// </summary>
     public List<SysClientPo> FetchAdsSubAccountApi(string? refreshToken);
