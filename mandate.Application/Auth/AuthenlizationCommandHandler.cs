@@ -46,11 +46,13 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
             {
                 long CustomerID = googleAdsRow.Customer.Id;
                 string ColConAction = googleAdsRow.ConversionAction.Name;
+                long ActionID = googleAdsRow.ConversionAction.Id;
                 // 寫入DB SysAdsDataCampaignAction
                 SysAdsDataCampaignActionPo sysAdsDataCampaignActionPo = new()
                 {
                     CustomerID = CustomerID.ToString(),
-                    CampaignID = googleAdsRow.Campaign.Id.ToString(),
+                    ActionID = ActionID.ToString(),
+                    //CampaignID = googleAdsRow.Campaign.Id.ToString(),
                     ColConAction = ColConAction,
                 };
                 _context.SysAdsDataCampaignAction.Add(sysAdsDataCampaignActionPo);
