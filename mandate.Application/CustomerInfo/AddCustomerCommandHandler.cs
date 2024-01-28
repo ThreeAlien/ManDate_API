@@ -46,7 +46,7 @@ namespace mandate.Application.CustomerInfo
             response = new()
             {
                 // 執行GoogleAds Api範例
-                Data = _googleAdsService.FetchAdsSubAccountApi(refreshToken)
+                Data = _googleAdsService.FetchAdsAdvertiseAccount(refreshToken)
             };
 
 

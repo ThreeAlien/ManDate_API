@@ -33,7 +33,7 @@ public class InsertSysAdsDataCampaignActionCommandHandler : IRequestHandler<Inse
         InsertSysAdsDataCampaignActionResponse response = new();
         string? refreshToken = await _googleAdsService.GenerateRefreshToken();
         // 1.取得子帳戶
-        List<Business.Service.SysClientPo> subAccountList = _googleAdsService.FetchAdsSubAccountApi(refreshToken);
+        List<Business.Service.SysClientPo> subAccountList = _googleAdsService.FetchAdsAdvertiseAccount(refreshToken);
 
         foreach (Business.Service.SysClientPo subAccount in subAccountList)
         {
