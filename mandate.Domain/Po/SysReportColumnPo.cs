@@ -9,46 +9,83 @@ namespace mandate.Domain.Po;
 [Table("SysReportColumn")]
 public class SysReportColumnPo
 {
-
-    public bool? ColAccount { get; set; } 
-    public bool? ColCutomerID { get; set; } 
-    public bool? ColCampaignID { get; set; } 
-    public bool? ColAdGroupID { get; set; } 
-    public bool? ColAdFinalURL { get; set; } 
-    public bool? ColHeadline { get; set; } 
-    public bool? ColShortHeadLine { get; set; } 
-    public bool? ColLongHeadLine { get; set; } 
-    public bool? ColHeadLine_1 { get; set; } 
-    public bool? ColHeadLine_2 { get; set; } 
-    public bool? ColDirections { get; set; } 
-    public bool? ColDirections_1 { get; set; } 
-    public bool? ColDirections_2 { get; set; } 
-    public bool? ColAdName { get; set; } 
-    public bool? ColAdPath_1 { get; set; } 
-    public bool? ColAdPath_2 { get; set; } 
-    public bool? ColSrchKeyWord { get; set; } 
-    public bool? ColSwitchTarget { get; set; } 
-    public bool? ColDateTime { get; set; } 
-    public bool? ColWeek { get; set; } 
-    public bool? ColSeason { get; set; } 
-    public bool? ColMonth { get; set; } 
-    public bool? ColIncome { get; set; } 
-    public bool? ColTransTime { get; set; } 
-    public bool? ColTransCostOnce { get; set; } 
-    public bool? ColTrans { get; set; } 
-    public bool? ColTransRate { get; set; } 
-    public bool? ColClick { get; set; } 
-    public bool? ColImpression { get; set; } 
-    public bool? ColCTR { get; set; } 
-    public bool? ColCPC { get; set; } 
-    public bool? ColCost { get; set; } 
-    public string ContentId { get; set; } = null!;
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string ColumnId { get; set; } = null!;
-    public bool? ColAge { get; set; } 
-    public bool? ColSex { get; set; } 
-    public bool? ColRegion { get; set; } 
+    public int ReportNo { get; set; }
 
-   
+    public bool? IsColAccount { get; set; }
+
+    public bool? IsColCutomerID { get; set; }
+
+    public bool? IsColCampaignID { get; set; }
+
+    public bool? IsColAdGroupID { get; set; }
+
+    public bool? IsColAdFinalURL { get; set; }
+
+    public bool? IsColHeadline { get; set; }
+
+    public bool? IsColShortHeadLine { get; set; }
+
+    public bool? IsColLongHeadLine { get; set; }
+
+    public bool? IsColHeadLine_1 { get; set; }
+
+    public bool? IsColHeadLine_2 { get; set; }
+
+    public bool? IsColDirections { get; set; }
+
+    public bool? IsColDirections_1 { get; set; }
+
+    public bool? IsColDirections_2 { get; set; }
+
+    public bool? IsColAdName { get; set; }
+
+    public bool? IsColAdPath_1 { get; set; }
+
+    public bool? IsColAdPath_2 { get; set; }
+
+    public bool? IsColSrchKeyWord { get; set; }
+
+    public bool? IsColSwitchTarget { get; set; }
+
+    public bool? IsColDateTime { get; set; }
+
+    public bool? IsColWeek { get; set; }
+
+    public bool? IsColSeason { get; set; }
+
+    public bool? IsColMonth { get; set; }
+
+    public bool? IsColIncome { get; set; }
+
+    public bool? IsColTransTime { get; set; }
+
+    public bool? IsColTransCostOnce { get; set; }
+
+    public bool? IsColTrans { get; set; }
+
+    public bool? IsColTransRate { get; set; }
+
+    public bool? IsColClick { get; set; }
+
+    public bool? IsColImpression { get; set; }
+
+    public bool? IsColCTR { get; set; }
+
+    public bool? IsColCPC { get; set; }
+
+    public bool? IsColCost { get; set; }
+
+    public string ContentId { get; set; } = null!;
+
+    public string ColumnId { get; set; } = null!;
+
+    public bool? IsColAge { get; set; }
+
+    public bool? IsColSex { get; set; }
+
+    public bool? IsColRegion { get; set; }
+
+    public string? ContentSort { get; set; } = null!;
 }
