@@ -17,6 +17,8 @@ public class GetReportDefaultFieldsResponse : BaseResponse<ReportDefaultFields>
 /// </summary>
 public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 {
+    public string ContentId { get; set; } = null!;
+
     public string ColumnId { get; set; } = null!;
 
     public bool? IsColAccount { get; set; }
@@ -82,8 +84,6 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
     public bool? IsColCPC { get; set; }
 
     public bool? IsColCost { get; set; }
-
-    public string ContentId { get; set; } = null!;
 
     public bool? IsColAge { get; set; }
 

@@ -36,18 +36,22 @@ public class GetReportDefaultFieldsCommandHandler : IRequestHandler<GetReportDef
         GetReportDefaultFieldsResponse response = new();
         try
         {
-            List<SysReportColumnPo> respData = await _context.SysReportColumn.ToListAsync();
+            List<SysReportColumnPo> sysReportColumnData = await _context.SysReportColumn.ToListAsync();
+            List<SysReportContentPo> sysReportContentData = await _context.SysReportContent.ToListAsync();
+            // Join Table
+            List<SysReportColumnPo> result = sysReportColumnData
+            .Join(sysReportContentData, column => column.ContentId, content => content.ContentID, (content, column) => content)
+            .ToList();
 
             response = new()
             {
-                Data = _mapper.Map<List<ReportDefaultFields>>(respData)
+                Data = _mapper.Map<List<ReportDefaultFields>>(result)
             };
         }
         catch (Exception ex)
         {
             throw ex;
         }
-
 
         return response;
     }
