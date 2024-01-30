@@ -60,8 +60,7 @@ namespace mandate.Application.ReportInfo
                     {
                         objUpdateColumnData.IsColAccount = request.ColumnData.ColAccount;
                         objUpdateColumnData.IsColCutomerID = request.ColumnData.ColCutomerID;
-                        objUpdateColumnData.IsColCampaignID = request.ColumnData.ColCampaignID;
-                        objUpdateColumnData.IsColAdGroupID = request.ColumnData.ColAdGroupID;
+                        //objUpdateColumnData.IsColCampaignID = request.ColumnData.ColCampaignID;                        
                         objUpdateColumnData.IsColAdFinalURL = request.ColumnData.ColAdFinalURL;
                         objUpdateColumnData.IsColHeadline = request.ColumnData.ColHeadline;
                         objUpdateColumnData.IsColShortHeadLine = request.ColumnData.ColShortHeadLine;

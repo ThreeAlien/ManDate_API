@@ -17,9 +17,9 @@ public class SysReportColumnPo
 
     public bool? IsColCutomerID { get; set; }
 
-    public bool? IsColCampaignID { get; set; }
+    //public bool? IsColCampaignID { get; set; }
 
-    public bool? IsColAdGroupID { get; set; }
+    //public bool? IsColAdGroupID { get; set; }
 
     public bool? IsColAdFinalURL { get; set; }
 

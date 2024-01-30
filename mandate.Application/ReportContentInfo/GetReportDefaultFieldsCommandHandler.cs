@@ -36,13 +36,46 @@ public class GetReportDefaultFieldsCommandHandler : IRequestHandler<GetReportDef
         GetReportDefaultFieldsResponse response = new();
         try
         {
-            List<SysReportColumnPo> sysReportColumnData = await _context.SysReportColumn.ToListAsync();
-            List<SysReportContentPo> sysReportContentData = await _context.SysReportContent.ToListAsync();
-            // Join Table
-            List<SysReportColumnPo> result = sysReportColumnData
-            .Join(sysReportContentData, column => column.ContentId, content => content.ContentID, (content, column) => content)
-            .ToList();
-
+            IQueryable<SysReportColumnPo> qry = _context.SysReportColumn
+                                                .Join(_context.SysReportContent, column => column.ContentId, content => content.ContentID, (column, content) => column)
+                                                .AsQueryable();
+            List<SysReportColumnPo> result = await qry
+                                            .Select(x => new SysReportColumnPo
+                                            {
+                                                ContentId = x.ContentId,
+                                                IsColAccount = x.IsColAccount,
+                                                IsColCutomerID = x.IsColCutomerID,
+                                                IsColAdFinalURL = x.IsColAdFinalURL,
+                                                IsColHeadline = x.IsColHeadline,
+                                                IsColShortHeadLine = x.IsColHeadline,
+                                                IsColHeadLine_1 = x.IsColHeadLine_1,
+                                                IsColHeadLine_2 = x.IsColHeadLine_2,
+                                                IsColDirections = x.IsColDirections,
+                                                IsColDirections_1 = x.IsColDirections_1,
+                                                IsColDirections_2 = x.IsColDirections_2,
+                                                IsColAdName = x.IsColAdName,
+                                                IsColAdPath_1 = x.IsColAdPath_1,
+                                                IsColAdPath_2 = x.IsColAdPath_2,
+                                                IsColSrchKeyWord = x.IsColSrchKeyWord,
+                                                IsColSwitchTarget = x.IsColSwitchTarget,
+                                                IsColDateTime = x.IsColDateTime,
+                                                IsColWeek = x.IsColWeek,
+                                                IsColSeason = x.IsColSeason,
+                                                IsColMonth = x.IsColMonth,
+                                                IsColIncome = x.IsColIncome,
+                                                IsColTransTime = x.IsColTransTime,
+                                                IsColTransCostOnce = x.IsColTransCostOnce,
+                                                IsColTrans = x.IsColTrans,
+                                                IsColTransRate = x.IsColTransRate,
+                                                IsColClick = x.IsColClick,
+                                                IsColImpression = x.IsColImpression,
+                                                IsColCTR = x.IsColCTR,
+                                                IsColCPC = x.IsColCPC,
+                                                IsColCost = x.IsColCost,
+                                                IsColAge = x.IsColAge,
+                                                IsColSex = x.IsColSex,
+                                                IsColRegion = x.IsColRegion,
+                                            }).ToListAsync();           
             response = new()
             {
                 Data = _mapper.Map<List<ReportDefaultFields>>(result)
