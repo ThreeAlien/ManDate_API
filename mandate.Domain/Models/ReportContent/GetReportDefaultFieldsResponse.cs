@@ -25,9 +25,9 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 
     public bool? IsColCutomerID { get; set; }
 
-    public bool? IsColCampaignID { get; set; }
+    public bool? IsColCampaignName { get; set; }
 
-    public bool? IsColAdGroupID { get; set; }
+    public bool? IsColAdGroupName { get; set; }
 
     public bool? IsColAdFinalURL { get; set; }
 
@@ -99,8 +99,8 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
             .ForMember(d => d.ColumnId, map => map.MapFrom(s => s.ColumnId))
             .ForMember(d => d.IsColAccount, map => map.MapFrom(s => s.IsColAccount))
             .ForMember(d => d.IsColCutomerID, map => map.MapFrom(s => s.IsColCutomerID))
-            //.ForMember(d => d.IsColCampaignID, map => map.MapFrom(s => s.IsColCampaignID))
-            //.ForMember(d => d.IsColAdGroupID, map => map.MapFrom(s => s.IsColAdGroupID))
+            .ForMember(d => d.IsColCampaignName, map => map.MapFrom(s => s.IsColCampaignName))
+            .ForMember(d => d.IsColAdGroupName, map => map.MapFrom(s => s.IsColAdGroupName))
             .ForMember(d => d.IsColAdFinalURL, map => map.MapFrom(s => s.IsColAdFinalURL))
             .ForMember(d => d.IsColHeadline, map => map.MapFrom(s => s.IsColHeadline))
             .ForMember(d => d.IsColShortHeadLine, map => map.MapFrom(s => s.IsColShortHeadLine))

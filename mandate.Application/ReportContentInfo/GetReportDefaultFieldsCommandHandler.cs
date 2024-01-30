@@ -44,6 +44,9 @@ public class GetReportDefaultFieldsCommandHandler : IRequestHandler<GetReportDef
                                             {
                                                 ContentId = x.ContentId,
                                                 IsColAccount = x.IsColAccount,
+                                                IsColAdGroupName = x.IsColAdGroupName,
+                                                IsColCampaignName = x.IsColCampaignName,
+                                                IsColLongHeadLine = x.IsColLongHeadLine,
                                                 IsColCutomerID = x.IsColCutomerID,
                                                 IsColAdFinalURL = x.IsColAdFinalURL,
                                                 IsColHeadline = x.IsColHeadline,
