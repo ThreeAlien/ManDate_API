@@ -11,8 +11,8 @@ public class ReportColumnVo : IMapTo<SysReportColumnPo>
 {
     public bool? ColAccount { get; set; }
     public bool? ColCutomerID { get; set; }
-    public bool? ColCampaignID { get; set; }
-    public bool? ColAdGroupID { get; set; }
+    public bool? ColCampaignName { get; set; }
+    public bool? ColAdGroupName { get; set; }
     public bool? ColAdFinalURL { get; set; }
     public bool? ColHeadline { get; set; }
     public bool? ColShortHeadLine { get; set; }
@@ -53,7 +53,8 @@ public class ReportColumnVo : IMapTo<SysReportColumnPo>
         profile.CreateMap<ReportColumnVo, SysReportColumnPo>()
             .ForMember(d => d.IsColAccount, map => map.MapFrom(s => s.ColAccount))
             .ForMember(d => d.IsColCutomerID, map => map.MapFrom(s => s.ColCutomerID))
-            //.ForMember(d => d.IsColCampaignID, map => map.MapFrom(s => s.ColCampaignID))            
+            .ForMember(d => d.IsColAdGroupName, map => map.MapFrom(s => s.ColAdGroupName))
+            .ForMember(d => d.IsColCampaignName, map => map.MapFrom(s => s.ColCampaignName))
             .ForMember(d => d.IsColAdFinalURL, map => map.MapFrom(s => s.ColAdFinalURL))
             .ForMember(d => d.IsColHeadline, map => map.MapFrom(s => s.ColHeadline))
             .ForMember(d => d.IsColShortHeadLine, map => map.MapFrom(s => s.ColShortHeadLine))
