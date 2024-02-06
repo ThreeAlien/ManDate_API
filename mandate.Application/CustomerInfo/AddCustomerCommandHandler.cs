@@ -41,12 +41,31 @@ namespace mandate.Application.CustomerInfo
         {
             
             string? refreshToken = await _googleAdsService.GenerateRefreshToken();
+            List<SysClientPo> subAccountList = _googleAdsService.FetchAdsSubAccountApi(refreshToken);
 
+            foreach (SysClientPo item in subAccountList)
+            {
+                try
+                {
+                    Domain.Po.SysClientPo sysClientPo = new()
+                    {
+                        ClientId = item.ClientId,
+                        ClientName = item.ClientName,
+                    };
+                    _context.SysClient.Add(sysClientPo);
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+
+            }
             AddCustomerResponse response = new();
             response = new()
             {
                 // 執行GoogleAds Api範例
-                Data = _googleAdsService.FetchAdsAdvertiseAccount(refreshToken)
+                Data = null
             };
 
 
