@@ -36,7 +36,9 @@ namespace mandate.Application.ReportContentInfo
             GetReportContentResponse response = new();
             try
             {
-                List<SysReportContentPo> respData = await _context.SysReportContent.Where(content => content.ContentID == request.ContentID).ToListAsync();
+                List<SysReportContentPo> respData = await _context.SysReportContent
+                    .Where(x => !string.IsNullOrEmpty(request.ContentID)? x.ContentID == request.ContentID:true)
+                    .ToListAsync();
 
                 response = new()
                 {
