@@ -1,4 +1,5 @@
-﻿using mandate.Application.Auth;
+﻿using mandate.Application.AdsData;
+using mandate.Application.Auth;
 using mandate.Application.CustomerInfo;
 using mandate.Application.InsertAdsData;
 using mandate.Application.ReportContentInfo;
@@ -37,6 +38,7 @@ public static class ApCommandExtension
 
         service.AddScoped<IRequestHandler<GetSubClientRequest, GetSubClientResponse>, GetSubClientCommandHandler>();
         service.AddScoped<IRequestHandler<AddCustomerRequest, AddCustomerResponse>, AddCustomerCommandHandler>();
+        service.AddScoped<IRequestHandler<GetSysAdsDataRequest, GetSysAdsDataResponse>, GetSysAdsDataCommandHandler>();
         #region Ads 資料導入
         service.AddScoped<IRequestHandler<InsertSysAdsDataCampaignActionRequest, InsertSysAdsDataCampaignActionResponse>, InsertSysAdsDataCampaignActionCommandHandler>();
         service.AddScoped<IRequestHandler<InsertSysAdsDataAdGroupCriterionRequest, InsertSysAdsDataAdGroupCriterionResponse>, InsertSysAdsDataAdGroupCriterionCommandHandler>();
