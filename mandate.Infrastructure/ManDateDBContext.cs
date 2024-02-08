@@ -16,13 +16,20 @@ public class ManDateDBContext : DbContext
     }
 
     /// <summary>
+    ///Ads數據表(SysAdsData)
+    /// </summary>
+    public DbSet<SysAdsDataPo> SysAdsData { get; set; }
+
+    /// <summary>
     ///客戶基本資料表(SysClient)
     /// </summary>
     public DbSet<SysClientPo> SysClient { get; set; }
+
     /// <summary>
     ///報表內容表(SysReportContent)
     /// </summary>
     public DbSet<SysReportContentPo> SysReportContent { get; set; }
+
     /// <summary>
     ///報表(SysReportContent)
     /// </summary>
@@ -72,6 +79,8 @@ public class ManDateDBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<SysAdsDataPo>().HasNoKey();
+
         modelBuilder.Entity<SysClientPo>().HasKey(c => c.ClientId);
 
         modelBuilder.Entity<SysReportContentPo>().HasKey(c => c.ContentID);

@@ -12,14 +12,14 @@ public class SysReportPo
     /// <summary>
     /// 報表內容流水編號
     /// </summary>
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 
-    //public int ReportNo { get; set; }
+    public int ReportNo { get; set; }
 
     /// <summary>
     /// 報表ID
     /// </summary>
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public string ReportID { get; set; } = null!;
 
     /// <summary>
