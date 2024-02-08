@@ -19,7 +19,7 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 {
     public string ContentId { get; set; } = null!;
 
-    public string ColumnId { get; set; } = null!;
+    public string ContentName { get; set; } = null!;
 
     public bool? IsColAccount { get; set; }
 
@@ -91,12 +91,11 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 
     public bool? IsColRegion { get; set; }
 
-    public string? ContentSort { get; set; } = null!;
-
     void IMapFrom<SysReportColumnPo>.Mapping(Profile profile)
     {
         profile.CreateMap<SysReportColumnPo, ReportDefaultFields>()
-            .ForMember(d => d.ColumnId, map => map.MapFrom(s => s.ColumnId))
+            .ForMember(d => d.ContentId, map => map.MapFrom(s => s.ContentId))
+            .ForMember(d => d.ContentName, map => map.Ignore())
             .ForMember(d => d.IsColAccount, map => map.MapFrom(s => s.IsColAccount))
             .ForMember(d => d.IsColCutomerID, map => map.MapFrom(s => s.IsColCutomerID))
             .ForMember(d => d.IsColCampaignName, map => map.MapFrom(s => s.IsColCampaignName))
@@ -130,7 +129,6 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
             .ForMember(d => d.ContentId, map => map.MapFrom(s => s.ContentId))
             .ForMember(d => d.IsColAge, map => map.MapFrom(s => s.IsColAge))
             .ForMember(d => d.IsColSex, map => map.MapFrom(s => s.IsColSex))
-            .ForMember(d => d.IsColRegion, map => map.MapFrom(s => s.IsColRegion))
-            .ForMember(d => d.ContentSort, map => map.MapFrom(s => s.ContentSort));
+            .ForMember(d => d.IsColRegion, map => map.MapFrom(s => s.IsColRegion));
     }
 }
