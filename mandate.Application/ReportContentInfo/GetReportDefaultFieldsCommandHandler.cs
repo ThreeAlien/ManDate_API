@@ -36,49 +36,50 @@ public class GetReportDefaultFieldsCommandHandler : IRequestHandler<GetReportDef
         GetReportDefaultFieldsResponse response = new();
         try
         {
-            IQueryable<SysReportColumnPo> qry = _context.SysReportColumn
-                                                .Join(_context.SysReportContent, column => column.ContentId, content => content.ContentID, (column, content) => column)
-                                                .AsQueryable();
-            List<SysReportColumnPo> result = await qry
-                                            .Select(x => new SysReportColumnPo
-                                            {
-                                                ContentId = x.ContentId,
-                                                IsColAccount = x.IsColAccount,
-                                                IsColAdGroupName = x.IsColAdGroupName,
-                                                IsColCampaignName = x.IsColCampaignName,
-                                                IsColLongHeadLine = x.IsColLongHeadLine,
-                                                IsColCutomerID = x.IsColCutomerID,
-                                                IsColAdFinalURL = x.IsColAdFinalURL,
-                                                IsColHeadline = x.IsColHeadline,
-                                                IsColShortHeadLine = x.IsColHeadline,
-                                                IsColHeadLine_1 = x.IsColHeadLine_1,
-                                                IsColHeadLine_2 = x.IsColHeadLine_2,
-                                                IsColDirections = x.IsColDirections,
-                                                IsColDirections_1 = x.IsColDirections_1,
-                                                IsColDirections_2 = x.IsColDirections_2,
-                                                IsColAdName = x.IsColAdName,
-                                                IsColAdPath_1 = x.IsColAdPath_1,
-                                                IsColAdPath_2 = x.IsColAdPath_2,
-                                                IsColSrchKeyWord = x.IsColSrchKeyWord,
-                                                IsColSwitchTarget = x.IsColSwitchTarget,
-                                                IsColDateTime = x.IsColDateTime,
-                                                IsColWeek = x.IsColWeek,
-                                                IsColSeason = x.IsColSeason,
-                                                IsColMonth = x.IsColMonth,
-                                                IsColIncome = x.IsColIncome,
-                                                IsColTransTime = x.IsColTransTime,
-                                                IsColTransCostOnce = x.IsColTransCostOnce,
-                                                IsColTrans = x.IsColTrans,
-                                                IsColTransRate = x.IsColTransRate,
-                                                IsColClick = x.IsColClick,
-                                                IsColImpression = x.IsColImpression,
-                                                IsColCTR = x.IsColCTR,
-                                                IsColCPC = x.IsColCPC,
-                                                IsColCost = x.IsColCost,
-                                                IsColAge = x.IsColAge,
-                                                IsColSex = x.IsColSex,
-                                                IsColRegion = x.IsColRegion,
-                                            }).ToListAsync();           
+            List<ReportDefaultFields> result = _context.SysReportColumn
+                                                .Join(_context.SysReportContent, column => column.ContentId, content => content.ContentID, (column, content) => new { column, content.ContentName }).Select(x => new ReportDefaultFields
+                                                {
+                                                    ContentId = x.column.ContentId,
+                                                    ContentName = x.ContentName,
+                                                    IsColAccount = x.column.IsColAccount,
+                                                    IsColAdGroupName = x.column.IsColAdGroupName,
+                                                    IsColCampaignName = x.column.IsColCampaignName,
+                                                    IsColLongHeadLine = x.column.IsColLongHeadLine,
+                                                    IsColCutomerID = x.column.IsColCutomerID,
+                                                    IsColAdFinalURL = x.column.IsColAdFinalURL,
+                                                    IsColHeadline = x.column.IsColHeadline,
+                                                    IsColShortHeadLine = x.column.IsColHeadline,
+                                                    IsColHeadLine_1 = x.column.IsColHeadLine_1,
+                                                    IsColHeadLine_2 = x.column.IsColHeadLine_2,
+                                                    IsColDirections = x.column.IsColDirections,
+                                                    IsColDirections_1 = x.column.IsColDirections_1,
+                                                    IsColDirections_2 = x.column.IsColDirections_2,
+                                                    IsColAdName = x.column.IsColAdName,
+                                                    IsColAdPath_1 = x.column.IsColAdPath_1,
+                                                    IsColAdPath_2 = x.column.IsColAdPath_2,
+                                                    IsColSrchKeyWord = x.column.IsColSrchKeyWord,
+                                                    IsColSwitchTarget = x.column.IsColSwitchTarget,
+                                                    IsColDateTime = x.column.IsColDateTime,
+                                                    IsColWeek = x.column.IsColWeek,
+                                                    IsColSeason = x.column.IsColSeason,
+                                                    IsColMonth = x.column.IsColMonth,
+                                                    IsColIncome = x.column.IsColIncome,
+                                                    IsColTransTime = x.column.IsColTransTime,
+                                                    IsColTransCostOnce = x.column.IsColTransCostOnce,
+                                                    IsColTrans = x.column.IsColTrans,
+                                                    IsColTransRate = x.column.IsColTransRate,
+                                                    IsColClick = x.column.IsColClick,
+                                                    IsColImpression = x.column.IsColImpression,
+                                                    IsColCTR = x.column.IsColCTR,
+                                                    IsColCPC = x.column.IsColCPC,
+                                                    IsColCost = x.column.IsColCost,
+                                                    IsColAge = x.column.IsColAge,
+                                                    IsColSex = x.column.IsColSex,
+                                                    IsColRegion = x.column.IsColRegion,
+                                                }).ToList();
+
+
+
             response = new()
             {
                 Data = _mapper.Map<List<ReportDefaultFields>>(result)
