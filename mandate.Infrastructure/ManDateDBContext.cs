@@ -70,6 +70,11 @@ public class ManDateDBContext : DbContext
     ///報表(SysAdsDataCriterionCon)
     /// </summary>
     public DbSet<SysAdsDataCampaignConPo> SysAdsDataCampaignCon { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataCriterionLocation)
+    /// </summary>
+    public DbSet<SysAdsDataCampaignLocationPo> SysAdsDataCampaignLocation { get; set; }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -97,6 +102,7 @@ public class ManDateDBContext : DbContext
         modelBuilder.Entity<SysAdsDataCampaignActionPo>().HasKey(c => new { c.CustomerID, c.ActionID });
         modelBuilder.Entity<SysAdsDataAdGroupCriterionPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
         modelBuilder.Entity<SysAdsDataCampaignConPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataCampaignLocationPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
         #endregion
 
 

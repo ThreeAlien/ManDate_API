@@ -25,6 +25,12 @@ public class InsertAdsDataController : BaseApiController
     public Task<InsertSysAdsDataCampaignConResponse> InsertSysAdsDataCampaignCon() => Mediator!.Send(new InsertSysAdsDataCampaignConRequest());
 
     /// <summary>
+    /// InsertSysAdsDataCampaignLocation
+    /// </summary>
+    [HttpPost]
+    public Task<InsertSysAdsDataCampaignLocationResponse> InsertSysAdsDataCampaignLocation() => Mediator!.Send(new InsertSysAdsDataCampaignLocationRequest());
+
+    /// <summary>
     /// InsertSysAdsDataCampaign
     /// </summary>
     [HttpPost]

@@ -43,6 +43,12 @@ public interface IGoogleAdsService
     /// <param name="refreshToken"></param>
     public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaignCon(string refreshToken, string custId);
 
+    /// <summary>
+    /// 取得AdsDataCampaignLocation報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaignLocation(string refreshToken, string custId);
+
 
     /// <summary>
     /// 取得Ads帳戶 Api

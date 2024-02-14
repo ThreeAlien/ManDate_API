@@ -24,12 +24,12 @@ public class SysAdsDataPo
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColCampaignID { get; set; }
+    public string? ColCampaignName { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColAdGroupID { get; set; }
+    public string? ColAdGroupName { get; set; }
 
     /// <summary>
     /// 待註解
@@ -41,15 +41,6 @@ public class SysAdsDataPo
     /// </summary>
     public string? ColHeadline { get; set; }
 
-    /// <summary>
-    /// 待註解
-    /// </summary>
-    public string? ColShortHeadLine { get; set; }
-
-    /// <summary>
-    /// 待註解
-    /// </summary>
-    public string? ColLongHeadLine { get; set; }
 
     /// <summary>
     /// 待註解
@@ -66,15 +57,7 @@ public class SysAdsDataPo
     /// </summary>
     public string? ColAdName { get; set; }
 
-    /// <summary>
-    /// 待註解
-    /// </summary>
-    public string? ColAdPath_1 { get; set; }
 
-    /// <summary>
-    /// 待註解
-    /// </summary>
-    public string? ColAdPath_2 { get; set; }
 
     /// <summary>
     /// 待註解
@@ -84,7 +67,7 @@ public class SysAdsDataPo
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColSwitchTarget { get; set; }
+    public string? ColConGoal { get; set; }
 
     /// <summary>
     /// 待註解
@@ -109,37 +92,37 @@ public class SysAdsDataPo
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColIncome { get; set; }
+    public string? ColConValue { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColTransTime { get; set; }
+    public string? ColConByDate { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColTransCostOnce { get; set; }
+    public string? ColConPerCost { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColTrans { get; set; }
+    public string? ColCon { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColTransRate { get; set; }
+    public string? ColConRate { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColClick { get; set; }
+    public string? ConClicks { get; set; }
 
     /// <summary>
     /// 待註解
     /// </summary>
-    public string? ColImpression { get; set; }
+    public string? ColImpressions { get; set; }
 
     /// <summary>
     /// 待註解
@@ -155,4 +138,29 @@ public class SysAdsDataPo
     /// 待註解
     /// </summary>
     public string? ColCost { get; set; }
+
+    /// <summary>
+    /// 待註解
+    /// </summary>
+    public string? ColAge { get; set; }
+
+    /// <summary>
+    /// 待註解
+    /// </summary>
+    public string? ColGender { get; set; }
+
+    /// <summary>
+    /// 待註解
+    /// </summary>
+    public string? ColConstant { get; set; }
+
+    /// <summary>
+    /// 待註解
+    /// </summary>
+    public string? ColConAction { get; set; }
+
+    /// <summary>
+    /// 待註解
+    /// </summary>
+    public string? ColCPA { get; set; }
 }
