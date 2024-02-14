@@ -7,19 +7,19 @@ namespace mandate.Domain.Po;
 public class SysAdsDataCampaignLocationPo
 {
     /// <summary>
-    /// 待註解
+    /// 客戶ID
     /// </summary>
     [Key]
     public string? CustomerID { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 廣告活動ID
     /// </summary>
     [Key]
     public string? CampaignID { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 地區
     /// </summary>
     public string? ColConstant { get; set; }
 
