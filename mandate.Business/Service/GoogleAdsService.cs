@@ -328,6 +328,69 @@ WHERE customer.status = 'ENABLED'";
     }
 
     /// <summary>
+    /// 取得AdsDataCampaignCon報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaignLocation(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        string query = @"SELECT campaign_criterion.location.geo_target_constant
+                                , campaign.name,campaign.id
+                                , customer.id 
+                        FROM location_view ";
+
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, query,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    var test = resp.Results;
+                    foreach (GoogleAdsRow googleAdsRow in resp.Results)
+                    {
+                        var properties = googleAdsRow.GetType().GetProperties();
+                        foreach (var property in properties)
+                        {
+                            var value = property.GetValue(googleAdsRow);
+                            Console.WriteLine("{0}: {1}",
+                                property.Name, value != null ? value.ToString() : "null");
+                        }
+                        Console.WriteLine("-----------------------------------------------------");
+                    }
+
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
+    }
+
+
+    /// <summary>
     /// 取得Ads帳戶(權限管理用) Api
     /// </summary>
     /// <param name="refreshToken"></param>
@@ -417,7 +480,9 @@ WHERE customer.status = 'ENABLED'";
                             customer_client.id
                         FROM customer_client
                         WHERE
-                            customer_client.level <= 2";
+                            customer_client.level <= 2
+                        AND customer.status = 'ENABLED'
+                        AND customer_client.status = 'ENABLED'";
 
         Dictionary<long, List<CustomerClient>> customerIdsToChildAccounts =
                 new Dictionary<long, List<CustomerClient>>();
