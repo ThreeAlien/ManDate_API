@@ -93,8 +93,7 @@ public class GoogleAdsService : IGoogleAdsService
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
-        string query = @"SELECT campaign.id, campaign.name, metrics.conversions, metrics.conversions_from_interactions_rate, metrics.cost_per_conversion, metrics.conversions_by_conversion_date, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, metrics.average_target_cpa_micros, metrics.conversions_value, metrics.all_conversions_value, customer.id, customer.resource_name, customer.status FROM campaign
-WHERE customer.status = 'ENABLED'";
+        string query = @"SELECT campaign.id, campaign.name, metrics.conversions, metrics.conversions_from_interactions_rate, metrics.cost_per_conversion, metrics.conversions_by_conversion_date, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, metrics.average_target_cpa_micros, metrics.conversions_value, metrics.all_conversions_value, customer.id, customer.resource_name, customer.status, campaign.end_date, campaign.start_date FROM campaign WHERE customer.status = 'ENABLED'";
 
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
@@ -103,6 +102,19 @@ WHERE customer.status = 'ENABLED'";
             googleAdsService.SearchStream(custId, query,
                 delegate (SearchGoogleAdsStreamResponse resp)
                 {
+                    var test = resp.Results;
+                    foreach (GoogleAdsRow googleAdsRow in resp.Results)
+                    {
+                        var properties = googleAdsRow.GetType().GetProperties();
+                        foreach (var property in properties)
+                        {
+                            var value = property.GetValue(googleAdsRow);
+                            Console.WriteLine("{0}: {1}",
+                                property.Name, value != null ? value.ToString() : "null");
+                        }
+                        Console.WriteLine("-----------------------------------------------------");
+                    }
+
                     results = resp.Results;
                 }
             );
