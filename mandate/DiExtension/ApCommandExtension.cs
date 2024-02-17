@@ -39,6 +39,7 @@ public static class ApCommandExtension
         service.AddScoped<IRequestHandler<GetSubClientRequest, GetSubClientResponse>, GetSubClientCommandHandler>();
         service.AddScoped<IRequestHandler<AddCustomerRequest, AddCustomerResponse>, AddCustomerCommandHandler>();
         service.AddScoped<IRequestHandler<GetSysAdsDataRequest, GetSysAdsDataResponse>, GetSysAdsDataCommandHandler>();
+        service.AddScoped<IRequestHandler<GetAdsAccountRequest, GetAdsAccountResponse>, GetAdsAccountCommandHandler>();
         #region Ads 資料導入
         service.AddScoped<IRequestHandler<InsertSysAdsDataCampaignActionRequest, InsertSysAdsDataCampaignActionResponse>, InsertSysAdsDataCampaignActionCommandHandler>();
         service.AddScoped<IRequestHandler<InsertSysAdsDataAdGroupCriterionRequest, InsertSysAdsDataAdGroupCriterionResponse>, InsertSysAdsDataAdGroupCriterionCommandHandler>();
