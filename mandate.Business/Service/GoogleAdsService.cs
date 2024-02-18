@@ -394,7 +394,7 @@ WHERE customer.status = 'ENABLED'";
     /// 取得Ads帳戶(權限管理用) Api
     /// </summary>
     /// <param name="refreshToken"></param>
-    public void FetchAdsAccountApi(string refreshToken)
+    public string[]? FetchAdsAccountApi(string refreshToken)
     {
         GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
         GoogleAdsConfig config = new GoogleAdsConfig()
@@ -413,15 +413,15 @@ WHERE customer.status = 'ENABLED'";
 
         try
         {
-            // Retrieve the list of customer resources.
-            string[] customerResourceNames = customerService.ListAccessibleCustomers();
-
-            // Display the result.
-            foreach (string customerResourceName in customerResourceNames)
+            string[]? customerResourceNames = customerService.ListAccessibleCustomers();
+            string[]? filterDatas = new string[customerResourceNames.Length];
+            for (int i = 0; i < customerResourceNames.Length; i++)
             {
-                Console.WriteLine(
-                    $"Found customer with resource name = '{customerResourceName}'.");
+                string[] parts = customerResourceNames[i].Split('/');
+                filterDatas[i] = parts[1];
             }
+
+            return filterDatas;
         }
         catch (GoogleAdsException e)
         {

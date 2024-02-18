@@ -11,4 +11,10 @@ public class AdsDataController : BaseApiController
     /// </summary>
     [HttpPost]
     public Task<GetSysAdsDataResponse> GetSysAdsData(GetSysAdsDataRequest request) => Mediator!.Send(request);
+
+    /// <summary>
+    /// 取得Ads帳戶(權限管理用)
+    /// </summary>
+    [HttpPost]
+    public Task<GetAdsAccountResponse> GetAdsAccount(GetAdsAccountRequest request) => Mediator!.Send(request);
 }
