@@ -163,4 +163,14 @@ public class SysAdsDataPo
     /// CPA
     /// </summary>
     public string? ColCPA { get; set; }
+
+    /// <summary>
+    ///  廣告開始時間
+    /// </summary>
+    public string? ColStartDate { get; set; }
+
+    /// <summary>
+    /// 廣告結束時間
+    /// </summary>
+    public string? ColEndDate { get; set; }
 }

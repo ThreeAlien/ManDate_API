@@ -56,6 +56,8 @@ public class InsertSysAdsDataCampaignCommandHandler : IRequestHandler<InsertSysA
                 string ColCPC = googleAdsRow.Metrics.AverageCpc.ToString();
                 string ColCost = googleAdsRow.Metrics.CostMicros.ToString();
                 string ColCPA = googleAdsRow.Metrics.AverageTargetCpaMicros.ToString();
+                string ColStartDate = googleAdsRow.Campaign.StartDate.ToString();
+                string ColEndDate = googleAdsRow.Campaign.EndDate.ToString();
                 // 寫入DB SysAdsDataCampaign
 
                 try
@@ -75,6 +77,8 @@ public class InsertSysAdsDataCampaignCommandHandler : IRequestHandler<InsertSysA
                         ColCPC = ColCPC,
                         ColCost = ColCost,
                         ColCPA = ColCPA,
+                        ColStartDate = ColStartDate,
+                        ColEndDate = ColEndDate,
                     };
                     _context.SysAdsDataCampaign.Add(sysAdsDataCampaignPo);
                     await _context.SaveChangesAsync();
