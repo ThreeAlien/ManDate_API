@@ -47,14 +47,9 @@ public class GoogleAdsService : IGoogleAdsService
 
         try
         {
-            GoogleAuthorizationCodeFlow.Initializer initializer = new GoogleAuthorizationCodeFlow.Initializer
-            {
-                ClientSecrets = secrets,
-                Prompt = "consent",
-            };
-
-            Task<UserCredential> task = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                initializer,
+            DsAuthorizationBroker.RedirectUri = "https://mandate-group.com";
+            Task<UserCredential> task = DsAuthorizationBroker.AuthorizeAsync(
+                secrets,
                 new string[] { option.Scope },
                 string.Empty,
                 CancellationToken.None,

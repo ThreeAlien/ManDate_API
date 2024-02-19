@@ -11,6 +11,11 @@ public class GoogleAdsOption
     public const string SectionName = "GoogleAds";
 
     /// <summary>
+    /// AuthorizationEndpoint
+    /// </summary>
+    public string AuthorizationEndpoint { get; set; } = null!;
+
+    /// <summary>
     /// DeveloperToken
     /// </summary>
     public string DeveloperToken { get; set; } = null!;
