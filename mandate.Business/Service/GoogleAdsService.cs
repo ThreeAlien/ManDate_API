@@ -2,13 +2,17 @@
 using Google.Ads.GoogleAds.Config;
 using Google.Ads.GoogleAds.Lib;
 using Google.Ads.GoogleAds.V15.Errors;
+using Google.Ads.GoogleAds.V15.Resources;
 using Google.Ads.GoogleAds.V15.Services;
-using Google.Apis.Auth.OAuth2.Flows;
+using Google.Api.Gax;
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Auth.OAuth2.Requests;
+using Google.Apis.Auth.OAuth2.Responses;
+using Google.Apis.Http;
 using Google.Apis.Util.Store;
 using Microsoft.Extensions.Configuration;
-using Google.Ads.GoogleAds.V15.Resources;
-using Google.Api.Gax;
+using System.Net.Http.Json;
 
 namespace mandate.Business.Service;
 
@@ -47,9 +51,14 @@ public class GoogleAdsService : IGoogleAdsService
 
         try
         {
-            DsAuthorizationBroker.RedirectUri = "https://mandate-group.com";
-            Task<UserCredential> task = DsAuthorizationBroker.AuthorizeAsync(
-                secrets,
+            GoogleAuthorizationCodeFlow.Initializer initializer = new GoogleAuthorizationCodeFlow.Initializer
+            {
+                ClientSecrets = secrets,
+                Prompt = "consent",
+            };
+
+            Task<UserCredential> task = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                initializer,
                 new string[] { option.Scope },
                 string.Empty,
                 CancellationToken.None,
@@ -66,6 +75,61 @@ public class GoogleAdsService : IGoogleAdsService
 
         return Task.FromResult(refreshToken);
     }
+
+    /// <summary>
+    /// SSO 驗證
+    /// </summary>
+    public void SingleSignOn()
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        ClientSecrets secrets = new()
+        {
+            ClientId = option.ClientId,
+            ClientSecret = option.ClientSecret
+        };
+
+        try
+        {
+            // TODO：此網址待等weider前端寫好之後再改
+            DsAuthorizationBroker.RedirectUri = "https://mandate-group.com";
+            Task<UserCredential> task = DsAuthorizationBroker.AuthorizeAsync(
+                secrets,
+                new string[] { option.Scope },
+                string.Empty,
+                CancellationToken.None,
+                new NullDataStore()
+            );
+        }
+        catch (AggregateException)
+        {
+            Console.WriteLine("An error occured while authorizing the user.");
+        }
+    }
+
+    public async Task<string?> AuthorizeCallBack(string code)
+    {
+        // TODO：此網址待等weider前端寫好之後再改
+        string redirectUri = "https://mandate-group.com";
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+
+
+        HttpClient client = new HttpClient();
+        AuthorizationCodeTokenRequest request = new()
+        {
+            Code = code,
+            RedirectUri = redirectUri,
+            ClientId = option.ClientId,
+            ClientSecret = option.ClientSecret,
+            Scope = "openid profile email"
+        };
+        Task<TokenResponse> a = request.ExecuteAsync(client,
+                            GoogleAuthConsts.OidcTokenUrl,
+                            new(),
+                            Google.Apis.Util.SystemClock.Default);
+        var t = a.Result.RefreshToken;
+        return t;
+    }
+
 
     /// <summary>
     /// 取得AdsDataCampaign報表 Api
@@ -153,7 +217,7 @@ public class GoogleAdsService : IGoogleAdsService
             googleAdsService.SearchStream(custId, query,
                 delegate (SearchGoogleAdsStreamResponse resp)
                 {
-                        results = resp.Results;                 
+                    results = resp.Results;
                 }
             );
         }

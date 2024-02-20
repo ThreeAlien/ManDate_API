@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Ads.GoogleAds" Version="17.1.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
 </Project>

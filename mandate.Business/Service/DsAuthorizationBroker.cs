@@ -20,6 +20,7 @@ public class DsAuthorizationBroker : GoogleWebAuthorizationBroker
         {
             ClientSecrets = clientSecrets,
         };
+
         return await AuthorizeAsyncCore(initializer, scopes, user,
             taskCancellationToken, dataStore).ConfigureAwait(false);
     }
