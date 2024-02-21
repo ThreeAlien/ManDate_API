@@ -21,9 +21,21 @@ public class AuthorizeCallBackCommandHandler : IRequestHandler<AuthorizeCallBack
 
     public async Task<AuthorizeCallBackResponse> Handle(AuthorizeCallBackRequest request, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrEmpty(request.Code))
+        {
+            return new AuthorizeCallBackResponse()
+            {
+                Code = "400",
+                Data = null,
+                Msg = "SsoCode 為必填！"
+            };
+        }
+
+        string? refreshToken = string.Empty;
+
         try
         {
-            var a = await _googleAdsService.AuthorizeCallBack(request.Code);
+            refreshToken = await _googleAdsService.AuthorizeCallBack(request.Code);
         }
         catch (Exception ex)
         {
@@ -38,7 +50,7 @@ public class AuthorizeCallBackCommandHandler : IRequestHandler<AuthorizeCallBack
         return new AuthorizeCallBackResponse()
         {
             Code = "200",
-            Data = null,
+            Data = refreshToken,
             Msg = "success"
         };
     }

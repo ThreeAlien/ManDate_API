@@ -14,7 +14,7 @@ public class BaseResponse<T>
     /// <summary>
     /// 資料
     /// </summary>
-    public List<T>? Data { get; set; }
+    public T? Data { get; set; }
 
     /// <summary>
     /// 訊息

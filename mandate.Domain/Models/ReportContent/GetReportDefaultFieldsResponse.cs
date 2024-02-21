@@ -8,7 +8,7 @@ namespace mandate.Domain.Models.ReportContent;
 /// <summary>
 /// 取得報表預設欄位 Response
 /// </summary>
-public class GetReportDefaultFieldsResponse : BaseResponse<ReportDefaultFields>
+public class GetReportDefaultFieldsResponse : BaseResponse<List<ReportDefaultFields>>
 {
 }
 

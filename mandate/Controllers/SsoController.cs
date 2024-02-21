@@ -7,12 +7,6 @@ namespace mandate.api.Controllers;
 public class SsoController : BaseApiController
 {
     /// <summary>
-    /// Sso
-    /// </summary>
-    [HttpPost]
-    public Task<SingleSignOnResponse> SingleSignOn(SingleSignOnRequest request) => Mediator!.Send(request);
-
-    /// <summary>
     /// CallBack
     /// </summary>
     [HttpPost]

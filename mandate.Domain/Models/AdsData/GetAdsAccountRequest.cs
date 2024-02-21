@@ -7,4 +7,8 @@ namespace mandate.Domain.Models.AdsData;
 /// </summary>
 public class GetAdsAccountRequest : IRequest<GetAdsAccountResponse>
 {
+    /// <summary>
+    /// Token
+    /// </summary>
+    public string RefreshToken { get; set; } = null!;
 }

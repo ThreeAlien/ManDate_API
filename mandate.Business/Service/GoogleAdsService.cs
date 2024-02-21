@@ -76,36 +76,6 @@ public class GoogleAdsService : IGoogleAdsService
         return Task.FromResult(refreshToken);
     }
 
-    /// <summary>
-    /// SSO 驗證
-    /// </summary>
-    public void SingleSignOn()
-    {
-        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
-        ClientSecrets secrets = new()
-        {
-            ClientId = option.ClientId,
-            ClientSecret = option.ClientSecret
-        };
-
-        try
-        {
-            // TODO：此網址待等weider前端寫好之後再改
-            DsAuthorizationBroker.RedirectUri = "https://mandate-group.com";
-            Task<UserCredential> task = DsAuthorizationBroker.AuthorizeAsync(
-                secrets,
-                new string[] { option.Scope },
-                string.Empty,
-                CancellationToken.None,
-                new NullDataStore()
-            );
-        }
-        catch (AggregateException)
-        {
-            Console.WriteLine("An error occured while authorizing the user.");
-        }
-    }
-
     public async Task<string?> AuthorizeCallBack(string code)
     {
         // TODO：此網址待等weider前端寫好之後再改
@@ -122,12 +92,12 @@ public class GoogleAdsService : IGoogleAdsService
             ClientSecret = option.ClientSecret,
             Scope = "openid profile email"
         };
-        Task<TokenResponse> a = request.ExecuteAsync(client,
+        Task<TokenResponse> tokenResponse = request.ExecuteAsync(client,
                             GoogleAuthConsts.OidcTokenUrl,
                             new(),
                             Google.Apis.Util.SystemClock.Default);
-        var t = a.Result.RefreshToken;
-        return t;
+        string refreshToken = tokenResponse.Result.RefreshToken;
+        return refreshToken;
     }
 
 

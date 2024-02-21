@@ -8,7 +8,7 @@ namespace mandate.Domain.Models.SubClient;
 /// <summary>
 /// 取得子帳戶基本資料 Response
 /// </summary>
-public class GetSubClientResponse : BaseResponse<GetSubClientInfo>
+public class GetSubClientResponse : BaseResponse<List<GetSubClientInfo>>
 {
 }
 
