@@ -92,12 +92,12 @@ public class GoogleAdsService : IGoogleAdsService
             ClientSecret = option.ClientSecret,
             Scope = "openid profile email"
         };
-        Task<TokenResponse> a = request.ExecuteAsync(client,
+        Task<TokenResponse> tokenResponse = request.ExecuteAsync(client,
                             GoogleAuthConsts.OidcTokenUrl,
                             new(),
                             Google.Apis.Util.SystemClock.Default);
-        var t = a.Result.RefreshToken;
-        return t;
+        string refreshToken = tokenResponse.Result.RefreshToken;
+        return refreshToken;
     }
 
 

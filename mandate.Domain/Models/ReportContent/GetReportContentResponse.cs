@@ -8,7 +8,7 @@ namespace mandate.Domain.Models.ReportContent;
 /// <summary>
 /// 取得顧客資料 Response
 /// </summary>
-public class GetReportContentResponse : BaseResponse<GetReportContentInfo>
+public class GetReportContentResponse : BaseResponse<List<GetReportContentInfo>>
 {
 }
 

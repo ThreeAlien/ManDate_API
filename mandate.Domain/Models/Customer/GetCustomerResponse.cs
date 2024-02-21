@@ -8,7 +8,7 @@ namespace mandate.Domain.Models.Customer;
 /// <summary>
 /// 取得顧客資料 Response
 /// </summary>
-public class GetCustomerResponse : BaseResponse<GetCustInfo>
+public class GetCustomerResponse : BaseResponse<List<GetCustInfo>>
 {
 }
 

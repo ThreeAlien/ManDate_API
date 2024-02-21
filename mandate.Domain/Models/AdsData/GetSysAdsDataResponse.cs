@@ -3,6 +3,6 @@ using mandate.Domain.Po;
 
 namespace mandate.Domain.Models.AdsData;
 
-public class GetSysAdsDataResponse : BaseResponse<SysAdsDataPo>
+public class GetSysAdsDataResponse : BaseResponse<List<SysAdsDataPo>>
 {
 }
