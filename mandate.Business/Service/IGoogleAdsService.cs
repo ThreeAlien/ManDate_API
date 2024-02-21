@@ -7,8 +7,6 @@ namespace mandate.Business.Service;
 /// </summary>
 public interface IGoogleAdsService
 {
-    public void SingleSignOn();
-
     public Task<string?> AuthorizeCallBack(string code);
 
     /// <summary>
