@@ -24,9 +24,16 @@ public class GetAdsAccountCommandHandler : IRequestHandler<GetAdsAccountRequest,
 
     public async Task<GetAdsAccountResponse> Handle(GetAdsAccountRequest request, CancellationToken cancellationToken)
     {
-
-        string? refreshToken = await _googleAdsService.GenerateRefreshToken();
-        string[]? adsAccountArray = _googleAdsService.FetchAdsAccountApi(refreshToken);
+        if (string.IsNullOrEmpty(request.RefreshToken))
+        {
+            return new GetAdsAccountResponse()
+            {
+                Code = "400",
+                Data = null,
+                Msg = "RequestToken為必填！"
+            };
+        }
+        string[]? adsAccountArray = _googleAdsService.FetchAdsAccountApi(request.RefreshToken);
 
         List<string> listDatas = new List<string>(adsAccountArray);
 
