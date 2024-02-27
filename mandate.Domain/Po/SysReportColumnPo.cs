@@ -25,9 +25,9 @@ public class SysReportColumnPo
 
     public bool? IsColHeadline { get; set; }
 
-    public bool? IsColShortHeadLine { get; set; }
+    //public bool? IsColShortHeadLine { get; set; }
 
-    public bool? IsColLongHeadLine { get; set; }
+    //public bool? IsColLongHeadLine { get; set; }
 
     public bool? IsColHeadLine_1 { get; set; }
 
@@ -41,35 +41,35 @@ public class SysReportColumnPo
 
     public bool? IsColAdName { get; set; }
 
-    public bool? IsColAdPath_1 { get; set; }
+    //public bool? IsColAdPath_1 { get; set; }
 
-    public bool? IsColAdPath_2 { get; set; }
+    //public bool? IsColAdPath_2 { get; set; }
 
     public bool? IsColSrchKeyWord { get; set; }
 
-    public bool? IsColSwitchTarget { get; set; }
+    public bool? IsColConGoal { get; set; }
 
-    public bool? IsColDateTime { get; set; }
+    //public bool? IsColDateTime { get; set; }
 
-    public bool? IsColWeek { get; set; }
+    //public bool? IsColWeek { get; set; }
 
-    public bool? IsColSeason { get; set; }
+    //public bool? IsColSeason { get; set; }
 
-    public bool? IsColMonth { get; set; }
+    //public bool? IsColMonth { get; set; }
 
-    public bool? IsColIncome { get; set; }
+    public bool? IsColConValue { get; set; }
 
-    public bool? IsColTransTime { get; set; }
+    public bool? IsColConByDate { get; set; }
 
-    public bool? IsColTransCostOnce { get; set; }
+    public bool? IsColConPerCost { get; set; }
 
-    public bool? IsColTrans { get; set; }
+    public bool? IsColCon { get; set; }
 
-    public bool? IsColTransRate { get; set; }
+    public bool? IsColConRate { get; set; }
 
-    public bool? IsColClick { get; set; }
+    public bool? IsColClicks { get; set; }
 
-    public bool? IsColImpression { get; set; }
+    public bool? IsColImpressions { get; set; }
 
     public bool? IsColCTR { get; set; }
 
@@ -83,9 +83,17 @@ public class SysReportColumnPo
 
     public bool? IsColAge { get; set; }
 
-    public bool? IsColSex { get; set; }
+    public bool? IsColGender { get; set; }
 
-    public bool? IsColRegion { get; set; }
+    public bool? IsColConstant { get; set; }
+
+    public bool? IsColConAction { get; set; }
+
+    public bool? IsColCPA { get; set; }
+
+    public bool? IsColStartDate { get; set; }
+
+    public bool? IsColEndDate { get; set; }
 
     public string? ContentSort { get; set; } = null!;
 }

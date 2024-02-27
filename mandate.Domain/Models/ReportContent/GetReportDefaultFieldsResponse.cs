@@ -33,9 +33,9 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 
     public bool? IsColHeadline { get; set; }
 
-    public bool? IsColShortHeadLine { get; set; }
+    //public bool? IsColShortHeadLine { get; set; }
 
-    public bool? IsColLongHeadLine { get; set; }
+    //public bool? IsColLongHeadLine { get; set; }
 
     public bool? IsColHeadLine_1 { get; set; }
 
@@ -49,35 +49,35 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 
     public bool? IsColAdName { get; set; }
 
-    public bool? IsColAdPath_1 { get; set; }
+    //public bool? IsColAdPath_1 { get; set; }
 
-    public bool? IsColAdPath_2 { get; set; }
+    //public bool? IsColAdPath_2 { get; set; }
 
     public bool? IsColSrchKeyWord { get; set; }
 
-    public bool? IsColSwitchTarget { get; set; }
+    public bool? IsColConGoal { get; set; }
 
-    public bool? IsColDateTime { get; set; }
+    //public bool? IsColDateTime { get; set; }
 
-    public bool? IsColWeek { get; set; }
+    //public bool? IsColWeek { get; set; }
 
-    public bool? IsColSeason { get; set; }
+    //public bool? IsColSeason { get; set; }
 
-    public bool? IsColMonth { get; set; }
+    //public bool? IsColMonth { get; set; }
 
-    public bool? IsColIncome { get; set; }
+    public bool? IsColConValue { get; set; }
 
-    public bool? IsColTransTime { get; set; }
+    public bool? IsColConByDate { get; set; }
 
-    public bool? IsColTransCostOnce { get; set; }
+    public bool? IsColConPerCost { get; set; }
 
-    public bool? IsColTrans { get; set; }
+    public bool? IsColCon { get; set; }
 
-    public bool? IsColTransRate { get; set; }
+    public bool? IsColConRate { get; set; }
 
-    public bool? IsColClick { get; set; }
+    public bool? IsColClicks { get; set; }
 
-    public bool? IsColImpression { get; set; }
+    public bool? IsColImpressions { get; set; }
 
     public bool? IsColCTR { get; set; }
 
@@ -87,9 +87,17 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 
     public bool? IsColAge { get; set; }
 
-    public bool? IsColSex { get; set; }
+    public bool? IsColGender { get; set; }
 
-    public bool? IsColRegion { get; set; }
+    public bool? IsColConstant { get; set; }
+
+    public bool? IsColConAction { get; set; }
+
+    public bool? IsColCPA { get; set; }
+
+    public bool? IsColStartDate { get; set; }
+
+    public bool? IsColEndDate { get; set; }
 
     void IMapFrom<SysReportColumnPo>.Mapping(Profile profile)
     {
@@ -102,33 +110,39 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
             .ForMember(d => d.IsColAdGroupName, map => map.MapFrom(s => s.IsColAdGroupName))
             .ForMember(d => d.IsColAdFinalURL, map => map.MapFrom(s => s.IsColAdFinalURL))
             .ForMember(d => d.IsColHeadline, map => map.MapFrom(s => s.IsColHeadline))
-            .ForMember(d => d.IsColShortHeadLine, map => map.MapFrom(s => s.IsColShortHeadLine))
-            .ForMember(d => d.IsColLongHeadLine, map => map.MapFrom(s => s.IsColLongHeadLine))
+            //.ForMember(d => d.IsColShortHeadLine, map => map.MapFrom(s => s.IsColShortHeadLine))
+            //.ForMember(d => d.IsColLongHeadLine, map => map.MapFrom(s => s.IsColLongHeadLine))
             .ForMember(d => d.IsColHeadLine_1, map => map.MapFrom(s => s.IsColHeadLine_1))
             .ForMember(d => d.IsColHeadLine_2, map => map.MapFrom(s => s.IsColHeadLine_2))
             .ForMember(d => d.IsColDirections, map => map.MapFrom(s => s.IsColDirections))
             .ForMember(d => d.IsColDirections_1, map => map.MapFrom(s => s.IsColDirections_1))
             .ForMember(d => d.IsColDirections_2, map => map.MapFrom(s => s.IsColDirections_2))
-            .ForMember(d => d.IsColAdPath_1, map => map.MapFrom(s => s.IsColAdPath_1))
-            .ForMember(d => d.IsColAdPath_2, map => map.MapFrom(s => s.IsColAdPath_2))
+            //.ForMember(d => d.IsColAdPath_1, map => map.MapFrom(s => s.IsColAdPath_1))
+            //.ForMember(d => d.IsColAdPath_2, map => map.MapFrom(s => s.IsColAdPath_2))
             .ForMember(d => d.IsColSrchKeyWord, map => map.MapFrom(s => s.IsColSrchKeyWord))
-            .ForMember(d => d.IsColSwitchTarget, map => map.MapFrom(s => s.IsColSwitchTarget))
-            .ForMember(d => d.IsColDateTime, map => map.MapFrom(s => s.IsColDateTime))
-            .ForMember(d => d.IsColWeek, map => map.MapFrom(s => s.IsColWeek))
-            .ForMember(d => d.IsColSeason, map => map.MapFrom(s => s.IsColSeason))
-            .ForMember(d => d.IsColMonth, map => map.MapFrom(s => s.IsColMonth))
-            .ForMember(d => d.IsColIncome, map => map.MapFrom(s => s.IsColIncome))
-            .ForMember(d => d.IsColTransTime, map => map.MapFrom(s => s.IsColTransTime))
-            .ForMember(d => d.IsColTransCostOnce, map => map.MapFrom(s => s.IsColTransCostOnce))
-            .ForMember(d => d.IsColTrans, map => map.MapFrom(s => s.IsColTrans))
-            .ForMember(d => d.IsColClick, map => map.MapFrom(s => s.IsColClick))
-            .ForMember(d => d.IsColImpression, map => map.MapFrom(s => s.IsColImpression))
+            .ForMember(d => d.IsColConGoal, map => map.MapFrom(s => s.IsColConGoal))
+            //.ForMember(d => d.IsColDateTime, map => map.MapFrom(s => s.IsColDateTime))
+            //.ForMember(d => d.IsColWeek, map => map.MapFrom(s => s.IsColWeek))
+            //.ForMember(d => d.IsColSeason, map => map.MapFrom(s => s.IsColSeason))
+            //.ForMember(d => d.IsColMonth, map => map.MapFrom(s => s.IsColMonth))
+            .ForMember(d => d.IsColConValue, map => map.MapFrom(s => s.IsColConValue))
+            .ForMember(d => d.IsColConByDate, map => map.MapFrom(s => s.IsColConByDate))
+            .ForMember(d => d.IsColConPerCost, map => map.MapFrom(s => s.IsColConPerCost))
+            .ForMember(d => d.IsColCon, map => map.MapFrom(s => s.IsColCon))
+            .ForMember(d => d.IsColConRate, map => map.MapFrom(s => s.IsColConRate))
+            .ForMember(d => d.IsColClicks, map => map.MapFrom(s => s.IsColClicks))
+            .ForMember(d => d.IsColImpressions, map => map.MapFrom(s => s.IsColImpressions))
             .ForMember(d => d.IsColCTR, map => map.MapFrom(s => s.IsColCTR))
             .ForMember(d => d.IsColCPC, map => map.MapFrom(s => s.IsColCPC))
             .ForMember(d => d.IsColCost, map => map.MapFrom(s => s.IsColCost))
             .ForMember(d => d.ContentId, map => map.MapFrom(s => s.ContentId))
             .ForMember(d => d.IsColAge, map => map.MapFrom(s => s.IsColAge))
-            .ForMember(d => d.IsColSex, map => map.MapFrom(s => s.IsColSex))
-            .ForMember(d => d.IsColRegion, map => map.MapFrom(s => s.IsColRegion));
+            .ForMember(d => d.IsColGender, map => map.MapFrom(s => s.IsColGender))
+            .ForMember(d => d.IsColConstant, map => map.MapFrom(s => s.IsColConstant))
+            .ForMember(d => d.IsColConAction, map => map.MapFrom(s => s.IsColConAction))
+            .ForMember(d => d.IsColCPA, map => map.MapFrom(s => s.IsColCPA))
+            .ForMember(d => d.IsColStartDate, map => map.MapFrom(s => s.IsColStartDate))
+            .ForMember(d => d.IsColEndDate, map => map.MapFrom(s => s.IsColEndDate))
+            ;
     }
 }
