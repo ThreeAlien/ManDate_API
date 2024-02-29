@@ -7,29 +7,30 @@ namespace mandate.Domain.Po;
 public class SysAdsDataAdGroupCriterionPo
 {
     /// <summary>
-    /// 待註解
+    /// 客戶UD
     /// </summary>
     [Key]
     public string? CustomerID { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 廣告ID
     /// </summary>
     [Key]
     public string? CampaignID { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 關鍵字
     /// </summary>
     public string? ColSrchKeyWord { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 年齡
     /// </summary>
     public string? ColAge { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 性別
     /// </summary>
     public string? ColGender { get; set; }
+
 }

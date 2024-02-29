@@ -33,10 +33,6 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 
     public bool? IsColHeadline { get; set; }
 
-    //public bool? IsColShortHeadLine { get; set; }
-
-    //public bool? IsColLongHeadLine { get; set; }
-
     public bool? IsColHeadLine_1 { get; set; }
 
     public bool? IsColHeadLine_2 { get; set; }
@@ -49,21 +45,10 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
 
     public bool? IsColAdName { get; set; }
 
-    //public bool? IsColAdPath_1 { get; set; }
-
-    //public bool? IsColAdPath_2 { get; set; }
-
     public bool? IsColSrchKeyWord { get; set; }
 
     public bool? IsColConGoal { get; set; }
 
-    //public bool? IsColDateTime { get; set; }
-
-    //public bool? IsColWeek { get; set; }
-
-    //public bool? IsColSeason { get; set; }
-
-    //public bool? IsColMonth { get; set; }
 
     public bool? IsColConValue { get; set; }
 
@@ -110,21 +95,13 @@ public class ReportDefaultFields : IMapFrom<SysReportColumnPo>
             .ForMember(d => d.IsColAdGroupName, map => map.MapFrom(s => s.IsColAdGroupName))
             .ForMember(d => d.IsColAdFinalURL, map => map.MapFrom(s => s.IsColAdFinalURL))
             .ForMember(d => d.IsColHeadline, map => map.MapFrom(s => s.IsColHeadline))
-            //.ForMember(d => d.IsColShortHeadLine, map => map.MapFrom(s => s.IsColShortHeadLine))
-            //.ForMember(d => d.IsColLongHeadLine, map => map.MapFrom(s => s.IsColLongHeadLine))
             .ForMember(d => d.IsColHeadLine_1, map => map.MapFrom(s => s.IsColHeadLine_1))
             .ForMember(d => d.IsColHeadLine_2, map => map.MapFrom(s => s.IsColHeadLine_2))
             .ForMember(d => d.IsColDirections, map => map.MapFrom(s => s.IsColDirections))
             .ForMember(d => d.IsColDirections_1, map => map.MapFrom(s => s.IsColDirections_1))
             .ForMember(d => d.IsColDirections_2, map => map.MapFrom(s => s.IsColDirections_2))
-            //.ForMember(d => d.IsColAdPath_1, map => map.MapFrom(s => s.IsColAdPath_1))
-            //.ForMember(d => d.IsColAdPath_2, map => map.MapFrom(s => s.IsColAdPath_2))
             .ForMember(d => d.IsColSrchKeyWord, map => map.MapFrom(s => s.IsColSrchKeyWord))
             .ForMember(d => d.IsColConGoal, map => map.MapFrom(s => s.IsColConGoal))
-            //.ForMember(d => d.IsColDateTime, map => map.MapFrom(s => s.IsColDateTime))
-            //.ForMember(d => d.IsColWeek, map => map.MapFrom(s => s.IsColWeek))
-            //.ForMember(d => d.IsColSeason, map => map.MapFrom(s => s.IsColSeason))
-            //.ForMember(d => d.IsColMonth, map => map.MapFrom(s => s.IsColMonth))
             .ForMember(d => d.IsColConValue, map => map.MapFrom(s => s.IsColConValue))
             .ForMember(d => d.IsColConByDate, map => map.MapFrom(s => s.IsColConByDate))
             .ForMember(d => d.IsColConPerCost, map => map.MapFrom(s => s.IsColConPerCost))

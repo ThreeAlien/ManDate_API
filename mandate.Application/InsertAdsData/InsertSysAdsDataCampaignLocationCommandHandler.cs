@@ -48,12 +48,15 @@ public class InsertSysAdsDataCampaignLocationCommandHandler : IRequestHandler<In
                     string Constant =
                         googleAdsRow?.CampaignCriterion?.Location?.GeoTargetConstant?.ToString() ?? " ";
 
+                    DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
+
                     // 寫入DB SysAdsDataCampaignLocation
                     SysAdsDataCampaignLocationPo SysAdsDataCampaignLocationPo = new()
                     {
                         CustomerID = googleAdsRow.Customer.Id.ToString(),
                         CampaignID = googleAdsRow.Campaign.Id.ToString(),
-                        ColConstant = Constant
+                        ColConstant = Constant,
+                        ColDate = ColDate,
                     };
                     _context.SysAdsDataCampaignLocation.Add(SysAdsDataCampaignLocationPo);
                     await _context.SaveChangesAsync();

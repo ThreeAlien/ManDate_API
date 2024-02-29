@@ -15,22 +15,14 @@ public class ReportColumnVo : IMapTo<SysReportColumnPo>
     public bool? ColAdGroupName { get; set; }
     public bool? ColAdFinalURL { get; set; }
     public bool? ColHeadline { get; set; }
-    //public bool? ColShortHeadLine { get; set; }
-    //public bool? ColLongHeadLine { get; set; }
     public bool? ColHeadLine_1 { get; set; }
     public bool? ColHeadLine_2 { get; set; }
     public bool? ColDirections { get; set; }
     public bool? ColDirections_1 { get; set; }
     public bool? ColDirections_2 { get; set; }
     public bool? ColAdName { get; set; }
-    //public bool? ColAdPath_1 { get; set; }
-    //public bool? ColAdPath_2 { get; set; }
     public bool? ColSrchKeyWord { get; set; }
     public bool? ColConGoal { get; set; }
-    //public bool? ColDateTime { get; set; }
-    //public bool? ColWeek { get; set; }
-    //public bool? ColSeason { get; set; }
-    //public bool? ColMonth { get; set; }
     public bool? ColConValue { get; set; }
     public bool? ColConByDate { get; set; }
     public bool? ColConPerCost { get; set; }
@@ -65,22 +57,14 @@ public class ReportColumnVo : IMapTo<SysReportColumnPo>
             .ForMember(d => d.IsColCampaignName, map => map.MapFrom(s => s.ColCampaignName))
             .ForMember(d => d.IsColAdFinalURL, map => map.MapFrom(s => s.ColAdFinalURL))
             .ForMember(d => d.IsColHeadline, map => map.MapFrom(s => s.ColHeadline))
-            //.ForMember(d => d.IsColShortHeadLine, map => map.MapFrom(s => s.ColShortHeadLine))
-            //.ForMember(d => d.IsColLongHeadLine, map => map.MapFrom(s => s.ColLongHeadLine))
             .ForMember(d => d.IsColHeadLine_1, map => map.MapFrom(s => s.ColHeadLine_1))
             .ForMember(d => d.IsColHeadLine_2, map => map.MapFrom(s => s.ColHeadLine_2))
             .ForMember(d => d.IsColDirections, map => map.MapFrom(s => s.ColDirections))
             .ForMember(d => d.IsColDirections_1, map => map.MapFrom(s => s.ColDirections_1))
             .ForMember(d => d.IsColDirections_2, map => map.MapFrom(s => s.ColDirections_2))
             .ForMember(d => d.IsColAdName, map => map.MapFrom(s => s.ColAdName))
-            //.ForMember(d => d.IsColAdPath_1, map => map.MapFrom(s => s.ColAdPath_1))
-            //.ForMember(d => d.IsColAdPath_2, map => map.MapFrom(s => s.ColAdPath_2))
             .ForMember(d => d.IsColSrchKeyWord, map => map.MapFrom(s => s.ColSrchKeyWord))
             .ForMember(d => d.IsColConGoal, map => map.MapFrom(s => s.ColConGoal))
-            //.ForMember(d => d.IsColDateTime, map => map.MapFrom(s => s.ColDateTime))
-            //.ForMember(d => d.IsColWeek, map => map.MapFrom(s => s.ColWeek))
-            //.ForMember(d => d.IsColSeason, map => map.MapFrom(s => s.ColSeason))
-            //.ForMember(d => d.IsColMonth, map => map.MapFrom(s => s.ColMonth))
             .ForMember(d => d.IsColConValue, map => map.MapFrom(s => s.ColConValue))
             .ForMember(d => d.IsColConByDate, map => map.MapFrom(s => s.ColConByDate))
             .ForMember(d => d.IsColConPerCost, map => map.MapFrom(s => s.ColConPerCost))

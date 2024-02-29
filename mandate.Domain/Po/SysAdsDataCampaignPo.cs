@@ -9,7 +9,7 @@ public class SysAdsDataCampaignPo
     /// <summary>
     /// 子客戶編號
     /// </summary>
-    [Key]
+    
     public string? CustomerID { get; set; }
 
     /// <summary>
@@ -23,35 +23,10 @@ public class SysAdsDataCampaignPo
     /// </summary>
     public string? ColCampaignName { get; set; }
 
-    /// <summary>
-    /// 收益
-    /// </summary>
-    public string? ColConValue { get; set; }
 
-    /// <summary>
-    /// 轉換 (依轉換時間)
-    /// </summary>
-    public string? ColConByDate { get; set; }
-
-    /// <summary>
-    /// 單次轉換費用
-    /// </summary>
-    public string? ColConPerCost { get; set; }
-
-    /// <summary>
-    /// 轉換
-    /// </summary>
-    public string? ColCon { get; set; }
-
-    /// <summary>
-    /// 轉換率
-    /// </summary>
-    public string? ColConRate { get; set; }
-
-    /// <summary>
     /// 點擊
     /// </summary>
-    public string? ConClicks { get; set; }
+    public string? ColClicks { get; set; }
 
     /// <summary>
     /// 曝光數
@@ -81,10 +56,16 @@ public class SysAdsDataCampaignPo
     /// <summary>
     ///  廣告開始時間
     /// </summary>
-    public string? ColStartDate { get; set; }
+    public DateTime? ColStartDate { get; set; }
 
     /// <summary>
     /// 廣告結束時間
     /// </summary>
-    public string? ColEndDate { get; set; }
+    public DateTime? ColEndDate { get; set; }
+
+    /// <summary>
+    /// 數據日期
+    /// </summary>
+    [Key]
+    public DateTime? ColDate { get; set; }
 }

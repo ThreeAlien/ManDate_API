@@ -56,17 +56,17 @@ public class InsertSysAdsDataAdGroupAdCommandHandler : IRequestHandler<InsertSys
 
                 long customerId = googleAdsRow.Customer.Id;
                 string ColAdGroupName = googleAdsRow.AdGroup.Name;
-                string ColAdFinalURL = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.FinalUrls.ToString()) ? " " : googleAdsRow.AdGroupAd.Ad.FinalUrls.ToString();
+                string ColAdFinalURL = string.IsNullOrEmpty(googleAdsRow?.AdGroupAd?.Ad?.FinalUrls.ToString()) ? " " : googleAdsRow.AdGroupAd.Ad.FinalUrls.ToString();
 
-                string ColHeadLine_1 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart1) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart1;
-                string ColHeadLine_2 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart2) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart2;
+                string ColHeadLine_1 = string.IsNullOrEmpty(googleAdsRow?.AdGroupAd?.Ad?.ExpandedTextAd?.HeadlinePart1) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart1;
+                string ColHeadLine_2 = string.IsNullOrEmpty(googleAdsRow?.AdGroupAd?.Ad?.ExpandedTextAd?.HeadlinePart2) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart2;
                 string ColHeadLine = string.Join("|", new[] { ColHeadLine_1, ColHeadLine_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
-                string ColHeadLine_3 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart3) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart3;
-                string ColDirections_1 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description;
-                string ColDirections_2 = string.IsNullOrEmpty(googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description2) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description2;
+                string ColHeadLine_3 = string.IsNullOrEmpty(googleAdsRow?.AdGroupAd?.Ad?.ExpandedTextAd?.HeadlinePart3) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.HeadlinePart3;
+                string ColDirections_1 = string.IsNullOrEmpty(googleAdsRow?.AdGroupAd?.Ad?.ExpandedTextAd?.Description) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description;
+                string ColDirections_2 = string.IsNullOrEmpty(googleAdsRow?.AdGroupAd?.Ad?.ExpandedTextAd?.Description2) ? " " : googleAdsRow.AdGroupAd.Ad.ExpandedTextAd.Description2;
                 string ColDirections = string.Join("|", new[] { ColDirections_1, ColDirections_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
                 string ColAdName = string.Join("|", new[] { ColHeadLine_1, ColHeadLine_2, ColHeadLine_3, ColAdFinalURL, ColDirections_1, ColDirections_2 }.Where(s => !string.IsNullOrWhiteSpace(s)));
-
+                DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
                 // 寫入DB SysAdsDataAdGroupAd
 
                 try
@@ -80,11 +80,11 @@ public class InsertSysAdsDataAdGroupAdCommandHandler : IRequestHandler<InsertSys
                         ColHeadline = ColHeadLine,
                         ColHeadline_1 = ColHeadLine_1,
                         ColHeadline_2 = ColHeadLine_2,
-                        ColHeadline_3 = ColHeadLine_3,
                         ColDirections = ColDirections,
                         ColDirections_1 = ColDirections_1,
                         ColDirections_2 = ColDirections_2,
                         ColAdName = ColAdName,
+                        ColDate = ColDate,
                     };
                     _context.SysAdsDataAdGroupAd.Add(sysAdsDataAdGroupAdPo);
                     await _context.SaveChangesAsync();

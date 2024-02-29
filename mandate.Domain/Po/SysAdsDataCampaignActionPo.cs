@@ -22,4 +22,10 @@ public class SysAdsDataCampaignActionPo
     /// 待註解
     /// </summary>
     public string? ColConAction { get; set; }
+
+    /// <summary>
+    /// 數據日期
+    /// </summary>
+    [Key]
+    public DateTime? ColDate { get; set; }
 }

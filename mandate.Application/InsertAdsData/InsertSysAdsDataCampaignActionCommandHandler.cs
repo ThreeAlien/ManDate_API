@@ -46,13 +46,14 @@ public class InsertSysAdsDataCampaignActionCommandHandler : IRequestHandler<Inse
                     long CustomerID = googleAdsRow.Customer.Id;
                     string ColConAction = googleAdsRow.ConversionAction.Name;
                     long ActionID = googleAdsRow.ConversionAction.Id;
+                    DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
                     // 寫入DB SysAdsDataCampaignAction
                     SysAdsDataCampaignActionPo sysAdsDataCampaignActionPo = new()
                     {
                         CustomerID = CustomerID.ToString(),
                         ActionID = ActionID.ToString(),
-                        //CampaignID = googleAdsRow.Campaign.Id.ToString(),
                         ColConAction = ColConAction,
+                        ColDate = ColDate,
                     };
                     _context.SysAdsDataCampaignAction.Add(sysAdsDataCampaignActionPo);
                     await _context.SaveChangesAsync();

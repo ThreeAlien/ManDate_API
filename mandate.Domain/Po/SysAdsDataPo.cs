@@ -167,10 +167,10 @@ public class SysAdsDataPo
     /// <summary>
     ///  廣告開始時間
     /// </summary>
-    public string? ColStartDate { get; set; }
+    public DateTime? ColStartDate { get; set; }
 
     /// <summary>
     /// 廣告結束時間
     /// </summary>
-    public string? ColEndDate { get; set; }
+    public DateTime? ColEndDate { get; set; }
 }

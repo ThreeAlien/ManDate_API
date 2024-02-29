@@ -37,6 +37,12 @@ public class InsertAdsDataController : BaseApiController
     public Task<InsertSysAdsDataCampaignResponse> InsertSysAdsDataCampaign() => Mediator!.Send(new InsertSysAdsDataCampaignRequest());
 
     /// <summary>
+    /// InsertSysAdsDataCampaign
+    /// </summary>
+    [HttpPost]
+    public Task<InsertSysAdsDataCampaignOtherResponse> InsertSysAdsDataCampaignOther() => Mediator!.Send(new InsertSysAdsDataCampaignOtherRequest());
+
+    /// <summary>
     /// InsertSysAdsDataAdGroupAd
     /// </summary>
     [HttpPost]
