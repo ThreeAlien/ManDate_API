@@ -48,9 +48,9 @@ namespace mandate.Application.ReportInfo
                     ReportStatus = request.ReportStatus
 
                 };
-                SysReportColumnPo CreateReportColumn = _mapper.Map<SysReportColumnPo>(request.ColumnData);
+                List<SysReportColumnPo> CreateReportColumn = _mapper.Map<List<SysReportColumnPo>>(request.ColumnData);
                 _context.Add(CreateReport);
-                _context.Add(CreateReportColumn);
+                _context.AddRange(CreateReportColumn);
                 await _context.SaveChangesAsync();
 
                 response = new()
