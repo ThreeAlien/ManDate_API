@@ -41,8 +41,7 @@ namespace mandate.Application.ReportInfo
 
                 if (objUpdateData != null)
                 {
-                    objUpdateData.ReportStatus = request.ReportStatus;
-                    _context.Update(objUpdateData);
+                    _context.Remove(objUpdateData);
                     _context.SaveChanges();
                 }
 
