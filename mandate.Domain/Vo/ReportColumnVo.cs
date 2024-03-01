@@ -9,6 +9,7 @@ namespace mandate.Domain.Vo;
 /// </summary>
 public class ReportColumnVo : IMapTo<SysReportColumnPo>
 {
+    public int? ReportNo { get; set; }
     public bool? ColAccount { get; set; }
     public bool? ColCutomerID { get; set; }
     public bool? ColCampaignName { get; set; }
@@ -34,7 +35,6 @@ public class ReportColumnVo : IMapTo<SysReportColumnPo>
     public bool? ColCPC { get; set; }
     public bool? ColCost { get; set; }
     public string ContentId { get; set; } = null!;
-
     public string ColumnId { get; set; } = null!;
     public bool? ColAge { get; set; }
     public bool? ColGender { get; set; }
@@ -47,6 +47,11 @@ public class ReportColumnVo : IMapTo<SysReportColumnPo>
     public bool? ColStartDate { get; set; }
 
     public bool? ColEndDate { get; set; }
+
+    /// <summary>
+    /// 此資料是否刪除
+    /// </summary>
+    public bool IsDelete { get; set; }
 
     void IMapTo<SysReportColumnPo>.Mapping(Profile profile)
     {
@@ -83,8 +88,6 @@ public class ReportColumnVo : IMapTo<SysReportColumnPo>
             .ForMember(d => d.IsColConAction, map => map.MapFrom(s => s.ColConAction))
             .ForMember(d => d.IsColCPA, map => map.MapFrom(s => s.ColCPA))
             .ForMember(d => d.IsColStartDate, map => map.MapFrom(s => s.ColStartDate))
-            .ForMember(d => d.IsColEndDate, map => map.MapFrom(s => s.ColEndDate))
-            ;
-
+            .ForMember(d => d.IsColEndDate, map => map.MapFrom(s => s.ColEndDate));
     }
 }

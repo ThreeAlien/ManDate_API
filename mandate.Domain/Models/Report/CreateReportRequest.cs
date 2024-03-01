@@ -57,5 +57,8 @@ public class CreateReportRequest : IRequest<CreateReportResponse>
     /// </summary>
     public bool? ReportStatus { get; set; }
 
-    public ReportColumnVo? ColumnData { get; set; }
+    /// <summary>
+    /// 報表欄位資料
+    /// </summary>
+    public List<ReportColumnVo>? ColumnData { get; set; }
 }

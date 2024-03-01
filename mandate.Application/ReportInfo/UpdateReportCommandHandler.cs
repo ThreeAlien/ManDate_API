@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using mandate.Domain.Models;
 using mandate.Domain.Po;
+using mandate.Domain.Vo;
 using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Data.SqlTypes;
 
 namespace mandate.Application.ReportInfo
 {
@@ -40,7 +38,6 @@ namespace mandate.Application.ReportInfo
             try
             {
                 SysReportPo? objUpdateData = await _context.SysReport.Where(s => s.ReportID == request.ReportID).FirstOrDefaultAsync();
-                SysReportColumnPo? objUpdateColumnData = await _context.SysReportColumn.Where(s => s.ColumnId == request.ColumnData.ColumnId).FirstOrDefaultAsync();
 
                 if (objUpdateData != null)
                 {
@@ -55,54 +52,72 @@ namespace mandate.Application.ReportInfo
                     objUpdateData.ReportStatus = request.ReportStatus;
 
                     _context.Update(objUpdateData);
-
-                    if (objUpdateColumnData != null)
-                    {
-                        objUpdateColumnData.IsColAccount = request.ColumnData.ColAccount;
-                        objUpdateColumnData.IsColCutomerID = request.ColumnData.ColCutomerID;
-                        //objUpdateColumnData.IsColCampaignID = request.ColumnData.ColCampaignID;                        
-                        objUpdateColumnData.IsColAdFinalURL = request.ColumnData.ColAdFinalURL;
-                        objUpdateColumnData.IsColHeadline = request.ColumnData.ColHeadline;
-                        //objUpdateColumnData.IsColShortHeadLine = request.ColumnData.ColShortHeadLine;
-                        //objUpdateColumnData.IsColLongHeadLine = request.ColumnData.ColLongHeadLine;
-                        objUpdateColumnData.IsColHeadLine_1 = request.ColumnData.ColHeadLine_1;
-                        objUpdateColumnData.IsColHeadLine_2 = request.ColumnData.ColHeadLine_2;
-                        objUpdateColumnData.IsColDirections = request.ColumnData.ColDirections;
-                        objUpdateColumnData.IsColDirections_1 = request.ColumnData.ColDirections_1;
-                        objUpdateColumnData.IsColDirections_2 = request.ColumnData.ColDirections_2;
-                        objUpdateColumnData.IsColAdName = request.ColumnData.ColAdName;
-                        //objUpdateColumnData.IsColAdPath_1 = request.ColumnData.ColAdPath_1;
-                        //objUpdateColumnData.IsColAdPath_2 = request.ColumnData.ColAdPath_2;
-                        objUpdateColumnData.IsColSrchKeyWord = request.ColumnData.ColSrchKeyWord;
-                        objUpdateColumnData.IsColConGoal = request.ColumnData.ColConGoal;
-                        //objUpdateColumnData.IsColDateTime = request.ColumnData.ColDateTime;
-                        //objUpdateColumnData.IsColWeek = request.ColumnData.ColWeek;
-                        //objUpdateColumnData.IsColSeason = request.ColumnData.ColSeason;
-                        //objUpdateColumnData.IsColMonth = request.ColumnData.ColMonth;
-                        objUpdateColumnData.IsColConValue = request.ColumnData.ColConValue;
-                        objUpdateColumnData.IsColConByDate = request.ColumnData.ColConByDate;
-                        objUpdateColumnData.IsColConPerCost = request.ColumnData.ColConPerCost;
-                        objUpdateColumnData.IsColCon = request.ColumnData.ColCon;
-                        objUpdateColumnData.IsColConRate = request.ColumnData.ColConRate;
-                        objUpdateColumnData.IsColClicks = request.ColumnData.ColClicks;
-                        objUpdateColumnData.IsColImpressions = request.ColumnData.ColImpressions;
-                        objUpdateColumnData.IsColCTR = request.ColumnData.ColCTR;
-                        objUpdateColumnData.IsColCPC = request.ColumnData.ColCPC;
-                        objUpdateColumnData.IsColCost = request.ColumnData.ColCost;
-                        objUpdateColumnData.ContentId = request.ColumnData.ContentId;
-                        objUpdateColumnData.ColumnId = request.ColumnData.ColumnId;
-                        objUpdateColumnData.IsColAge = request.ColumnData.ColAge;
-                        objUpdateColumnData.IsColGender = request.ColumnData.ColGender;
-                        objUpdateColumnData.IsColConstant = request.ColumnData.ColConstant;
-                        objUpdateColumnData.IsColConAction = request.ColumnData.ColConAction;
-                        objUpdateColumnData.IsColCPA = request.ColumnData.ColCPA;
-                        objUpdateColumnData.IsColStartDate = request.ColumnData.ColStartDate;
-                        objUpdateColumnData.IsColEndDate = request.ColumnData.ColEndDate;
-
-                        _context.Update(objUpdateColumnData);
-                    }
-
                     _context.SaveChanges();
+
+                    if (request.ColumnData.Count() > 0)
+                    {
+                        foreach (ReportColumnVo item in request.ColumnData)
+                        {
+                            // 若該資料的isDelete是true，就刪除
+                            if (item.IsDelete)
+                            {
+                                SysReportColumnPo? DelSysReportColumnData = _context.SysReportColumn.Where(s => s.ReportNo == item.ReportNo).FirstOrDefault();
+                                _context.Remove(DelSysReportColumnData);
+                                _context.SaveChanges();
+                            }
+                            else
+                            {
+                                // 若傳進來的資料無ReportNo，就新增
+                                if (item.ReportNo == null)
+                                {
+                                    SysReportColumnPo AddReportColumn = _mapper.Map<SysReportColumnPo>(item);
+                                    _context.Add(AddReportColumn);
+                                    _context.SaveChanges();
+                                }
+                                // 有ReportNo，就更新
+                                else
+                                {
+                                    SysReportColumnPo? SysReportColumnData = _context.SysReportColumn.Where(s => s.ReportNo == item.ReportNo).FirstOrDefault();
+                                    SysReportColumnData.IsColAccount = item.ColAccount;
+                                    SysReportColumnData.IsColCutomerID = item.ColCutomerID;
+                                    SysReportColumnData.IsColCampaignName = item.ColCampaignName;
+                                    SysReportColumnData.IsColAdGroupName = item.ColAdGroupName;
+                                    SysReportColumnData.IsColAdFinalURL = item.ColAdFinalURL;
+                                    SysReportColumnData.IsColHeadline = item.ColHeadline;
+                                    SysReportColumnData.IsColHeadLine_1 = item.ColHeadLine_1;
+                                    SysReportColumnData.IsColHeadLine_2 = item.ColHeadLine_2;
+                                    SysReportColumnData.IsColDirections = item.ColDirections;
+                                    SysReportColumnData.IsColDirections_1 = item.ColDirections_1;
+                                    SysReportColumnData.IsColDirections_2 = item.ColDirections_2;
+                                    SysReportColumnData.IsColAdName = item.ColAdName;
+                                    SysReportColumnData.IsColSrchKeyWord = item.ColSrchKeyWord;
+                                    SysReportColumnData.IsColConGoal = item.ColConGoal;
+                                    SysReportColumnData.IsColConValue = item.ColConValue;
+                                    SysReportColumnData.IsColConByDate = item.ColConByDate;
+                                    SysReportColumnData.IsColConPerCost = item.ColConPerCost;
+                                    SysReportColumnData.IsColCon = item.ColCon;
+                                    SysReportColumnData.IsColConRate = item.ColConRate;
+                                    SysReportColumnData.IsColClicks = item.ColClicks;
+                                    SysReportColumnData.IsColImpressions = item.ColImpressions;
+                                    SysReportColumnData.IsColCTR = item.ColCTR;
+                                    SysReportColumnData.IsColCPC = item.ColCPC;
+                                    SysReportColumnData.IsColCost = item.ColCost;
+                                    SysReportColumnData.ContentId = item.ContentId;
+                                    SysReportColumnData.ColumnId = item.ColumnId;
+                                    SysReportColumnData.IsColAge = item.ColAge;
+                                    SysReportColumnData.IsColGender = item.ColGender;
+                                    SysReportColumnData.IsColConstant = item.ColConstant;
+                                    SysReportColumnData.IsColConAction = item.ColConAction;
+                                    SysReportColumnData.IsColCPA = item.ColCPA;
+                                    SysReportColumnData.IsColStartDate = item.ColStartDate;
+                                    SysReportColumnData.IsColEndDate = item.ColEndDate;
+
+                                    _context.Update(SysReportColumnData);
+                                    _context.SaveChanges();
+                                }
+                            }
+                        }
+                    }
                 }
 
                 response = new()
@@ -121,8 +136,6 @@ namespace mandate.Application.ReportInfo
                     Msg = ex.ToString()
                 };
             }
-
-
             return response;
         }
     }
