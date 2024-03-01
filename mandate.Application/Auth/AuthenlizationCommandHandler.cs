@@ -93,23 +93,20 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
             }
 
             // 5. AdsDataCampaign
-            Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> adsDataCampaignResult = await _googleAdsService.FetchAdsDataCampaign(refreshToken, subAccount.ClientId);
+            Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> adsDataCampaignResult = await _googleAdsService.FetchAdsDataCampaignOther(refreshToken, subAccount.ClientId);
             foreach (GoogleAdsRow googleAdsRow in adsDataCampaignResult)
             {
                 long customerId = googleAdsRow.Customer.Id;
                 string campaignName = googleAdsRow.Campaign.Name;
-                string colConValue = googleAdsRow.Metrics.ConversionsValue.ToString();
-                string ColConByDate = googleAdsRow.Metrics.ConversionsByConversionDate.ToString();
-                string colConPerCost = StringExtension.ToRounding(googleAdsRow.Metrics.CostPerConversion).ToString();
-
-                string ColCon = googleAdsRow.Metrics.Conversions.ToString();
-                string ColConRate = StringExtension.ToRoundPercentage(googleAdsRow.Metrics.ConversionsFromInteractionsRate);
                 string ConClicks = googleAdsRow.Metrics.Clicks.ToString();
                 string ColImpressions = googleAdsRow.Metrics.Impressions.ToString();
                 string ColCTR = googleAdsRow.Metrics.Ctr.ToString();
                 string ColCPC = googleAdsRow.Metrics.AverageCpc.ToString();
                 string ColCost = googleAdsRow.Metrics.CostMicros.ToString();
                 string ColCPA = googleAdsRow.Metrics.AverageTargetCpaMicros.ToString();
+                DateTime ColStartDate = Convert.ToDateTime(googleAdsRow.Campaign.StartDate.ToString());
+                DateTime ColEndDate = Convert.ToDateTime(googleAdsRow.Campaign.EndDate.ToString());
+                DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
 
                 // 寫入DB SysAdsDataCampaign
                 SysAdsDataCampaignPo sysAdsDataCampaignPo = new()
@@ -117,16 +114,14 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
                     CustomerID = customerId.ToString(),
                     CampaignID = googleAdsRow.Campaign.Id.ToString(),
                     ColCampaignName = campaignName,
-                    ColConValue = colConValue,
-                    ColConByDate = ColConByDate,
-                    ColConPerCost = colConPerCost,
-                    ColCon = ColCon,
-                    ColConRate = ColConRate,
                     ColImpressions = ColImpressions,
                     ColCTR = ColCTR,
                     ColCPC = ColCPC,
                     ColCost = ColCost,
                     ColCPA = ColCPA,
+                    ColStartDate = ColStartDate,
+                    ColEndDate = ColEndDate,
+                    ColDate = ColDate,
                 };
                 _context.SysAdsDataCampaign.Add(sysAdsDataCampaignPo);
                 await _context.SaveChangesAsync();
@@ -158,7 +153,7 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
                     ColHeadline = ColHeadLine,
                     ColHeadline_1 = ColHeadLine_1,
                     ColHeadline_2 = ColHeadLine_2,
-                    ColHeadline_3 = ColHeadLine_3,
+                 //   ColHeadline_3 = ColHeadLine_3,
                     ColDirections = ColDirections,
                     ColDirections_1 = ColDirections_1,
                     ColDirections_2 = ColDirections_2,

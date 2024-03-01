@@ -19,7 +19,7 @@ public class SysAdsDataCampaignConPo
     public string? CampaignID { get; set; }
 
     /// <summary>
-    /// 待註解
+    /// 廣告目標
     /// </summary>
     public string? ColConGoal { get; set; }
 }

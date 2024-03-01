@@ -72,22 +72,22 @@ public class SysAdsDataPo
     /// <summary>
     /// 廣告時間
     /// </summary>
-    public string? ColDateTime { get; set; }
+    //public string? ColDateTime { get; set; }
 
-    /// <summary>
-    /// 週
-    /// </summary>
-    public string? ColWeek { get; set; }
+    ///// <summary>
+    ///// 週
+    ///// </summary>
+    //public string? ColWeek { get; set; }
 
-    /// <summary>
-    /// 季
-    /// </summary>
-    public string? ColSeason { get; set; }
+    ///// <summary>
+    ///// 季
+    ///// </summary>
+    //public string? ColSeason { get; set; }
 
-    /// <summary>
-    /// 月
-    /// </summary>
-    public string? ColMonth { get; set; }
+    ///// <summary>
+    ///// 月
+    ///// </summary>
+    //public string? ColMonth { get; set; }
 
     /// <summary>
     /// 轉換價值
@@ -117,7 +117,7 @@ public class SysAdsDataPo
     /// <summary>
     /// 點擊率
     /// </summary>
-    public string? ConClicks { get; set; }
+    public string? ColClicks { get; set; }
 
     /// <summary>
     /// 曝光數
@@ -167,10 +167,10 @@ public class SysAdsDataPo
     /// <summary>
     ///  廣告開始時間
     /// </summary>
-    public string? ColStartDate { get; set; }
+    public DateTime? ColStartDate { get; set; }
 
     /// <summary>
     /// 廣告結束時間
     /// </summary>
-    public string? ColEndDate { get; set; }
+    public DateTime? ColEndDate { get; set; }
 }

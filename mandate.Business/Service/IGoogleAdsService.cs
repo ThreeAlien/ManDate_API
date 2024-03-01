@@ -22,6 +22,12 @@ public interface IGoogleAdsService
     public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaign(string refreshToken, string custId);
 
     /// <summary>
+    /// 取得AdsDataCampaign報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaignOther(string refreshToken, string custId);
+
+    /// <summary>
     /// 取得AdsDataAdGroupAd報表 Api
     /// </summary>
     /// <param name="refreshToken"></param>

@@ -61,18 +61,19 @@ public class InsertSysAdsDataAdGroupCriterionCommandHandler : IRequestHandler<In
                                         !string.IsNullOrEmpty(googleAdsRow.AdGroupCriterion.Gender.Type.ToString())
                                         ? googleAdsRow.AdGroupCriterion.Gender.Type.ToString()
                                         : " ";
+                    //string ColDate = googleAdsRow.Segments.Date.ToString();
 
                     // 寫入DB SysAdsDataAdGroupCriterion
-                    //SysAdsDataAdGroupCriterionPo sysAdsDataAdGroupCriterionPo = new()
-                    //{
-                    //    CustomerID = googleAdsRow.Customer.Id.ToString(),
-                    //    CampaignID = googleAdsRow.Campaign.Id.ToString(),
-                    //    ColSrchKeyWord = AdGroupCriterion,
-                    //    ColAge = AdGroupCriterionAgeRange,
-                    //    ColGender = AdGroupCriterionGender,
-                    //};
-                    //_context.SysAdsDataAdGroupCriterion.Add(sysAdsDataAdGroupCriterionPo);
-                    //await _context.SaveChangesAsync();
+                    SysAdsDataAdGroupCriterionPo sysAdsDataAdGroupCriterionPo = new()
+                    {
+                        CustomerID = googleAdsRow.Customer.Id.ToString(),
+                        CampaignID = googleAdsRow.Campaign.Id.ToString(),
+                        ColSrchKeyWord = AdGroupCriterion,
+                        ColAge = AdGroupCriterionAgeRange,
+                        ColGender = AdGroupCriterionGender,
+                    };
+                    _context.SysAdsDataAdGroupCriterion.Add(sysAdsDataAdGroupCriterionPo);
+                    await _context.SaveChangesAsync();
 
                     response = new()
                     {

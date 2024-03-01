@@ -122,8 +122,75 @@ public class GoogleAdsService : IGoogleAdsService
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
-        string query = @"SELECT campaign.id, campaign.name, metrics.conversions, metrics.conversions_from_interactions_rate, metrics.cost_per_conversion, metrics.conversions_by_conversion_date, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, metrics.average_target_cpa_micros, metrics.conversions_value, metrics.all_conversions_value, customer.id, customer.resource_name, customer.status, campaign.end_date, campaign.start_date FROM campaign WHERE customer.status = 'ENABLED'";
+        string query = @"SELECT campaign.id
+                    , campaign.name
+                    , metrics.clicks
+                    , metrics.impressions
+                    , metrics.ctr
+                    , metrics.average_cpc
+                    , metrics.cost_micros
+                    , metrics.average_target_cpa_micros
+                    , customer.id
+                    , customer.resource_name
+                    , customer.status
+                    , campaign.end_date
+                    , campaign.start_date
+                    , segments.date FROM campaign WHERE customer.status = 'ENABLED' AND  segments.date BETWEEN '2024-02-21' AND '2024-02-28'";
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, query,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
 
+        return Task.FromResult(results);
+    }
+
+    /// <summary>
+    /// 取得AdsDataCampaign報表 Api
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsDataCampaignOther(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        string query = @"SELECT campaign.id
+                            , campaign.name
+                            , metrics.conversions
+                            , metrics.conversions_from_interactions_rate
+                            , metrics.cost_per_conversion
+                            , metrics.conversions_by_conversion_date
+                            , metrics.conversions_value
+                            , metrics.all_conversions_value
+                            , customer.id
+                            , customer.resource_name
+                            , customer.status FROM campaign WHERE customer.status = 'ENABLED'";
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
         {
@@ -178,7 +245,9 @@ public class GoogleAdsService : IGoogleAdsService
                             , ad_group_ad.ad.expanded_text_ad.description2
                             , customer.id
                             , customer.resource_name
-                             FROM ad_group_ad";
+                            , segments.date
+                             FROM ad_group_ad 
+                             WHERE customer.status = 'ENABLED' AND  segments.date BETWEEN '2024-02-21' AND '2024-02-28'";
 
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
@@ -224,7 +293,14 @@ public class GoogleAdsService : IGoogleAdsService
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
-        string query = @"SELECT customer.id, conversion_action.name, customer.resource_name, conversion_action.id FROM conversion_action";
+        string query = @"SELECT   customer.id
+                                , conversion_action.name
+                                , customer.resource_name
+                                , conversion_action.id 
+                                , segments.date
+                        FROM conversion_action
+                        WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'
+                        ";
 
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
@@ -280,8 +356,7 @@ public class GoogleAdsService : IGoogleAdsService
                                     ,ad_group_criterion.keyword.text
                                     ,ad_group_criterion.age_range.type
                                     ,ad_group_criterion.gender.type
-                                     FROM ad_group_criterion
-                                     WHERE customer.status = 'ENABLED'";
+                                     FROM ad_group_criterion";
 
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
@@ -379,7 +454,9 @@ public class GoogleAdsService : IGoogleAdsService
         string query = @"SELECT campaign_criterion.location.geo_target_constant
                                 , campaign.name,campaign.id
                                 , customer.id 
-                        FROM location_view ";
+                                , segments.date
+                        FROM location_view 
+                        WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'";
 
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try

@@ -57,6 +57,11 @@ public class ManDateDBContext : DbContext
     public DbSet<SysAdsDataCampaignPo> SysAdsDataCampaign { get; set; }
 
     /// <summary>
+    ///報表(SysAdsDataCampaignConversion)
+    /// </summary>
+    public DbSet<SysAdsDataCampaignConversionPo> SysAdsDataCampaignConversion { get; set; }
+
+    /// <summary>
     ///報表(SysAdsDataCampaignAction)
     /// </summary>
     public DbSet<SysAdsDataCampaignActionPo> SysAdsDataCampaignAction { get; set; }
@@ -97,12 +102,14 @@ public class ManDateDBContext : DbContext
         modelBuilder.Entity<SysReportColumnPo>().HasKey(c => c.ColumnId);
 
         #region GCP 資料導入
-        modelBuilder.Entity<SysAdsDataAdGroupAdPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
-        modelBuilder.Entity<SysAdsDataCampaignPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
-        modelBuilder.Entity<SysAdsDataCampaignActionPo>().HasKey(c => new { c.CustomerID, c.ActionID });
+        modelBuilder.Entity<SysAdsDataAdGroupAdPo>().HasKey(c => new { c.ColDate, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataCampaignPo>().HasKey(c => new { c.ColDate, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataCampaignConversionPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataCampaignActionPo>().HasKey(c => new { c.ColDate, c.ActionID });
         modelBuilder.Entity<SysAdsDataAdGroupCriterionPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
         modelBuilder.Entity<SysAdsDataCampaignConPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
-        modelBuilder.Entity<SysAdsDataCampaignLocationPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataCampaignLocationPo>().HasKey(c => new { c.ColDate, c.CampaignID });
+
         #endregion
 
 

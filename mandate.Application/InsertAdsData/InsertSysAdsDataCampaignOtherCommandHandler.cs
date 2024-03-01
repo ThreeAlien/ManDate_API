@@ -8,7 +8,7 @@ using MediatR;
 
 namespace mandate.Application.InsertAdsData;
 
-public class InsertSysAdsDataCampaignCommandHandler : IRequestHandler<InsertSysAdsDataCampaignRequest, InsertSysAdsDataCampaignResponse>
+public class InsertSysAdsDataCampaignOtherCommandHandler : IRequestHandler<InsertSysAdsDataCampaignOtherRequest, InsertSysAdsDataCampaignOtherResponse>
 {
     /// <summary>
     /// Google Ads服務
@@ -23,15 +23,15 @@ public class InsertSysAdsDataCampaignCommandHandler : IRequestHandler<InsertSysA
     /// <summary>
     /// 建構子
     /// </summary>
-    public InsertSysAdsDataCampaignCommandHandler(IGoogleAdsService googleAdsService, ManDateDBContext context)
+    public InsertSysAdsDataCampaignOtherCommandHandler(IGoogleAdsService googleAdsService, ManDateDBContext context)
     {
         _googleAdsService = googleAdsService;
         _context = context;
     }
 
-    public async Task<InsertSysAdsDataCampaignResponse> Handle(InsertSysAdsDataCampaignRequest request, CancellationToken cancellationToken)
+    public async Task<InsertSysAdsDataCampaignOtherResponse> Handle(InsertSysAdsDataCampaignOtherRequest request, CancellationToken cancellationToken)
     {
-        InsertSysAdsDataCampaignResponse response = new();
+        InsertSysAdsDataCampaignOtherResponse response = new();
         string? refreshToken = await _googleAdsService.GenerateRefreshToken();
         // 1.取得子帳戶
         List<Business.Service.SysClientPo> subAccountList = _googleAdsService.FetchAdsAdvertiseAccount(refreshToken);
@@ -44,41 +44,30 @@ public class InsertSysAdsDataCampaignCommandHandler : IRequestHandler<InsertSysA
             {
                 long customerId = googleAdsRow.Customer.Id;
                 string campaignName = googleAdsRow.Campaign.Name;
-                //string colConValue = googleAdsRow.Metrics.ConversionsValue.ToString();
-                //string ColConByDate = googleAdsRow.Metrics.ConversionsByConversionDate.ToString();
-                //string colConPerCost = StringExtension.ToRounding(googleAdsRow.Metrics.CostPerConversion).ToString();
+                string ColConValue = googleAdsRow.Metrics.ConversionsValue.ToString();
+                string ColConByDate = googleAdsRow.Metrics.ConversionsByConversionDate.ToString();
+                string ColConPerCost = StringExtension.ToRounding(googleAdsRow.Metrics.CostPerConversion).ToString();
 
-                //string ColCon = googleAdsRow.Metrics.Conversions.ToString();
-                //string ColConRate = StringExtension.ToRoundPercentage(googleAdsRow.Metrics.ConversionsFromInteractionsRate);
-                string ColClicks = googleAdsRow.Metrics.Clicks.ToString();
-                string ColImpressions = googleAdsRow.Metrics.Impressions.ToString();
-                string ColCTR = googleAdsRow.Metrics.Ctr.ToString();
-                string ColCPC = googleAdsRow.Metrics.AverageCpc.ToString();
-                string ColCost = googleAdsRow.Metrics.CostMicros.ToString();
-                string ColCPA = googleAdsRow.Metrics.AverageTargetCpaMicros.ToString();
-                DateTime ColStartDate = Convert.ToDateTime(googleAdsRow.Campaign.StartDate);
-                DateTime ColEndDate = Convert.ToDateTime(googleAdsRow.Campaign.EndDate.ToString());
-                DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
+                string ColCon = googleAdsRow.Metrics.Conversions.ToString();
+                string ColConRate = StringExtension.ToRoundPercentage(googleAdsRow.Metrics.ConversionsFromInteractionsRate);
+
                 //寫入DB SysAdsDataCampaign
 
                 try
                 {
-                    SysAdsDataCampaignPo sysAdsDataCampaignPo = new()
+                    SysAdsDataCampaignConversionPo sysAdsDataCampaignOtherPo = new()
                     {
                         CustomerID = customerId.ToString(),
                         CampaignID = googleAdsRow.Campaign.Id.ToString(),
                         ColCampaignName = campaignName,
-                        ColClicks = ColClicks,
-                        ColImpressions = ColImpressions,
-                        ColCTR = ColCTR,
-                        ColCPC = ColCPC,
-                        ColCost = ColCost,
-                        ColCPA = ColCPA,
-                        ColStartDate = ColStartDate,
-                        ColEndDate = ColEndDate,
-                        ColDate = ColDate,
+                        ColConValue = ColConValue,
+                        ColConByDate = ColConByDate,
+                        ColConPerCost = ColConPerCost,
+                        ColCon = ColCon,
+                        ColConRate = ColConRate,
+
                     };
-                    _context.SysAdsDataCampaign.Add(sysAdsDataCampaignPo);
+                    _context.SysAdsDataCampaignConversion.Add(sysAdsDataCampaignOtherPo);
                     await _context.SaveChangesAsync();
 
                     response = new()

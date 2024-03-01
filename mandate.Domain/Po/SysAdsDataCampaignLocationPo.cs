@@ -9,7 +9,6 @@ public class SysAdsDataCampaignLocationPo
     /// <summary>
     /// 客戶ID
     /// </summary>
-    [Key]
     public string? CustomerID { get; set; }
 
     /// <summary>
@@ -22,5 +21,11 @@ public class SysAdsDataCampaignLocationPo
     /// 地區
     /// </summary>
     public string? ColConstant { get; set; }
+
+    /// <summary>
+    /// 數據日期
+    /// </summary>
+    [Key]
+    public DateTime? ColDate { get; set; }
 
 }
