@@ -73,6 +73,38 @@ public interface IGoogleAdsService
     /// 取得Ads子帳戶 Api
     /// </summary>
     public List<SysClientPo> FetchAdsSubAccountApi(string? refreshToken);
+
+    /// <summary>
+    /// 取得性別
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns>請依不同查詢條件更換Query</returns>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsGenderData(string refreshToken, string custId);
+
+    /// <summary>
+    /// 取得年齡
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns>請依不同查詢條件更換Query</returns>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsAgeData(string refreshToken, string custId);
+
+    /// <summary>
+    /// 取得搜尋關鍵字
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns>請依不同查詢條件更換Query</returns>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsKeyWordData(string refreshToken, string custId);
+
+    /// <summary>
+    /// 取得地區
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns>請依不同查詢條件更換Query</returns>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsLocationData(string refreshToken, string custId);
 }
 
 #region 汎古的客戶資料

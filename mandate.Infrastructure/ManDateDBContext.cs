@@ -80,6 +80,26 @@ public class ManDateDBContext : DbContext
     ///報表(SysAdsDataCriterionLocation)
     /// </summary>
     public DbSet<SysAdsDataCampaignLocationPo> SysAdsDataCampaignLocation { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataAgeView)
+    /// </summary>
+    public DbSet<SysAdsDataAgeViewPo> SysAdsDataAgeView { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataGenderView)
+    /// </summary>
+    public DbSet<SysAdsDataGenderViewPo> SysAdsDataGenderView { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataKeywordView)
+    /// </summary>
+    public DbSet<SysAdsDataKeywordViewPo> SysAdsDataKeywordView { get; set; }
+
+    /// <summary>
+    ///報表(SysAdsDataLocationView)
+    /// </summary>
+    public DbSet<SysAdsDataLocationViewPo> SysAdsDataLocationView { get; set; }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -110,6 +130,10 @@ public class ManDateDBContext : DbContext
         modelBuilder.Entity<SysAdsDataCampaignConPo>().HasKey(c => new { c.CustomerID, c.CampaignID });
         modelBuilder.Entity<SysAdsDataCampaignLocationPo>().HasKey(c => new { c.ColDate, c.CampaignID });
 
+        modelBuilder.Entity<SysAdsDataAgeViewPo>().HasKey(c => new { c.SerialID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataGenderViewPo>().HasKey(c => new { c.SerialID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataKeywordViewPo>().HasKey(c => new { c.SerialID, c.CampaignID });
+        modelBuilder.Entity<SysAdsDataLocationViewPo>().HasKey(c => new { c.SerialID, c.CampaignID });
         #endregion
 
 
