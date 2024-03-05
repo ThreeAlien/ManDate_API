@@ -76,6 +76,11 @@ public class GoogleAdsService : IGoogleAdsService
         return Task.FromResult(refreshToken);
     }
 
+    /// <summary>
+    /// SSO CallBack
+    /// </summary>
+    /// <param name="code"></param>
+    /// <returns></returns>
     public async Task<string?> AuthorizeCallBack(string code)
     {
         // TODO：此網址待等weider前端寫好之後再改
@@ -770,5 +775,205 @@ public class GoogleAdsService : IGoogleAdsService
             var c = 0;
         }
         return result;
+    }
+
+    /// <summary>
+    /// 取得性別
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns></returns>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsGenderData(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        // 性別
+        string genderQuery = @"SELECT ad_group_criterion.gender.type, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM gender_view WHERE segments.date BETWEEN '2022-01-01' AND '2024-02-28'";
+        // 年齡
+        string ageQuery = @"SELECT ad_group_criterion.age_range.type, campaign.name, ad_group.name, ad_group_criterion.system_serving_status, ad_group_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM age_range_view  WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'";
+        // 關鍵字
+        string keyWordQuery = @"SELECT ad_group_criterion.keyword.text, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, segments.date, campaign.id, customer.id FROM keyword_view WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'  AND ad_group_criterion.status != 'REMOVED'";
+        // 地區
+        string locationQuery = @"SELECT campaign_criterion.location.geo_target_constant, campaign.name, campaign_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM location_view WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28' AND campaign_criterion.status != 'REMOVED'";
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, genderQuery,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
+    }
+
+    /// <summary>
+    /// 取得年齡
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns></returns>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsAgeData(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        // 年齡
+        string ageQuery = @"SELECT ad_group_criterion.age_range.type, campaign.name, ad_group.name, ad_group_criterion.system_serving_status, ad_group_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM age_range_view  WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'";
+       
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, ageQuery,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
+    }
+
+    /// <summary>
+    /// 取得搜尋關鍵字
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns></returns>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsKeyWordData(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+       
+        // 關鍵字
+        string keyWordQuery = @"SELECT ad_group_criterion.keyword.text, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, segments.date, campaign.id, customer.id FROM keyword_view WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'  AND ad_group_criterion.status != 'REMOVED'";
+        
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, keyWordQuery,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
+    }
+
+    /// <summary>
+    /// 取得地區
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns></returns>
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsLocationData(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+
+        string locationQuery = @"SELECT campaign_criterion.location.geo_target_constant, campaign.name, campaign_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM location_view WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28' AND campaign_criterion.status != 'REMOVED'";
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        try
+        {
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, locationQuery,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return Task.FromResult(results);
     }
 }
