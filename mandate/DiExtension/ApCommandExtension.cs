@@ -55,6 +55,7 @@ public static class ApCommandExtension
         service.AddScoped<IRequestHandler<InsertSysAdsDataCampaignRequest, InsertSysAdsDataCampaignResponse>, InsertSysAdsDataCampaignCommandHandler>();
         service.AddScoped<IRequestHandler<InsertSysAdsDataCampaignOtherRequest, InsertSysAdsDataCampaignOtherResponse>, InsertSysAdsDataCampaignOtherCommandHandler>();
         service.AddScoped<IRequestHandler<InsertSysAdsDataAdGroupAdRequest, InsertSysAdsDataAdGroupAdResponse>, InsertSysAdsDataAdGroupAdCommandHandler>();
+        service.AddScoped<IRequestHandler<AddSubClientRequest, AddSubClientResponse>, AddSubClientCommandHandler>();
         #endregion
         return service;
     }
