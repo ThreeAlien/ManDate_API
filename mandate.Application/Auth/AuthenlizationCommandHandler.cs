@@ -41,7 +41,7 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
         foreach (Business.Service.SysClientPo subAccount in subAccountList)
         {
             // 測試從Ads抓性別資料 For Andy
-            Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> adsCommonDataResult = await _googleAdsService.FetchAdsGenderData(refreshToken, subAccount.ClientId);
+            Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> adsCommonDataResult = await _googleAdsService.FetchAdsCommonData(refreshToken, subAccount.ClientId, "age");
 
             // 2. SysAdsDataCampaignAction
             Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> adsCampaignActionResult = await _googleAdsService.FetchAdsCampaignAction(refreshToken, subAccount.ClientId);
