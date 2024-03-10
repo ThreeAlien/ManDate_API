@@ -47,4 +47,10 @@ public class InsertAdsDataController : BaseApiController
     /// </summary>
     [HttpPost]
     public Task<InsertSysAdsDataAdGroupAdResponse> InsertSysAdsDataAdGroupAd() => Mediator!.Send(new InsertSysAdsDataAdGroupAdRequest());
+
+    /// <summary>
+    /// Insert age、gender、keyWord、location 資料
+    /// </summary>
+    [HttpPost]
+    public Task<InsertSysAdsCommonDataResponse> InsertSysAdsCommonData(InsertSysAdsCommonDataRequest request) => Mediator!.Send(request);
 }

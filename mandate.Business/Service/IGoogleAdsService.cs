@@ -80,7 +80,7 @@ public interface IGoogleAdsService
     /// <param name="refreshToken"></param>
     /// <param name="custId"></param>
     /// <returns>請依不同查詢條件更換Query</returns>
-    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsGenderData(string refreshToken, string custId);
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsCommonData(string refreshToken, string custId, string queryType);
 
     /// <summary>
     /// 取得年齡

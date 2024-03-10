@@ -783,7 +783,7 @@ public class GoogleAdsService : IGoogleAdsService
     /// <param name="refreshToken"></param>
     /// <param name="custId"></param>
     /// <returns></returns>
-    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsGenderData(string refreshToken, string custId)
+    public Task<Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>> FetchAdsCommonData(string refreshToken, string custId, string queryType)
     {
         GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
         GoogleAdsConfig config = new GoogleAdsConfig()
@@ -800,19 +800,31 @@ public class GoogleAdsService : IGoogleAdsService
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
+        string queryString;
         // 性別
-        string genderQuery = @"SELECT ad_group_criterion.gender.type, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM gender_view WHERE segments.date BETWEEN '2022-01-01' AND '2024-02-28'";
+        string genderQuery = @"SELECT ad_group_criterion.gender.type, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM gender_view WHERE segments.date > '2000-01-01' AND segments.date < '2024-03-07'";
         // 年齡
-        string ageQuery = @"SELECT ad_group_criterion.age_range.type, campaign.name, ad_group.name, ad_group_criterion.system_serving_status, ad_group_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM age_range_view  WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'";
+        string ageQuery = @"SELECT ad_group_criterion.age_range.type, campaign.name, ad_group.name, ad_group_criterion.system_serving_status, ad_group_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM age_range_view  WHERE segments.date > '2000-01-01' AND segments.date < '2024-03-07'";
         // 關鍵字
-        string keyWordQuery = @"SELECT ad_group_criterion.keyword.text, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, segments.date, campaign.id, customer.id FROM keyword_view WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'  AND ad_group_criterion.status != 'REMOVED'";
+        string keyWordQuery = @"SELECT ad_group_criterion.keyword.text, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, segments.date, campaign.id, customer.id FROM keyword_view WHERE segments.date > '2000-01-01' AND segments.date < '2024-03-07'  AND ad_group_criterion.status != 'REMOVED'";
         // 地區
-        string locationQuery = @"SELECT campaign_criterion.location.geo_target_constant, campaign.name, campaign_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM location_view WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28' AND campaign_criterion.status != 'REMOVED'";
+        string locationQuery = @"SELECT campaign_criterion.location.geo_target_constant, campaign.name, campaign_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM location_view WHERE segments.date > '2000-01-01' AND segments.date < '2024-03-07' AND campaign_criterion.status != 'REMOVED'";
+
+        queryString = queryType switch
+        {
+            "gender" => genderQuery,
+            "age" => ageQuery,
+            "keyWord" => keyWordQuery,
+            "location" => locationQuery,
+        };
+
+
+
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
         {
             // Issue a search request.
-            googleAdsService.SearchStream(custId, genderQuery,
+            googleAdsService.SearchStream(custId, queryString,
                 delegate (SearchGoogleAdsStreamResponse resp)
                 {
                     results = resp.Results;
