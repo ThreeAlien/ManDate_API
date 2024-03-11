@@ -81,4 +81,9 @@ public class SysReportColumnPo
     public bool? IsColEndDate { get; set; }
 
     public string? ContentSort { get; set; } = null!;
+
+    /// <summary>
+    /// 是否為預設欄位
+    /// </summary>
+    public bool? IsDefault { get; set; }
 }
