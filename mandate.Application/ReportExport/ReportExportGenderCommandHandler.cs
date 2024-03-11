@@ -44,40 +44,28 @@ public class ReportExportGenderCommandHandler : IRequestHandler<ReportExportGend
             if (request.StartDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) >= request.StartDate).ToList();
             if (request.EndDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) <= request.EndDate).ToList();
 
-            IEnumerable<SysAdsDataGenderViewPo> MaleRspData = respData.Where(s => s.ColGender == "Male");
-            IEnumerable<SysAdsDataGenderViewPo> FemaleRspData = respData.Where(s => s.ColGender == "Female");
-            IEnumerable<SysAdsDataGenderViewPo> UndeterminedRspData = respData.Where(s => s.ColGender == "Undetermined");
+            List<ReportExportGenderVo> genderResponse = respData
+            .GroupBy(g => g.ColGender)
+            .Select(group =>
+            {
+                string gender = group.Key;
+                int impressions = group.Sum(x => int.Parse(x.ColImpressions));
+                int clicks = group.Sum(x => int.Parse(x.ColClicks));
+                double ctr = group.Sum(x => double.Parse(x.ColCTR));
+                double cpc = group.Sum(x => double.Parse(x.ColCPC));
+                double cost = group.Sum(x => double.Parse(x.ColCost));
 
-            List<ReportExportGenderVo> genderResponse = new()
-        {
-            new ReportExportGenderVo()
-            {
-                Gender = "Male",
-                Impressions = MaleRspData.Sum(item => Int32.Parse(item.ColImpressions)),
-                Click = MaleRspData.Sum(item => Int32.Parse(item.ColClicks)),
-                CTR = MaleRspData.Sum(item => double.Parse(item.ColCTR)).ToString("P", CultureInfo.InvariantCulture),
-                CPC = MaleRspData.Sum(item => double.Parse(item.ColCPC)),
-                Cost = MaleRspData.Sum(item => double.Parse(item.ColCost)),
-            },
-            new ReportExportGenderVo()
-            {
-                Gender = "Female",
-                Impressions = FemaleRspData.Sum(item => Int32.Parse(item.ColImpressions)),
-                Click = FemaleRspData.Sum(item => Int32.Parse(item.ColClicks)),
-                CTR = FemaleRspData.Sum(item => double.Parse(item.ColCTR)).ToString("P", CultureInfo.InvariantCulture),
-                CPC = FemaleRspData.Sum(item => double.Parse(item.ColCPC)),
-                Cost = FemaleRspData.Sum(item => double.Parse(item.ColCost)),
-            },
-            new ReportExportGenderVo()
-            {
-                Gender = "Undetermined",
-                Impressions = UndeterminedRspData.Sum(item => Int32.Parse(item.ColImpressions)),
-                Click = UndeterminedRspData.Sum(item => Int32.Parse(item.ColClicks)),
-                CTR = UndeterminedRspData.Sum(item => double.Parse(item.ColCTR)).ToString("P", CultureInfo.InvariantCulture),
-                CPC = UndeterminedRspData.Sum(item => double.Parse(item.ColCPC)),
-                Cost = UndeterminedRspData.Sum(item => double.Parse(item.ColCost)),
-            }
-        };
+                return new ReportExportGenderVo()
+                {
+                    Gender = gender,
+                    Impressions = impressions,
+                    Click = clicks,
+                    CTR = ctr.ToString("P", CultureInfo.InvariantCulture),
+                    CPC = cpc,
+                    Cost = cost
+                };
+            })
+            .ToList();
 
             response = new()
             {
