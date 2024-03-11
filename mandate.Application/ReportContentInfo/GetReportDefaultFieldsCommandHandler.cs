@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using mandate.Business.Service;
 using mandate.Domain.Models.ReportContent;
-using mandate.Domain.Po;
 using mandate.Infrastructure;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace mandate.Application.ReportContentInfo;
 
@@ -37,32 +35,24 @@ public class GetReportDefaultFieldsCommandHandler : IRequestHandler<GetReportDef
         try
         {
             List<ReportDefaultFields> result = _context.SysReportColumn
-                                                .Join(_context.SysReportContent, column => column.ContentId, content => content.ContentID, (column, content) => new { column, content.ContentName }).Select(x => new ReportDefaultFields
+                                                .Join(_context.SysReportContent, column => column.ContentId, content => content.ContentID, (column, content) => new { column, content.ContentName }).Where(x => x.column.IsDefault == true).Select(x => new ReportDefaultFields
                                                 {
                                                     ContentId = x.column.ContentId,
                                                     ContentName = x.ContentName,
                                                     IsColAccount = x.column.IsColAccount,
                                                     IsColAdGroupName = x.column.IsColAdGroupName,
                                                     IsColCampaignName = x.column.IsColCampaignName,
-                                                    //IsColLongHeadLine = x.column.IsColLongHeadLine,
                                                     IsColCutomerID = x.column.IsColCutomerID,
                                                     IsColAdFinalURL = x.column.IsColAdFinalURL,
                                                     IsColHeadline = x.column.IsColHeadline,
-                                                    //IsColShortHeadLine = x.column.IsColHeadline,
                                                     IsColHeadLine_1 = x.column.IsColHeadLine_1,
                                                     IsColHeadLine_2 = x.column.IsColHeadLine_2,
                                                     IsColDirections = x.column.IsColDirections,
                                                     IsColDirections_1 = x.column.IsColDirections_1,
                                                     IsColDirections_2 = x.column.IsColDirections_2,
                                                     IsColAdName = x.column.IsColAdName,
-                                                    //IsColAdPath_1 = x.column.IsColAdPath_1,
-                                                    //IsColAdPath_2 = x.column.IsColAdPath_2,
                                                     IsColSrchKeyWord = x.column.IsColSrchKeyWord,
                                                     IsColConGoal = x.column.IsColConGoal,
-                                                    //IsColDateTime = x.column.IsColDateTime,
-                                                    //IsColWeek = x.column.IsColWeek,
-                                                    //IsColSeason = x.column.IsColSeason,
-                                                    //IsColMonth = x.column.IsColMonth,
                                                     IsColConValue = x.column.IsColConValue,
                                                     IsColConByDate = x.column.IsColConByDate,
                                                     IsColConPerCost = x.column.IsColConPerCost,

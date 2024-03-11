@@ -3,6 +3,7 @@ using mandate.Application.Auth;
 using mandate.Application.CustomerInfo;
 using mandate.Application.InsertAdsData;
 using mandate.Application.ReportContentInfo;
+using mandate.Application.ReportExport;
 using mandate.Application.ReportInfo;
 using mandate.Application.Sso;
 using mandate.Application.SubClient;
@@ -12,6 +13,7 @@ using mandate.Domain.Models.AdsData;
 using mandate.Domain.Models.Customer;
 using mandate.Domain.Models.Report;
 using mandate.Domain.Models.ReportContent;
+using mandate.Domain.Models.ReportExport;
 using mandate.Domain.Models.Sso;
 using mandate.Domain.Models.SubClient;
 using MediatR;
@@ -44,7 +46,12 @@ public static class ApCommandExtension
         service.AddScoped<IRequestHandler<GetSysAdsDataRequest, GetSysAdsDataResponse>, GetSysAdsDataCommandHandler>();
         service.AddScoped<IRequestHandler<GetAdsAccountRequest, GetAdsAccountResponse>, GetAdsAccountCommandHandler>();
         service.AddScoped<IRequestHandler<GetReportDetailRequest, GetReportDetailResponse>, GetReportDetailCommandHandler>();
-
+        #region 報表匯出
+        service.AddScoped<IRequestHandler<ReportExportGenderRequest, ReportExportGenderResponse>, ReportExportGenderCommandHandler>();
+        service.AddScoped<IRequestHandler<ReportExportAgeRequest, ReportExportAgeResponse>, ReportExportAgeCommandHandler>();
+        service.AddScoped<IRequestHandler<ReportExportKeyWordRequest, ReportExportKeyWordResponse>, ReportExportKeyWordCommandHandler>();
+        service.AddScoped<IRequestHandler<ReportExportLocationRequest, ReportExportLocationResponse>, ReportExportLocationCommandHandler>();
+        #endregion
 
         service.AddScoped<IRequestHandler<AuthorizeCallBackRequest, AuthorizeCallBackResponse>, AuthorizeCallBackCommandHandler>();
         #region Ads 資料導入
