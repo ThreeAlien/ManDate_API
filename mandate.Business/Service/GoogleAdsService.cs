@@ -84,7 +84,7 @@ public class GoogleAdsService : IGoogleAdsService
     public async Task<string?> AuthorizeCallBack(string code)
     {
         // TODO：此網址待等weider前端寫好之後再改
-        string redirectUri = "https://mandate-group.com";
+        string redirectUri = "http://localhost:4200/sso";
         GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
 
 
