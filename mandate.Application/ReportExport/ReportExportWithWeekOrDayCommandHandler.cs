@@ -42,13 +42,13 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
             List<SysAdsDataCampaignPo> respData = await _context.SysAdsDataCampaign.ToListAsync();
 
             #region request檢核
-            if (string.IsNullOrEmpty(request.Status))
+            if (string.IsNullOrEmpty(request.Status) || string.IsNullOrEmpty(request.CampaignID))
             {
                 return response = new()
                 {
                     Code = "404",
                     Data = null,
-                    Msg = "請輸入Status(Week Or Day)"
+                    Msg = "Status(Week Or Day)、CampaignID為必填"
                 };
             }
             #endregion

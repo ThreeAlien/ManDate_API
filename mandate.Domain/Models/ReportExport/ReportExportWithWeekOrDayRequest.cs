@@ -10,7 +10,7 @@ public class ReportExportWithWeekOrDayRequest : IRequest<ReportExportWithWeekOrD
     /// <summary>
     /// CampaignID
     /// </summary>
-    public string? CampaignID { get; set; }
+    public string CampaignID { get; set; } = null!;
 
     /// <summary>
     /// 狀態(使用者選"每周"或"每日")
