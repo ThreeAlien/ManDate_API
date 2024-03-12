@@ -2,6 +2,9 @@
 
 namespace mandate.Domain.Models.ReportExport;
 
+/// <summary>
+/// 報表匯出 - 每周或每日 Request
+/// </summary>
 public class ReportExportWithWeekOrDayRequest : IRequest<ReportExportWithWeekOrDayResponse>
 {
     /// <summary>

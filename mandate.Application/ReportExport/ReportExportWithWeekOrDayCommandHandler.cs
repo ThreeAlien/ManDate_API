@@ -6,17 +6,13 @@ using mandate.Domain.Vo;
 using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace mandate.Application.ReportExport;
 
+/// <summary>
+/// 報表匯出 - 每周或每日 CommandHandler
+/// </summary>
 public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExportWithWeekOrDayRequest, ReportExportWithWeekOrDayResponse>
 {
     /// <summary>
@@ -90,13 +86,14 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
                 .ToList();
             }
 
-            if(request.Status == ReportExportStatus.Week)
+            if (request.Status == ReportExportStatus.Week)
             {
                 reportResponse = respData
                 .GroupBy(g => GetWeekStartDate(g.ColDate))
                 .Select(group =>
                 {
-                    string location = Convert.ToString(group.Key);
+                    DateTime endDate = GetWeekEndDate((DateTime)group.Key);
+                    string location = group.Key.Value.ToString("yyyy/MM/dd") + "~" + endDate.ToString("yyyy/MM/dd");
                     int impressions = group.Sum(x => int.Parse(x.ColImpressions));
                     int clicks = group.Sum(x => int.Parse(x.ColClicks));
                     double ctr = group.Sum(x => double.Parse(x.ColCTR));
@@ -115,7 +112,7 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
                 })
                 .ToList();
             }
-            
+
 
             response = new()
             {
@@ -137,5 +134,12 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
         DateTime dateTime = Convert.ToDateTime(date);
         int diff = (7 + (dateTime.DayOfWeek - DayOfWeek.Monday)) % 7;
         return dateTime.AddDays(-1 * diff).Date;
+    }
+
+    // 取得給定日期所在週的結束日期
+    private static DateTime GetWeekEndDate(DateTime date)
+    {
+        int diff = ((int)DayOfWeek.Saturday - (int)date.DayOfWeek + 7) % 7;
+        return date.AddDays(diff + 1).Date;
     }
 }
