@@ -19,7 +19,7 @@ public class ReportExportController : BaseApiController
     /// 報表匯出 - 年齡
     /// </summary>
     [HttpPost]
-    public Task<ReportExportAgeResponse> ReportExportAge() => Mediator!.Send(new ReportExportAgeRequest());
+    public Task<ReportExportAgeResponse> ReportExportAge(ReportExportAgeRequest request) => Mediator!.Send(request);
 
     /// <summary>
     /// 報表匯出 - 關鍵字
@@ -31,5 +31,11 @@ public class ReportExportController : BaseApiController
     /// 報表匯出 - 地點
     /// </summary>
     [HttpPost]
-    public Task<ReportExportLocationResponse> ReportExportLocation() => Mediator!.Send(new ReportExportLocationRequest());
+    public Task<ReportExportLocationResponse> ReportExportLocation(ReportExportLocationRequest request) => Mediator!.Send(request);
+
+    /// <summary>
+    /// 報表匯出 - 每周或每日
+    /// </summary>
+    [HttpPost]
+    public Task<ReportExportWithWeekOrDayResponse> ReportExportWithWeekOrDay(ReportExportWithWeekOrDayRequest request) => Mediator!.Send(request);
 }

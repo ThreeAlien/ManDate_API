@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using mandate.Domain.Models.ReportExport;
 using mandate.Domain.Po;
+using mandate.Domain.Vo;
 using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace mandate.Application.ReportExport;
 
@@ -38,9 +40,36 @@ public class ReportExportLocationCommandHandler : IRequestHandler<ReportExportLo
         {
             List<SysAdsDataLocationViewPo> respData = await _context.SysAdsDataLocationView.ToListAsync();
 
+            if (!String.IsNullOrEmpty(request.CampaignID)) respData = respData.Where(x => x.CampaignID == request.CampaignID).ToList();
+            if (request.StartDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) >= request.StartDate).ToList();
+            if (request.EndDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) <= request.EndDate).ToList();
+
+            List<ReportExportLocationVo> locationResponse = respData
+            .GroupBy(g => g.ColConstant)
+            .Select(group =>
+            {
+                string location = group.Key;
+                int impressions = group.Sum(x => int.Parse(x.ColImpressions));
+                int clicks = group.Sum(x => int.Parse(x.ColClicks));
+                double ctr = group.Sum(x => double.Parse(x.ColCTR));
+                double cpc = group.Sum(x => double.Parse(x.ColCPC));
+                double cost = group.Sum(x => double.Parse(x.ColCost));
+
+                return new ReportExportLocationVo()
+                {
+                    Location = location,
+                    Impressions = impressions,
+                    Click = clicks,
+                    CTR = ctr.ToString("P", CultureInfo.InvariantCulture),
+                    CPC = cpc,
+                    Cost = cost
+                };
+            })
+            .ToList();
+
             response = new()
             {
-                Data = _mapper.Map<List<SysAdsDataLocationViewPo>>(respData)
+                Data = _mapper.Map<List<ReportExportLocationVo>>(locationResponse)
             };
         }
         catch (Exception ex)

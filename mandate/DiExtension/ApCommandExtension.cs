@@ -51,6 +51,7 @@ public static class ApCommandExtension
         service.AddScoped<IRequestHandler<ReportExportAgeRequest, ReportExportAgeResponse>, ReportExportAgeCommandHandler>();
         service.AddScoped<IRequestHandler<ReportExportKeyWordRequest, ReportExportKeyWordResponse>, ReportExportKeyWordCommandHandler>();
         service.AddScoped<IRequestHandler<ReportExportLocationRequest, ReportExportLocationResponse>, ReportExportLocationCommandHandler>();
+        service.AddScoped<IRequestHandler<ReportExportWithWeekOrDayRequest, ReportExportWithWeekOrDayResponse>, ReportExportWithWeekOrDayCommandHandler>();
         #endregion
 
         service.AddScoped<IRequestHandler<AuthorizeCallBackRequest, AuthorizeCallBackResponse>, AuthorizeCallBackCommandHandler>();
