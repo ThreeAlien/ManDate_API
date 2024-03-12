@@ -33,7 +33,7 @@ namespace mandate.Application.ReportInfo
 
         public async Task<GetReportResponse> Handle(GetReportRequest request, CancellationToken cancellationToken)
         {
-            List<SysReportPo> respData = await _context.SysReport.ToListAsync();
+            List<SysReportPo>? respData = await _context.SysReport.ToListAsync();
 
             if (!String.IsNullOrEmpty(request.ReportName)) respData = respData.Where(x => x.ReportName == request.ReportName).ToList();
             if (!String.IsNullOrEmpty(request.ReportGoalAds)) respData = respData.Where(x => x.ReportGoalAds == request.ReportGoalAds).ToList();
