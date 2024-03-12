@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using mandate.Domain.Models.ReportExport;
 using mandate.Domain.Po;
+using mandate.Domain.Vo;
 using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace mandate.Application.ReportExport;
 
@@ -38,11 +40,40 @@ public class ReportExportKeyWordCommandHandler : IRequestHandler<ReportExportKey
         {
             List<SysAdsDataKeywordViewPo> respData = await _context.SysAdsDataKeywordView.ToListAsync();
 
-            if (!String.IsNullOrEmpty(request.KeyWord)) respData = respData.Where(x => x.ColSrchKeyWord == request.KeyWord).ToList();
+            if (!String.IsNullOrEmpty(request.CampaignID)) respData = respData.Where(x => x.CampaignID == request.CampaignID).ToList();
+            if (request.StartDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) >= request.StartDate).ToList();
+            if (request.EndDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) <= request.EndDate).ToList();
+
+            List<ReportExportKeyWordVo> keyWordResponse = respData
+            .GroupBy(g => g.ColSrchKeyWord)
+            .Select(group =>
+            {
+                string? campaignName = group.Select(x => x.ColCampaignName).FirstOrDefault();
+                string? adGroupName = group.Select(x => x.ColAdGroupName).FirstOrDefault();
+                string keyWord = group.Key;
+                int impressions = group.Sum(x => int.Parse(x.ColImpressions));
+                int clicks = group.Sum(x => int.Parse(x.ColClicks));
+                double ctr = group.Sum(x => double.Parse(x.ColCTR));
+                double cpc = group.Sum(x => double.Parse(x.ColCPC));
+                double cost = group.Sum(x => double.Parse(x.ColCost));
+
+                return new ReportExportKeyWordVo()
+                {
+                    CampaignName = campaignName,
+                    AdGroupName = adGroupName,
+                    ColSrchKeyWord = keyWord,
+                    Impressions = impressions,
+                    Click = clicks,
+                    CTR = ctr.ToString("P", CultureInfo.InvariantCulture),
+                    CPC = cpc,
+                    Cost = cost
+                };
+            })
+            .ToList();
 
             response = new()
             {
-                Data = _mapper.Map<List<SysAdsDataKeywordViewPo>>(respData)
+                Data = _mapper.Map<List<ReportExportKeyWordVo>>(keyWordResponse)
             };
         }
         catch (Exception ex)

@@ -56,16 +56,16 @@ public class SysAdsDataCampaignPo
     /// <summary>
     ///  廣告開始時間
     /// </summary>
-    public DateTime? ColStartDate { get; set; }
+    public string? ColStartDate { get; set; }
 
     /// <summary>
     /// 廣告結束時間
     /// </summary>
-    public DateTime? ColEndDate { get; set; }
+    public string? ColEndDate { get; set; }
 
     /// <summary>
     /// 數據日期
     /// </summary>
     [Key]
-    public DateTime? ColDate { get; set; }
+    public string ColDate { get; set; } = null!;
 }

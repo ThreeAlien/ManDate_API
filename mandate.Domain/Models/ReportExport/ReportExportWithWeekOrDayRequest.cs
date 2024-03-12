@@ -3,14 +3,19 @@
 namespace mandate.Domain.Models.ReportExport;
 
 /// <summary>
-/// 報表匯出 - 年齡 Request
+/// 報表匯出 - 每周或每日 Request
 /// </summary>
-public class ReportExportAgeRequest : IRequest<ReportExportAgeResponse>
+public class ReportExportWithWeekOrDayRequest : IRequest<ReportExportWithWeekOrDayResponse>
 {
     /// <summary>
     /// CampaignID
     /// </summary>
-    public string? CampaignID { get; set; }
+    public string CampaignID { get; set; } = null!;
+
+    /// <summary>
+    /// 狀態(使用者選"每周"或"每日")
+    /// </summary>
+    public string Status { get; set; } = null!;
 
     /// <summary>
     /// 起始日期

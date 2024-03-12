@@ -107,9 +107,9 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
                 string ColCPC = googleAdsRow.Metrics.AverageCpc.ToString();
                 string ColCost = googleAdsRow.Metrics.CostMicros.ToString();
                 string ColCPA = googleAdsRow.Metrics.AverageTargetCpaMicros.ToString();
-                DateTime ColStartDate = Convert.ToDateTime(googleAdsRow.Campaign.StartDate.ToString());
-                DateTime ColEndDate = Convert.ToDateTime(googleAdsRow.Campaign.EndDate.ToString());
-                DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
+                string ColStartDate = googleAdsRow.Campaign.StartDate.ToString();
+                string ColEndDate = googleAdsRow.Campaign.EndDate.ToString();
+                string ColDate = googleAdsRow.Segments.Date.ToString();
 
                 // 寫入DB SysAdsDataCampaign
                 SysAdsDataCampaignPo sysAdsDataCampaignPo = new()

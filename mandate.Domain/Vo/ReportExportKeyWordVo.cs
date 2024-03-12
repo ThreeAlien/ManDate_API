@@ -1,14 +1,24 @@
 ﻿namespace mandate.Domain.Vo;
 
 /// <summary>
-/// 報表匯出 - 性別 Vo
+/// 報表匯出 - 關鍵字 Vo
 /// </summary>
-public class ReportExportGenderVo
+public class ReportExportKeyWordVo
 {
     /// <summary>
-    /// 性別
+    /// 廣告活動
     /// </summary>
-    public string? Gender { get; set; }
+    public string? CampaignName { get; set; }
+
+    /// <summary>
+    /// 廣告群組
+    /// </summary>
+    public string? AdGroupName { get; set; }
+
+    /// <summary>
+    /// 關鍵字
+    /// </summary>
+    public string? ColSrchKeyWord { get; set; }
 
     /// <summary>
     /// 曝光數

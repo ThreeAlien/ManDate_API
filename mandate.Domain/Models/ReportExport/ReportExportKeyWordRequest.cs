@@ -8,7 +8,17 @@ namespace mandate.Domain.Models.ReportExport;
 public class ReportExportKeyWordRequest : IRequest<ReportExportKeyWordResponse>
 {
     /// <summary>
-    /// 關鍵字
+    /// CampaignID
     /// </summary>
-    public string? KeyWord { get; set; }
+    public string? CampaignID { get; set; }
+
+    /// <summary>
+    /// 起始日期
+    /// </summary>
+    public DateTime? StartDate { get; set; }
+
+    /// <summary>
+    /// 結束日期
+    /// </summary>
+    public DateTime? EndDate { get; set; }
 }

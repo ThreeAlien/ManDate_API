@@ -1,14 +1,14 @@
 ﻿namespace mandate.Domain.Vo;
 
 /// <summary>
-/// 報表匯出 - 性別 Vo
+/// 報表匯出 - 每周或每日 Vo
 /// </summary>
-public class ReportExportGenderVo
+public class ReportExportWithWeekOrDayVo
 {
     /// <summary>
-    /// 性別
+    /// 日期
     /// </summary>
-    public string? Gender { get; set; }
+    public string? Date { get; set; }
 
     /// <summary>
     /// 曝光數
