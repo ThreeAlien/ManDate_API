@@ -39,8 +39,6 @@ public class GetReportDetailCommandHandler : IRequestHandler<GetReportDetailRequ
                                                     IsColCutomerID = x.column.IsColCutomerID,
                                                     IsColCampaignName = x.column.IsColCampaignName,
                                                     IsColAdGroupName = x.column.IsColAdGroupName,
-
-
                                                     IsColAdFinalURL = x.column.IsColAdFinalURL,
                                                     IsColHeadline = x.column.IsColHeadline,
                                                     IsColHeadLine_1 = x.column.IsColHeadLine_1,

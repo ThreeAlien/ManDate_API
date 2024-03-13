@@ -60,5 +60,5 @@ public class UpdateReportRequest : IRequest<UpdateReportResponse>
     /// <summary>
     /// 報表欄位資料
     /// </summary>
-    public List<ReportColumnVo>? ColumnData { get; set; }
+    public List<ReportColumnDataVo>? ColumnData { get; set; }
 }

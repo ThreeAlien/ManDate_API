@@ -4,6 +4,8 @@ using mandate.Domain.Po;
 using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Net;
 
 namespace mandate.Application.ReportInfo
 {
@@ -35,12 +37,26 @@ namespace mandate.Application.ReportInfo
         {
             List<SysReportPo> respData = await _context.SysReport.ToListAsync();
 
-            if (!String.IsNullOrEmpty(request.ReportName)) respData = respData.Where(x => x.ReportName == request.ReportName).ToList();
-            if (!String.IsNullOrEmpty(request.ReportGoalAds)) respData = respData.Where(x => x.ReportGoalAds == request.ReportGoalAds).ToList();
-            if (!String.IsNullOrEmpty(request.ReportMedia)) respData = respData.Where(x => x.ReportMedia == request.ReportMedia).ToList();
-            if (!String.IsNullOrEmpty(request.ReportID)) respData = respData.Where(x => x.ReportID == request.ReportID).ToList();
-            if (!String.IsNullOrEmpty(request.StartDate)) respData = respData.Where(x => Convert.ToDateTime(request.StartDate) < x.CreateDate).ToList();
-            if (!String.IsNullOrEmpty(request.EndDate)) respData = respData.Where(x => Convert.ToDateTime(request.EndDate) > x.CreateDate).ToList();
+            List<GetReportInfo> result = _context.SysReport
+                                        .Join(_context.SysSubClient, report => report.SubID, subClient => subClient.SubId, (report, subClient) => new { report, subClient.SubName }).Select(x => new GetReportInfo
+                                        {
+                                            ReportID = x.report.ReportID,
+                                            ReportName = x.report.ReportName,
+                                            SubClientName = x.SubName,
+                                            ReportGoalAds = x.report.ReportGoalAds,
+                                            ReportMedia = x.report.ReportMedia,
+                                            ReportStatus = x.report.ReportStatus,
+                                            ColumnID = x.report.ColumnID,
+                                            SubID = x.report.SubID,
+                                        }).ToList();
+
+            if (!String.IsNullOrEmpty(request.ReportID)) result = result.Where(x => x.ReportID == request.ReportID).ToList();
+            if (!String.IsNullOrEmpty(request.ReportName)) result = result.Where(x => x.ReportName == request.ReportName).ToList();
+            if (!String.IsNullOrEmpty(request.ReportGoalAds)) result = result.Where(x => x.ReportGoalAds == request.ReportGoalAds).ToList();
+            if (!String.IsNullOrEmpty(request.ReportMedia)) result = result.Where(x => x.ReportMedia == request.ReportMedia).ToList();
+            if (!String.IsNullOrEmpty(request.ReportID)) result = result.Where(x => x.ReportID == request.ReportID).ToList();
+            if (!String.IsNullOrEmpty(request.StartDate)) result = result.Where(x => Convert.ToDateTime(request.StartDate) < x.CreateDate).ToList();
+            if (!String.IsNullOrEmpty(request.EndDate)) result = result.Where(x => Convert.ToDateTime(request.EndDate) > x.CreateDate).ToList();
 
             GetReportResponse response = new()
             {
