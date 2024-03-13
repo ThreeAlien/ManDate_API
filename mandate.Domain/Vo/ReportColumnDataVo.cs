@@ -50,7 +50,7 @@ public class ReportColumnDataVo : IMapTo<ReportColumnVo>
 
     void IMapTo<ReportColumnVo>.Mapping(Profile profile)
     {
-        profile.CreateMap<ReportColumnData, ReportColumnVo>()
+        profile.CreateMap<ReportColumnDataVo, ReportColumnVo>()
             .ForMember(d => d.ColAccount, map => map.MapFrom(s => s.ColAccount))
             .ForMember(d => d.ColCutomerID, map => map.MapFrom(s => s.ColCutomerID))
             .ForMember(d => d.ColAdGroupName, map => map.MapFrom(s => s.ColAdGroupName))
