@@ -25,9 +25,18 @@ public class SysAdsDataKeywordViewPo
     public string CampaignID { get; set; } = null!;
 
     /// <summary>
-    /// 
+    /// 搜尋關鍵字
     /// </summary>
     public string? ColSrchKeyWord { get; set; }
+
+    /// <summary>
+    /// 搜尋字詞
+    /// </summary>
+    public string? ColSearchWord { get; set; }
+    /// <summary>
+    /// 比對類型
+    /// </summary>
+    public string? ColMatchType { get; set; }
 
     /// <summary>
     /// 
@@ -64,8 +73,9 @@ public class SysAdsDataKeywordViewPo
     /// </summary>
     public string? ColCost { get; set; }
 
+
     /// <summary>
     /// 
     /// </summary>
-    public string? ColDate { get; set; }
+    public DateTime? ColDate { get; set; }
 }

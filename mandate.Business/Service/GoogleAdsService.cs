@@ -802,13 +802,22 @@ public class GoogleAdsService : IGoogleAdsService
 
         string queryString;
         // 性別
-        string genderQuery = @"SELECT ad_group_criterion.gender.type, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM gender_view WHERE segments.date > '2000-01-01' AND segments.date < '2024-03-07'";
+        string genderQuery = @"SELECT ad_group_criterion.gender.type,
+campaign.name,
+ad_group.name,
+metrics.clicks,
+metrics.impressions,
+metrics.ctr,
+metrics.average_cpc,
+metrics.cost_micros,
+campaign.id, customer.id, segments.date FROM gender_view WHERE segments.date = '2024-03-01' AND ad_group_criterion.status != 'REMOVED' AND campaign.status = 'ENABLED'";
         // 年齡
-        string ageQuery = @"SELECT ad_group_criterion.age_range.type, campaign.name, ad_group.name, ad_group_criterion.system_serving_status, ad_group_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM age_range_view  WHERE segments.date > '2000-01-01' AND segments.date < '2024-03-07'";
+        string ageQuery = @"SELECT ad_group_criterion.age_range.type, campaign.name, ad_group.name, ad_group_criterion.system_serving_status, ad_group_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM age_range_view  WHERE segments.date = '2024-03-01' AND ad_group_criterion.status != 'REMOVED' AND campaign.status = 'ENABLED'";
         // 關鍵字
-        string keyWordQuery = @"SELECT ad_group_criterion.keyword.text, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, segments.date, campaign.id, customer.id FROM keyword_view WHERE segments.date > '2000-01-01' AND segments.date < '2024-03-07'  AND ad_group_criterion.status != 'REMOVED'";
+        string keyWordQuery = @"SELECT search_term_view.search_term, segments.keyword.info.match_type, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date,segments.keyword.info.text FROM search_term_view WHERE segments.date = '2024-03-01'  AND campaign.status = 'ENABLED'";
+        
         // 地區
-        string locationQuery = @"SELECT campaign_criterion.location.geo_target_constant, campaign.name, campaign_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM location_view WHERE segments.date > '2000-01-01' AND segments.date < '2024-03-07' AND campaign_criterion.status != 'REMOVED'";
+        string locationQuery = @"SELECT campaign_criterion.location.geo_target_constant, campaign.name, campaign_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM location_view WHERE segments.date = '2024-03-01' AND campaign.status = 'ENABLED'";
 
         queryString = queryType switch
         {
