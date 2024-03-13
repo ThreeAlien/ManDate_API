@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using mandate.Domain.Models;
 using mandate.Domain.Po;
+using mandate.Domain.Vo;
 using mandate.Infrastructure;
 using MediatR;
 
@@ -37,18 +38,20 @@ namespace mandate.Application.ReportInfo
             {
                 SysReportPo CreateReport = new()
                 {
+                    ReportID = request.ReportId,
                     ReportName = request.ReportName,
                     ReportGoalAds = request.ReportGoalAds,
                     ReportMedia = request.ReportMedia,
                     SubID = request.SubID,
-                    Editer = request.Editer,
-                    EditDate = DateTime.Now,
                     Creater = request.Creater,
                     CreateDate = DateTime.Now,
                     ReportStatus = request.ReportStatus
-
                 };
-                List<SysReportColumnPo> CreateReportColumn = _mapper.Map<List<SysReportColumnPo>>(request.ColumnData);
+                // 先映射，並給一個uuid給ColumnId
+                List<ReportColumnVo> ReportColumn = _mapper.Map<List<ReportColumnVo>>(request.ColumnData);
+                ReportColumn.ForEach(x => x.ColumnId = DateTime.Now.ToString("yyyyMMddHHmmssfff"));
+                // 再映射給DB
+                List<SysReportColumnPo> CreateReportColumn = _mapper.Map<List<SysReportColumnPo>>(ReportColumn);
                 _context.Add(CreateReport);
                 _context.AddRange(CreateReportColumn);
                 await _context.SaveChangesAsync();

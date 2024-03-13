@@ -115,7 +115,7 @@ public class ManDateDBContext : DbContext
 
         modelBuilder.Entity<SysReportContentPo>().HasKey(c => c.ContentID);
 
-        modelBuilder.Entity<SysReportPo>().HasKey(c => c.ReportID);
+        modelBuilder.Entity<SysReportPo>().HasKey(c => c.ReportNo);
 
         modelBuilder.Entity<SysSubClientPo>().HasKey(c => c.SubNo);
 

@@ -56,7 +56,7 @@ namespace mandate.Application.ReportInfo
 
                     if (request.ColumnData.Count() > 0)
                     {
-                        foreach (ReportColumnVo item in request.ColumnData)
+                        foreach (ReportColumnDataVo item in request.ColumnData)
                         {
                             // 若該資料的isDelete是true，就刪除
                             if (item.IsDelete)
@@ -67,54 +67,42 @@ namespace mandate.Application.ReportInfo
                             }
                             else
                             {
-                                // 若傳進來的資料無ReportNo，就新增
-                                if (item.ReportNo == null)
-                                {
-                                    SysReportColumnPo AddReportColumn = _mapper.Map<SysReportColumnPo>(item);
-                                    _context.Add(AddReportColumn);
-                                    _context.SaveChanges();
-                                }
-                                // 有ReportNo，就更新
-                                else
-                                {
-                                    SysReportColumnPo? SysReportColumnData = _context.SysReportColumn.Where(s => s.ReportNo == item.ReportNo).FirstOrDefault();
-                                    SysReportColumnData.IsColAccount = item.ColAccount;
-                                    SysReportColumnData.IsColCutomerID = item.ColCutomerID;
-                                    SysReportColumnData.IsColCampaignName = item.ColCampaignName;
-                                    SysReportColumnData.IsColAdGroupName = item.ColAdGroupName;
-                                    SysReportColumnData.IsColAdFinalURL = item.ColAdFinalURL;
-                                    SysReportColumnData.IsColHeadline = item.ColHeadline;
-                                    SysReportColumnData.IsColHeadLine_1 = item.ColHeadLine_1;
-                                    SysReportColumnData.IsColHeadLine_2 = item.ColHeadLine_2;
-                                    SysReportColumnData.IsColDirections = item.ColDirections;
-                                    SysReportColumnData.IsColDirections_1 = item.ColDirections_1;
-                                    SysReportColumnData.IsColDirections_2 = item.ColDirections_2;
-                                    SysReportColumnData.IsColAdName = item.ColAdName;
-                                    SysReportColumnData.IsColSrchKeyWord = item.ColSrchKeyWord;
-                                    SysReportColumnData.IsColConGoal = item.ColConGoal;
-                                    SysReportColumnData.IsColConValue = item.ColConValue;
-                                    SysReportColumnData.IsColConByDate = item.ColConByDate;
-                                    SysReportColumnData.IsColConPerCost = item.ColConPerCost;
-                                    SysReportColumnData.IsColCon = item.ColCon;
-                                    SysReportColumnData.IsColConRate = item.ColConRate;
-                                    SysReportColumnData.IsColClicks = item.ColClicks;
-                                    SysReportColumnData.IsColImpressions = item.ColImpressions;
-                                    SysReportColumnData.IsColCTR = item.ColCTR;
-                                    SysReportColumnData.IsColCPC = item.ColCPC;
-                                    SysReportColumnData.IsColCost = item.ColCost;
-                                    SysReportColumnData.ContentId = item.ContentId;
-                                    SysReportColumnData.ColumnId = item.ColumnId;
-                                    SysReportColumnData.IsColAge = item.ColAge;
-                                    SysReportColumnData.IsColGender = item.ColGender;
-                                    SysReportColumnData.IsColConstant = item.ColConstant;
-                                    SysReportColumnData.IsColConAction = item.ColConAction;
-                                    SysReportColumnData.IsColCPA = item.ColCPA;
-                                    SysReportColumnData.IsColStartDate = item.ColStartDate;
-                                    SysReportColumnData.IsColEndDate = item.ColEndDate;
+                                SysReportColumnPo? SysReportColumnData = _context.SysReportColumn.Where(s => s.ReportNo == item.ReportNo).FirstOrDefault();
+                                SysReportColumnData.IsColAccount = item.ColAccount;
+                                SysReportColumnData.IsColCutomerID = item.ColCutomerID;
+                                SysReportColumnData.IsColCampaignName = item.ColCampaignName;
+                                SysReportColumnData.IsColAdGroupName = item.ColAdGroupName;
+                                SysReportColumnData.IsColAdFinalURL = item.ColAdFinalURL;
+                                SysReportColumnData.IsColHeadline = item.ColHeadline;
+                                SysReportColumnData.IsColHeadLine_1 = item.ColHeadLine_1;
+                                SysReportColumnData.IsColHeadLine_2 = item.ColHeadLine_2;
+                                SysReportColumnData.IsColDirections = item.ColDirections;
+                                SysReportColumnData.IsColDirections_1 = item.ColDirections_1;
+                                SysReportColumnData.IsColDirections_2 = item.ColDirections_2;
+                                SysReportColumnData.IsColAdName = item.ColAdName;
+                                SysReportColumnData.IsColSrchKeyWord = item.ColSrchKeyWord;
+                                SysReportColumnData.IsColConGoal = item.ColConGoal;
+                                SysReportColumnData.IsColConValue = item.ColConValue;
+                                SysReportColumnData.IsColConByDate = item.ColConByDate;
+                                SysReportColumnData.IsColConPerCost = item.ColConPerCost;
+                                SysReportColumnData.IsColCon = item.ColCon;
+                                SysReportColumnData.IsColConRate = item.ColConRate;
+                                SysReportColumnData.IsColClicks = item.ColClicks;
+                                SysReportColumnData.IsColImpressions = item.ColImpressions;
+                                SysReportColumnData.IsColCTR = item.ColCTR;
+                                SysReportColumnData.IsColCPC = item.ColCPC;
+                                SysReportColumnData.IsColCost = item.ColCost;
+                                SysReportColumnData.ContentId = item.ContentId;
+                                SysReportColumnData.IsColAge = item.ColAge;
+                                SysReportColumnData.IsColGender = item.ColGender;
+                                SysReportColumnData.IsColConstant = item.ColConstant;
+                                SysReportColumnData.IsColConAction = item.ColConAction;
+                                SysReportColumnData.IsColCPA = item.ColCPA;
+                                SysReportColumnData.IsColStartDate = item.ColStartDate;
+                                SysReportColumnData.IsColEndDate = item.ColEndDate;
 
-                                    _context.Update(SysReportColumnData);
-                                    _context.SaveChanges();
-                                }
+                                _context.Update(SysReportColumnData);
+                                _context.SaveChanges();
                             }
                         }
                     }

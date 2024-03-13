@@ -1,4 +1,6 @@
-﻿using mandate.Domain.Vo;
+﻿using AutoMapper;
+using mandate.Domain.Vo;
+using mandate.Helper.Mapper;
 using MediatR;
 
 namespace mandate.Domain.Models;
@@ -8,11 +10,10 @@ namespace mandate.Domain.Models;
 /// </summary>
 public class CreateReportRequest : IRequest<CreateReportResponse>
 {
-
     /// <summary>
-    /// 報表內容流水編號
+    /// 報表ID
     /// </summary>
-    public int ReportNo { get; set; }
+    public string ReportId { get; set; } = null!;
 
     /// <summary>
     /// 報表名稱
@@ -60,5 +61,5 @@ public class CreateReportRequest : IRequest<CreateReportResponse>
     /// <summary>
     /// 報表欄位資料
     /// </summary>
-    public List<ReportColumnVo>? ColumnData { get; set; }
+    public List<ReportColumnDataVo>? ColumnData { get; set; }
 }
