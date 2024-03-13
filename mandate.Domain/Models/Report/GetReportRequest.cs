@@ -8,11 +8,6 @@ namespace mandate.Domain.Models;
 public class GetReportRequest : IRequest<GetReportResponse>
 {
     /// <summary>
-    /// 報表流水編號
-    /// </summary>
-    public string? ReportID { get; set; }
-
-    /// <summary>
     /// 報表名稱
     /// </summary>
     public string? ReportName { get; set; }
