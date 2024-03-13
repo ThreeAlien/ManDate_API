@@ -33,6 +33,11 @@ public class GetReportInfo : IMapFrom<SysReportPo>
     public string ReportName { get; set; } = null!;
 
     /// <summary>
+    /// 客戶Id
+    /// </summary>
+    public string? ClienId { get; set; }
+
+    /// <summary>
     /// 子帳戶名稱
     /// </summary>
     public string? SubClientName { get; set; }
@@ -85,6 +90,7 @@ public class GetReportInfo : IMapFrom<SysReportPo>
         profile.CreateMap<SysReportPo, GetReportInfo>()
             .ForMember(d => d.ReportID, map => map.MapFrom(s => s.ReportID))
             .ForMember(d => d.ReportName, map => map.MapFrom(s => s.ReportName))
+            .ForMember(d => d.ClienId, map => map.Ignore())
             .ForMember(d => d.SubClientName, map => map.Ignore())
             .ForMember(d => d.ReportGoalAds, map => map.MapFrom(s => s.ReportGoalAds))
             .ForMember(d => d.ReportMedia, map => map.MapFrom(s => s.ReportMedia))

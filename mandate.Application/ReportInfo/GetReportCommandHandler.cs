@@ -38,16 +38,19 @@ namespace mandate.Application.ReportInfo
             List<SysReportPo> respData = await _context.SysReport.ToListAsync();
 
             List<GetReportInfo> result = _context.SysReport
-                                        .Join(_context.SysSubClient, report => report.SubID, subClient => subClient.SubId, (report, subClient) => new { report, subClient.SubName }).Select(x => new GetReportInfo
+                                        .Join(_context.SysSubClient, report => report.SubID, subClient => subClient.SubId, (report, subClient) => new { report, subClient.SubName, subClient.ClientId }).Select(x => new GetReportInfo
                                         {
                                             ReportID = x.report.ReportID,
                                             ReportName = x.report.ReportName,
+                                            ClienId = x.ClientId,
                                             SubClientName = x.SubName,
                                             ReportGoalAds = x.report.ReportGoalAds,
                                             ReportMedia = x.report.ReportMedia,
                                             ReportStatus = x.report.ReportStatus,
                                             ColumnID = x.report.ColumnID,
                                             SubID = x.report.SubID,
+                                            Creater = x.report.Creater,
+                                            CreateDate = x.report.CreateDate,
                                         }).ToList();
 
             if (!String.IsNullOrEmpty(request.ReportName)) result = result.Where(x => x.ReportName == request.ReportName).ToList();
