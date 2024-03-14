@@ -41,8 +41,8 @@ public class ReportExportKeyWordCommandHandler : IRequestHandler<ReportExportKey
             List<SysAdsDataKeywordViewPo> respData = await _context.SysAdsDataKeywordView.ToListAsync();
 
             if (!String.IsNullOrEmpty(request.CampaignID)) respData = respData.Where(x => x.CampaignID == request.CampaignID).ToList();
-            if (request.StartDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) >= request.StartDate).ToList();
-            if (request.EndDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) <= request.EndDate).ToList();
+            if (request.StartDate != null) respData = respData.Where(x => x.ColDate >= request.StartDate).ToList();
+            if (request.EndDate != null) respData = respData.Where(x => x.ColDate <= request.EndDate).ToList();
 
             List<ReportExportKeyWordVo> keyWordResponse = respData
             .GroupBy(g => g.ColSrchKeyWord)

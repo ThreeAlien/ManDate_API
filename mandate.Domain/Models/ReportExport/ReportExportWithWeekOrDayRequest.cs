@@ -15,7 +15,7 @@ public class ReportExportWithWeekOrDayRequest : IRequest<ReportExportWithWeekOrD
     /// <summary>
     /// 狀態(使用者選"每周"或"每日")
     /// </summary>
-    public string Status { get; set; } = null!;
+    public string[] Status { get; set; } = null!;
 
     /// <summary>
     /// 起始日期

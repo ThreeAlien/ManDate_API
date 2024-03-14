@@ -34,4 +34,10 @@ public class ReportExportWithWeekOrDayVo
     /// 費用
     /// </summary>
     public double Cost { get; set; }
+
+    /// <summary>
+    /// 資料型態(每日或每周)
+    /// 給前端好辨識
+    /// </summary>
+    public string? DataType { get; set; }
 }

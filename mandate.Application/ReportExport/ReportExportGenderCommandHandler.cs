@@ -41,8 +41,8 @@ public class ReportExportGenderCommandHandler : IRequestHandler<ReportExportGend
             List<SysAdsDataGenderViewPo> respData = await _context.SysAdsDataGenderView.ToListAsync();
 
             if (!String.IsNullOrEmpty(request.CampaignID)) respData = respData.Where(x => x.CampaignID == request.CampaignID).ToList();
-            if (request.StartDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) >= request.StartDate).ToList();
-            if (request.EndDate != null) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) <= request.EndDate).ToList();
+            if (request.StartDate != null) respData = respData.Where(x => x.ColDate >= request.StartDate).ToList();
+            if (request.EndDate != null) respData = respData.Where(x => x.ColDate <= request.EndDate).ToList();
 
             List<ReportExportGenderVo> genderResponse = respData
             .GroupBy(g => g.ColGender)

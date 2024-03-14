@@ -45,6 +45,11 @@ public class ManDateDBContext : DbContext
     /// </summary>
     public DbSet<SysReportColumnPo> SysReportColumn { get; set; }
 
+    /// <summary>
+    /// 權限設定
+    /// </summary>
+    public DbSet<SysUserPo> SysUser { get; set; }
+
     #region GCP 資料導入
     /// <summary>
     ///報表(SysAdsDataAdGroupAd)
@@ -120,6 +125,8 @@ public class ManDateDBContext : DbContext
         modelBuilder.Entity<SysSubClientPo>().HasKey(c => c.SubNo);
 
         modelBuilder.Entity<SysReportColumnPo>().HasKey(c => c.ColumnId);
+
+        modelBuilder.Entity<SysUserPo>().HasKey(c => c.UserNo);
 
         #region GCP 資料導入
         modelBuilder.Entity<SysAdsDataAdGroupAdPo>().HasKey(c => new { c.ColDate, c.CampaignID });

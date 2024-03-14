@@ -10,6 +10,7 @@ using mandate.Application.SubClient;
 using mandate.Business.Service;
 using mandate.Domain.Models;
 using mandate.Domain.Models.AdsData;
+using mandate.Domain.Models.Auth;
 using mandate.Domain.Models.Customer;
 using mandate.Domain.Models.Report;
 using mandate.Domain.Models.ReportContent;
@@ -46,6 +47,7 @@ public static class ApCommandExtension
         service.AddScoped<IRequestHandler<GetSysAdsDataRequest, GetSysAdsDataResponse>, GetSysAdsDataCommandHandler>();
         service.AddScoped<IRequestHandler<GetAdsAccountRequest, GetAdsAccountResponse>, GetAdsAccountCommandHandler>();
         service.AddScoped<IRequestHandler<GetReportDetailRequest, GetReportDetailResponse>, GetReportDetailCommandHandler>();
+        service.AddScoped<IRequestHandler<LoginRequest, LoginResponse>, LoginCommandHandler>();
         #region 報表匯出
         service.AddScoped<IRequestHandler<ReportExportGenderRequest, ReportExportGenderResponse>, ReportExportGenderCommandHandler>();
         service.AddScoped<IRequestHandler<ReportExportAgeRequest, ReportExportAgeResponse>, ReportExportAgeCommandHandler>();
