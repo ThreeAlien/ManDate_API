@@ -53,7 +53,7 @@ namespace mandate.Application.ReportInfo
                                             CreateDate = x.report.CreateDate,
                                         }).ToList();
 
-            if (!String.IsNullOrEmpty(request.ReportName)) result = result.Where(x => x.ReportName == request.ReportName).ToList();
+            if (!String.IsNullOrEmpty(request.ReportName)) result = result.Where(x => x.ReportName.Contains(request.ReportName)).ToList();
             if (!String.IsNullOrEmpty(request.ReportGoalAds)) result = result.Where(x => x.ReportGoalAds == request.ReportGoalAds).ToList();
             if (!String.IsNullOrEmpty(request.ReportMedia)) result = result.Where(x => x.ReportMedia == request.ReportMedia).ToList();
             if (!String.IsNullOrEmpty(request.StartDate)) result = result.Where(x => Convert.ToDateTime(request.StartDate) < x.CreateDate).ToList();

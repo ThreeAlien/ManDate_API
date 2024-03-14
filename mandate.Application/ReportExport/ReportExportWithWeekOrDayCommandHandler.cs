@@ -42,7 +42,7 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
             List<SysAdsDataCampaignPo> respData = await _context.SysAdsDataCampaign.ToListAsync();
 
             #region request檢核
-            if (string.IsNullOrEmpty(request.Status) || string.IsNullOrEmpty(request.CampaignID))
+            if (request.Status.Length == 0 || string.IsNullOrEmpty(request.CampaignID))
             {
                 return response = new()
                 {
@@ -60,9 +60,9 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
             #endregion
 
             List<ReportExportWithWeekOrDayVo> reportResponse = new();
-            if (request.Status == ReportExportStatus.Day)
+            if (request.Status.Contains(ReportExportStatus.Day))
             {
-                reportResponse = respData
+                List<ReportExportWithWeekOrDayVo> respDayData = respData
                 .GroupBy(g => g.ColDate)
                 .Select(group =>
                 {
@@ -80,15 +80,19 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
                         Click = clicks,
                         CTR = ctr.ToString("P", CultureInfo.InvariantCulture),
                         CPC = cpc,
-                        Cost = cost
+                        Cost = cost,
+                        DataType = "Day"
                     };
                 })
                 .ToList();
+
+
+                reportResponse.AddRange(respDayData);
             }
 
-            if (request.Status == ReportExportStatus.Week)
+            if (request.Status.Contains(ReportExportStatus.Week))
             {
-                reportResponse = respData
+                List<ReportExportWithWeekOrDayVo> respWeekData = respData
                 .GroupBy(g => GetWeekStartDate(g.ColDate))
                 .Select(group =>
                 {
@@ -107,10 +111,13 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
                         Click = clicks,
                         CTR = ctr.ToString("P", CultureInfo.InvariantCulture),
                         CPC = cpc,
-                        Cost = cost
+                        Cost = cost,
+                        DataType = "Week"
                     };
                 })
                 .ToList();
+
+                reportResponse.AddRange(respWeekData);
             }
 
 
