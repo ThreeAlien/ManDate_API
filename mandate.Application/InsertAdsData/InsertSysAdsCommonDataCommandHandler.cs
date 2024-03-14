@@ -60,16 +60,16 @@ public class InsertSysAdsCommonDataCommandHandler : IRequestHandler<InsertSysAds
                     switch (request.QueryType)
                     {
                         case "age":
-                            InsertAgeData(googleAdsRow);
+                            await InsertAgeData(googleAdsRow);
                             break;
                         case "gender":
-                            InsertGenderData(googleAdsRow);
+                            await InsertGenderData(googleAdsRow);
                             break;
                         case "keyWord":
-                            InsertKeyWordData(googleAdsRow);
+                            await InsertKeyWordData(googleAdsRow);
                             break;
                         case "location":
-                            InsertLocationData(googleAdsRow);
+                            await InsertLocationData(googleAdsRow);
                             break;
                     }
 
@@ -98,22 +98,35 @@ public class InsertSysAdsCommonDataCommandHandler : IRequestHandler<InsertSysAds
     /// 寫入年齡資料
     /// </summary>
     /// <param name="googleAdsRow"></param>
-    private async void InsertAgeData(GoogleAdsRow googleAdsRow)
+    private async Task InsertAgeData(GoogleAdsRow googleAdsRow)
     {
+        long CustomerID = googleAdsRow.Customer.Id;
+        string AdGroupCriterionAgeRange =
+            googleAdsRow.AdGroupCriterion.AgeRange != null &&
+            !string.IsNullOrEmpty(googleAdsRow.AdGroupCriterion.AgeRange.Type.ToString())
+            ? googleAdsRow.AdGroupCriterion.AgeRange.Type.ToString()
+            : " ";
+        string ColClicks = googleAdsRow.Metrics.Clicks.ToString();
+        string ColImpressions = googleAdsRow.Metrics.Impressions.ToString();
+        string ColCTR = googleAdsRow.Metrics.Ctr.ToString();
+        string ColCPC = googleAdsRow.Metrics.AverageCpc.ToString();
+        string ColCost = googleAdsRow.Metrics.CostMicros.ToString();
+        DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
+
         SysAdsDataAgeViewPo sysAdsDataAgeViewPo = new()
         {
             CustomerID = googleAdsRow.Customer.Id.ToString(),
             CampaignID = googleAdsRow.Campaign.Id.ToString(),
-            ColAge = googleAdsRow.AdGroupCriterion.AgeRange.Type.ToString(),
+            ColAge = AdGroupCriterionAgeRange,
             ColCampaignName = googleAdsRow.Campaign.Name,
             ColAdGroupName = googleAdsRow.AdGroup.Name,
-            ColClicks = googleAdsRow.Metrics.Clicks.ToString(),
-            ColImpressions = googleAdsRow.Metrics.Impressions.ToString(),
-            ColCTR = googleAdsRow.Metrics.Ctr.ToString(),
-            ColCPC = googleAdsRow.Metrics.AverageCpc.ToString(),
-            ColCost = googleAdsRow.Metrics.CostMicros.ToString(),
-            ColDate = googleAdsRow.Segments.Date.ToString(),
-        };
+            ColClicks = ColClicks,
+            ColImpressions = ColImpressions,
+            ColCTR = ColCTR,
+            ColCPC = ColCPC,
+            ColCost = ColCost,
+            ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString()),
+    };
         _context.SysAdsDataAgeView.Add(sysAdsDataAgeViewPo);
         await _context.SaveChangesAsync();
     }
@@ -122,21 +135,34 @@ public class InsertSysAdsCommonDataCommandHandler : IRequestHandler<InsertSysAds
     /// 寫入性別資料
     /// </summary>
     /// <param name="googleAdsRow"></param>
-    private async void InsertGenderData(GoogleAdsRow googleAdsRow)
+    private async Task InsertGenderData(GoogleAdsRow googleAdsRow)
     {
+        long CustomerID = googleAdsRow.Customer.Id;
+        string AdGroupCriterionGender =
+                            googleAdsRow.AdGroupCriterion.Gender != null &&
+                            !string.IsNullOrEmpty(googleAdsRow.AdGroupCriterion.Gender.Type.ToString())
+                            ? googleAdsRow.AdGroupCriterion.Gender.Type.ToString()
+                            : " ";
+        string ColClicks = googleAdsRow.Metrics.Clicks.ToString();
+        string ColImpressions = googleAdsRow.Metrics.Impressions.ToString();
+        string ColCTR = googleAdsRow.Metrics.Ctr.ToString();
+        string ColCPC = googleAdsRow.Metrics.AverageCpc.ToString();
+        string ColCost = googleAdsRow.Metrics.CostMicros.ToString();
+        DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
+
         SysAdsDataGenderViewPo sysAdsDataGenderViewPo = new()
         {
             CustomerID = googleAdsRow.Customer.Id.ToString(),
             CampaignID = googleAdsRow.Campaign.Id.ToString(),
-            ColGender = googleAdsRow.AdGroupCriterion.Gender.Type.ToString(),
+            ColGender = AdGroupCriterionGender,
             ColCampaignName = googleAdsRow.Campaign.Name,
             ColAdGroupName = googleAdsRow.AdGroup.Name,
-            ColClicks = googleAdsRow.Metrics.Clicks.ToString(),
-            ColImpressions = googleAdsRow.Metrics.Impressions.ToString(),
-            ColCTR = googleAdsRow.Metrics.Ctr.ToString(),
-            ColCPC = googleAdsRow.Metrics.AverageCpc.ToString(),
-            ColCost = googleAdsRow.Metrics.CostMicros.ToString(),
-            ColDate = googleAdsRow.Segments.Date.ToString(),
+            ColClicks = ColClicks,
+            ColImpressions = ColImpressions,
+            ColCTR = ColCTR,
+            ColCPC = ColCPC,
+            ColCost = ColCost,
+            ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString()),
         };
         _context.SysAdsDataGenderView.Add(sysAdsDataGenderViewPo);
         await _context.SaveChangesAsync();
@@ -146,44 +172,65 @@ public class InsertSysAdsCommonDataCommandHandler : IRequestHandler<InsertSysAds
     /// 寫入關鍵字資料
     /// </summary>
     /// <param name="googleAdsRow"></param>
-    private void InsertKeyWordData(GoogleAdsRow googleAdsRow)
+    private async Task InsertKeyWordData(GoogleAdsRow googleAdsRow)
     {
+        string AdGroupCriterionKeyWord =
+                           googleAdsRow?.Segments?.Keyword?.Info.Text.ToString() ?? " ";
+        string MatchType = googleAdsRow?.Segments?.Keyword?.Info.MatchType.ToString() ?? " ";
+        string SearchWord = googleAdsRow?.SearchTermView?.SearchTerm?.ToString() ?? " ";
+        string ColClicks = googleAdsRow.Metrics.Clicks.ToString();
+        string ColImpressions = googleAdsRow.Metrics.Impressions.ToString();
+        string ColCTR = googleAdsRow.Metrics.Ctr.ToString();
+        string ColCPC = googleAdsRow.Metrics.AverageCpc.ToString();
+        string ColCost = googleAdsRow.Metrics.CostMicros.ToString();
+        DateTime ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString());
+
         SysAdsDataKeywordViewPo sysAdsDataKeywordViewPo = new()
         {
             CustomerID = googleAdsRow.Customer.Id.ToString(),
             CampaignID = googleAdsRow.Campaign.Id.ToString(),
-            ColSrchKeyWord = googleAdsRow.AdGroupCriterion.Keyword.Text.ToString(),
+            ColSrchKeyWord = AdGroupCriterionKeyWord,
+            ColSearchWord = SearchWord,
+            ColMatchType = MatchType,
             ColCampaignName = googleAdsRow.Campaign.Name,
             ColAdGroupName = googleAdsRow.AdGroup.Name,
-            ColClicks = googleAdsRow.Metrics.Clicks.ToString(),
-            ColImpressions = googleAdsRow.Metrics.Impressions.ToString(),
-            ColCTR = googleAdsRow.Metrics.Ctr.ToString(),
-            ColCPC = googleAdsRow.Metrics.AverageCpc.ToString(),
-            ColCost = googleAdsRow.Metrics.CostMicros.ToString(),
-            ColDate = googleAdsRow.Segments.Date.ToString(),
+            ColClicks = ColClicks,
+            ColImpressions = ColImpressions,
+            ColCTR = ColCTR,
+            ColCPC = ColCPC,
+            ColCost = ColCost,
+            ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString()),
         };
         _context.SysAdsDataKeywordView.Add(sysAdsDataKeywordViewPo);
+        await _context.SaveChangesAsync();
     }
 
     /// <summary>
     /// 寫入地點資料
     /// </summary>
     /// <param name="googleAdsRow"></param>
-    private async void InsertLocationData(GoogleAdsRow googleAdsRow)
+    private async Task InsertLocationData(GoogleAdsRow googleAdsRow)
     {
+        string Constant = googleAdsRow?.CampaignCriterion?.Location?.GeoTargetConstant?.ToString() ?? " ";
+        string AdGroupName = googleAdsRow?.AdGroup?.Name.ToString() ?? " ";
+        string ColClicks = googleAdsRow.Metrics.Clicks.ToString();
+        string ColImpressions = googleAdsRow.Metrics.Impressions.ToString();
+        string ColCTR = googleAdsRow.Metrics.Ctr.ToString();
+        string ColCPC = googleAdsRow.Metrics.AverageCpc.ToString();
+        string ColCost = googleAdsRow.Metrics.CostMicros.ToString();
         SysAdsDataLocationViewPo sysAdsDataLocationViewPo = new()
         {
             CustomerID = googleAdsRow.Customer.Id.ToString(),
             CampaignID = googleAdsRow.Campaign.Id.ToString(),
-            ColConstant = googleAdsRow.CampaignCriterion.Location.GeoTargetConstant.ToString(),
+            ColConstant = Constant,
             ColCampaignName = googleAdsRow.Campaign.Name,
-            ColAdGroupName = googleAdsRow.AdGroup.Name,
-            ColClicks = googleAdsRow.Metrics.Clicks.ToString(),
-            ColImpressions = googleAdsRow.Metrics.Impressions.ToString(),
-            ColCTR = googleAdsRow.Metrics.Ctr.ToString(),
-            ColCPC = googleAdsRow.Metrics.AverageCpc.ToString(),
-            ColCost = googleAdsRow.Metrics.CostMicros.ToString(),
-            ColDate = googleAdsRow.Segments.Date.ToString(),
+            ColAdGroupName = AdGroupName,
+            ColClicks = ColClicks,
+            ColImpressions = ColImpressions,
+            ColCTR = ColCTR,
+            ColCPC = ColCPC,
+            ColCost = ColCost,
+            ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString()),
         };
         _context.SysAdsDataLocationView.Add(sysAdsDataLocationViewPo);
         await _context.SaveChangesAsync();

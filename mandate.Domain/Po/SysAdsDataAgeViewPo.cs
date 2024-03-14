@@ -64,9 +64,10 @@ public class SysAdsDataAgeViewPo
     /// </summary>
     public string? ColCost { get; set; }
 
+
     /// <summary>
     /// 
     /// </summary>
-    public string? ColDate { get; set; }
+    public DateTime? ColDate { get; set; }
 
 }
