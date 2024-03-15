@@ -62,6 +62,8 @@ public class GetReportDefaultFieldsCommandHandler : IRequestHandler<GetReportDef
                                                     IsColImpressions = x.column.IsColImpressions,
                                                     IsColCTR = x.column.IsColCTR,
                                                     IsColCPC = x.column.IsColCPC,
+                                                    IsColCPA = x.column.IsColCPA,
+                                                    IsColConAction = x.column.IsColConAction,
                                                     IsColCost = x.column.IsColCost,
                                                     IsColAge = x.column.IsColAge,
                                                     IsColGender = x.column.IsColGender,
