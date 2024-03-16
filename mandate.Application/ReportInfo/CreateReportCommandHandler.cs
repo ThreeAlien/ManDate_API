@@ -4,6 +4,7 @@ using mandate.Domain.Po;
 using mandate.Domain.Vo;
 using mandate.Infrastructure;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace mandate.Application.ReportInfo
 {
@@ -34,6 +35,7 @@ namespace mandate.Application.ReportInfo
         public async Task<CreateReportResponse> Handle(CreateReportRequest request, CancellationToken cancellationToken)
         {
             CreateReportResponse response = new();
+            string guid = DateTime.Now.ToString("yyyyMMddHHmmssfff");
             try
             {
                 SysReportPo CreateReport = new()
@@ -42,6 +44,7 @@ namespace mandate.Application.ReportInfo
                     ReportName = request.ReportName,
                     ReportGoalAds = request.ReportGoalAds,
                     ReportMedia = request.ReportMedia,
+                    ColumnID = guid,
                     SubID = request.SubID,
                     Creater = request.Creater,
                     CreateDate = DateTime.Now,
@@ -49,9 +52,11 @@ namespace mandate.Application.ReportInfo
                 };
                 // 先映射，並給一個uuid給ColumnId
                 List<ReportColumnVo> ReportColumn = _mapper.Map<List<ReportColumnVo>>(request.ColumnData);
-                ReportColumn.ForEach(x => x.ColumnId = DateTime.Now.ToString("yyyyMMddHHmmssfff"));
+                ReportColumn.ForEach(x => x.ColumnId = guid);
+
                 // 再映射給DB
                 List<SysReportColumnPo> CreateReportColumn = _mapper.Map<List<SysReportColumnPo>>(ReportColumn);
+
                 _context.Add(CreateReport);
                 _context.AddRange(CreateReportColumn);
                 await _context.SaveChangesAsync();

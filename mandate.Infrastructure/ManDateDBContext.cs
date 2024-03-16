@@ -124,7 +124,7 @@ public class ManDateDBContext : DbContext
 
         modelBuilder.Entity<SysSubClientPo>().HasKey(c => c.SubNo);
 
-        modelBuilder.Entity<SysReportColumnPo>().HasKey(c => c.ColumnId);
+        modelBuilder.Entity<SysReportColumnPo>().HasKey(c => c.ReportNo);
 
         modelBuilder.Entity<SysUserPo>().HasKey(c => c.UserNo);
 
