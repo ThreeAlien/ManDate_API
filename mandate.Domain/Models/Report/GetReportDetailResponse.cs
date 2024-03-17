@@ -17,6 +17,8 @@ public class GetReportDetailResponse : BaseResponse<List<ReportDetailFields>>
 /// </summary>
 public class ReportDetailFields : IMapFrom<SysReportColumnPo>
 {
+    public int? ReportNo { get; set; }
+
     public string ContentName { get; set; } = null!;
 
     public bool? IsColAccount { get; set; }

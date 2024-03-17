@@ -5,6 +5,7 @@ using mandate.Domain.Vo;
 using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace mandate.Application.ReportInfo
 {
@@ -65,7 +66,8 @@ namespace mandate.Application.ReportInfo
                                 _context.Remove(DelSysReportColumnData);
                                 _context.SaveChanges();
                             }
-                            else
+                            // 若該資料的ReportNo不為null，就更新
+                            else if (item.ReportNo != null)
                             {
                                 SysReportColumnPo? SysReportColumnData = _context.SysReportColumn.Where(s => s.ReportNo == item.ReportNo).FirstOrDefault();
                                 SysReportColumnData.IsColAccount = item.ColAccount;
@@ -103,6 +105,18 @@ namespace mandate.Application.ReportInfo
 
                                 _context.Update(SysReportColumnData);
                                 _context.SaveChanges();
+                            }
+                            // 若該資料的ReportNo為null，就新增
+                            else
+                            {
+                                ReportColumnVo ReportColumn = _mapper.Map<ReportColumnVo>(item);
+                                ReportColumn.ColumnId = objUpdateData.ColumnID;
+
+                                SysReportColumnPo CreateReportColumn = _mapper.Map<SysReportColumnPo>(ReportColumn);
+
+                                _context.Add(CreateReportColumn);
+                                _context.SaveChanges();
+
                             }
                         }
                     }
