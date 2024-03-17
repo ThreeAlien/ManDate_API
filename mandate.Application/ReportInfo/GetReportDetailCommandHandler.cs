@@ -34,6 +34,7 @@ public class GetReportDetailCommandHandler : IRequestHandler<GetReportDetailRequ
             List<ReportDetailFields> result = _context.SysReportColumn
                                                 .Join(_context.SysReportContent, column => column.ContentId, content => content.ContentID, (column, content) => new { column, content.ContentName }).Select(x => new ReportDetailFields
                                                 {
+                                                    ReportNo = x.column.ReportNo,
                                                     ContentName = x.ContentName,
                                                     IsColAccount = x.column.IsColAccount,
                                                     IsColCutomerID = x.column.IsColCutomerID,
