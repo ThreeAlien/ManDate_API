@@ -65,9 +65,10 @@ namespace mandate.Application.ReportInfo
                                 SysReportColumnPo? DelSysReportColumnData = _context.SysReportColumn.Where(s => s.ReportNo == item.ReportNo).FirstOrDefault();
                                 _context.Remove(DelSysReportColumnData);
                                 _context.SaveChanges();
+                                continue;
                             }
-                            // 若該資料的ReportNo不為null，就更新
-                            else if (item.ReportNo != null)
+                            // 若該資料的ReportNo不為0，就更新
+                            else if (item.ReportNo != 0)
                             {
                                 SysReportColumnPo? SysReportColumnData = _context.SysReportColumn.Where(s => s.ReportNo == item.ReportNo).FirstOrDefault();
                                 SysReportColumnData.IsColAccount = item.ColAccount;
