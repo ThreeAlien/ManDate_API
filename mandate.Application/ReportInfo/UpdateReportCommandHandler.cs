@@ -48,8 +48,6 @@ namespace mandate.Application.ReportInfo
                     objUpdateData.SubID = request.SubID;
                     objUpdateData.Editer = request.Editer;
                     objUpdateData.EditDate = DateTime.Now;
-                    objUpdateData.Creater = request.Creater;
-                    objUpdateData.CreateDate = DateTime.Now;
                     objUpdateData.ReportStatus = request.ReportStatus;
 
                     _context.Update(objUpdateData);

@@ -5,6 +5,7 @@ using mandate.Domain.Vo;
 using mandate.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 
 namespace mandate.Application.ReportExport;
@@ -41,8 +42,8 @@ public class ReportExportLocationCommandHandler : IRequestHandler<ReportExportLo
             List<SysAdsDataLocationViewPo> respData = await _context.SysAdsDataLocationView.ToListAsync();
 
             if (!String.IsNullOrEmpty(request.CampaignID)) respData = respData.Where(x => x.CampaignID == request.CampaignID).ToList();
-            if (request.StartDate != null) respData = respData.Where(x => x.ColDate >= request.StartDate).ToList();
-            if (request.EndDate != null) respData = respData.Where(x => x.ColDate <= request.EndDate).ToList();
+            if (!String.IsNullOrEmpty(request.StartDate)) respData = respData.Where(x => x.ColDate >= Convert.ToDateTime(request.StartDate)).ToList();
+            if (!String.IsNullOrEmpty(request.EndDate)) respData = respData.Where(x => x.ColDate <= Convert.ToDateTime(request.EndDate)).ToList();
 
             List<ReportExportLocationVo> locationResponse = respData
             .GroupBy(g => g.ColConstant)

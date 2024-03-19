@@ -49,6 +49,8 @@ namespace mandate.Application.ReportInfo
                                             ReportStatus = x.report.ReportStatus,
                                             ColumnID = x.report.ColumnID,
                                             SubID = x.report.SubID,
+                                            EditDate = x.report.EditDate,
+                                            Editer = x.report.Editer,
                                             Creater = x.report.Creater,
                                             CreateDate = x.report.CreateDate,
                                         }).ToList();

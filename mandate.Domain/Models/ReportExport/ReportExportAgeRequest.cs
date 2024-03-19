@@ -15,10 +15,10 @@ public class ReportExportAgeRequest : IRequest<ReportExportAgeResponse>
     /// <summary>
     /// 起始日期
     /// </summary>
-    public DateTime? StartDate { get; set; }
+    public string? StartDate { get; set; }
 
     /// <summary>
     /// 結束日期
     /// </summary>
-    public DateTime? EndDate { get; set; }
+    public string? EndDate { get; set; }
 }
