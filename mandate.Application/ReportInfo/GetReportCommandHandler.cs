@@ -53,7 +53,8 @@ namespace mandate.Application.ReportInfo
                                             Editer = x.report.Editer,
                                             Creater = x.report.Creater,
                                             CreateDate = x.report.CreateDate,
-                                        }).ToList();
+                                        }).OrderByDescending(y=>y.EditDate)
+                                        .ToList();
 
             if (!String.IsNullOrEmpty(request.ReportName)) result = result.Where(x => x.ReportName.Contains(request.ReportName)).ToList();
             if (!String.IsNullOrEmpty(request.ReportGoalAds)) result = result.Where(x => x.ReportGoalAds == request.ReportGoalAds).ToList();
