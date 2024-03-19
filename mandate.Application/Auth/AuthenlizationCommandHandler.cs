@@ -35,6 +35,9 @@ public class AuthenlizationCommandHandler : IRequestHandler<AuthenlizationReques
     public async Task<AuthenlizationResponse> Handle(AuthenlizationRequest request, CancellationToken cancellationToken)
     {
         string? refreshToken = await _googleAdsService.GenerateRefreshToken();
+
+        string[]? adsAccountArray = _googleAdsService.FetchAdsAccountApi(refreshToken);
+
         // 1.取得子帳戶
         List<Business.Service.SysClientPo> subAccountList = _googleAdsService.FetchAdsAdvertiseAccount(refreshToken);
 

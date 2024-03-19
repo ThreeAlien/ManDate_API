@@ -520,7 +520,6 @@ public class GoogleAdsService : IGoogleAdsService
 
         // Get the CustomerService.
         CustomerServiceClient customerService = client.GetService(Services.V15.CustomerService);
-
         try
         {
             string[]? customerResourceNames = customerService.ListAccessibleCustomers();
