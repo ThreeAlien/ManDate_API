@@ -8,9 +8,9 @@ namespace mandate.Domain.Models.ReportExport;
 public class ReportExportLocationRequest : IRequest<ReportExportLocationResponse>
 {
     /// <summary>
-    /// CampaignID
+    /// SubId
     /// </summary>
-    public string? CampaignID { get; set; }
+    public string? SubId { get; set; }
 
     /// <summary>
     /// 起始日期

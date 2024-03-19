@@ -8,9 +8,9 @@ namespace mandate.Domain.Models.ReportExport;
 public class ReportExportWithWeekOrDayRequest : IRequest<ReportExportWithWeekOrDayResponse>
 {
     /// <summary>
-    /// CampaignID
+    /// SubId
     /// </summary>
-    public string CampaignID { get; set; } = null!;
+    public string SubId { get; set; } = null!;
 
     /// <summary>
     /// 狀態(使用者選"每周"或"每日")
