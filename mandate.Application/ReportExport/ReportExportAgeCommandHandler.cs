@@ -43,7 +43,7 @@ public class ReportExportAgeCommandHandler : IRequestHandler<ReportExportAgeRequ
 
             if (!String.IsNullOrEmpty(request.SubId)) respData = respData.Where(x => x.CustomerID == request.SubId).ToList();
             if (!String.IsNullOrEmpty(request.StartDate)) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) >= Convert.ToDateTime(request.StartDate)).ToList();
-            if (!String.IsNullOrEmpty(request.EndDate)) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) <= Convert.ToDateTime(request.EndDate)).ToList();
+            if (!String.IsNullOrEmpty(request.EndDate)) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) < Convert.ToDateTime(request.EndDate).AddDays(1)).ToList();
 
             List<ReportExportAgeVo> ageResponse = respData
             .GroupBy(g => g.ColAge)

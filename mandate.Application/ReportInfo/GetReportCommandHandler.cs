@@ -59,7 +59,7 @@ namespace mandate.Application.ReportInfo
             if (!String.IsNullOrEmpty(request.ReportGoalAds)) result = result.Where(x => x.ReportGoalAds == request.ReportGoalAds).ToList();
             if (!String.IsNullOrEmpty(request.ReportMedia)) result = result.Where(x => x.ReportMedia == request.ReportMedia).ToList();
             if (!String.IsNullOrEmpty(request.StartDate)) result = result.Where(x => Convert.ToDateTime(request.StartDate) <= x.CreateDate).ToList();
-            if (!String.IsNullOrEmpty(request.EndDate)) result = result.Where(x => Convert.ToDateTime(request.EndDate) >= x.CreateDate).ToList();
+            if (!String.IsNullOrEmpty(request.EndDate)) result = result.Where(x => Convert.ToDateTime(request.EndDate).AddDays(1) > x.CreateDate).ToList();
 
             GetReportResponse response = new()
             {
