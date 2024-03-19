@@ -8,9 +8,9 @@ namespace mandate.Domain.Models.ReportExport;
 public class ReportExportAgeRequest : IRequest<ReportExportAgeResponse>
 {
     /// <summary>
-    /// CampaignID
+    /// SubId
     /// </summary>
-    public string? CampaignID { get; set; }
+    public string? SubId { get; set; }
 
     /// <summary>
     /// 起始日期
