@@ -1,4 +1,5 @@
 ﻿using Google.Ads.GoogleAds.V15.Services;
+using mandate.Business.Models;
 
 namespace mandate.Business.Service;
 
@@ -63,6 +64,14 @@ public interface IGoogleAdsService
     /// </summary>
     /// <param name="refreshToken"></param>
     public string[]? FetchAdsAccountApi(string refreshToken);
+
+    /// <summary>
+    /// 取得權限
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns></returns>
+    public List<GetAccessRoleResult> AccessRole(string refreshToken, string custId);
 
     /// <summary>
     /// 取得廣告帳戶 Api

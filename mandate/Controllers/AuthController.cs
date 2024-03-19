@@ -18,4 +18,10 @@ public class AuthController : BaseApiController
     /// </summary>
     [HttpPost]
     public Task<LoginResponse> Login(LoginRequest request) => Mediator!.Send(request);
+
+    /// <summary>
+    /// 取得權限
+    /// </summary>
+    [HttpPost]
+    public Task<GetAccessRoleResponse> GetAccessRoles(GetAccessRoleRequest request) => Mediator!.Send(request);
 }

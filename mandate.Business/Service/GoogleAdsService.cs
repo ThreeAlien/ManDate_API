@@ -13,6 +13,8 @@ using Google.Apis.Http;
 using Google.Apis.Util.Store;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
+using System.Linq;
+using mandate.Business.Models;
 
 namespace mandate.Business.Service;
 
@@ -543,6 +545,60 @@ public class GoogleAdsService : IGoogleAdsService
     }
 
     /// <summary>
+    /// 取得權限
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <param name="custId"></param>
+    /// <returns></returns>
+    public List<GetAccessRoleResult> AccessRole(string refreshToken, string custId)
+    {
+        GoogleAdsOption option = _configuration.GetSection(GoogleAdsOption.SectionName).Get<GoogleAdsOption>();
+        GoogleAdsConfig config = new GoogleAdsConfig()
+        {
+            DeveloperToken = option.DeveloperToken,
+            OAuth2Mode = Google.Ads.Gax.Config.OAuth2Flow.APPLICATION,
+            OAuth2ClientId = option.ClientId,
+            OAuth2ClientSecret = option.ClientSecret,
+            OAuth2RefreshToken = refreshToken,
+            LoginCustomerId = option.LoginCustomerId,
+        };
+        GoogleAdsClient client = new GoogleAdsClient(config);
+        string query = "SELECT customer.id, customer_user_access.access_role, customer_user_access.email_address FROM customer_user_access";
+        Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
+        GoogleAdsServiceClient googleAdsService = client.GetService(
+        Services.V15.GoogleAdsService);
+        List<GetAccessRoleResult> getAccessRoleResults = new();
+        try
+        {
+            
+            // Issue a search request.
+            googleAdsService.SearchStream(custId, query,
+                delegate (SearchGoogleAdsStreamResponse resp)
+                {
+                    results = resp.Results;
+                }
+            );
+
+            getAccessRoleResults.AddRange(from item in results
+                                          let result = new GetAccessRoleResult()
+                                          {
+                                              Email = item.CustomerUserAccess.EmailAddress,
+                                              AccessRole = item.CustomerUserAccess.AccessRole.ToString(),
+                                          } select result);
+        }
+        catch (GoogleAdsException e)
+        {
+            Console.WriteLine("Failure:");
+            Console.WriteLine($"Message: {e.Message}");
+            Console.WriteLine($"Failure: {e.Failure}");
+            Console.WriteLine($"Request ID: {e.RequestId}");
+            throw;
+        }
+
+        return getAccessRoleResults;
+    }
+
+    /// <summary>
     /// 取得廣告帳戶
     /// </summary>
     /// <param name="refreshToken"></param>
@@ -814,7 +870,7 @@ campaign.id, customer.id, segments.date FROM gender_view WHERE segments.date = '
         string ageQuery = @"SELECT ad_group_criterion.age_range.type, campaign.name, ad_group.name, ad_group_criterion.system_serving_status, ad_group_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM age_range_view  WHERE segments.date = '2024-03-01' AND ad_group_criterion.status != 'REMOVED' AND campaign.status = 'ENABLED'";
         // 關鍵字
         string keyWordQuery = @"SELECT search_term_view.search_term, segments.keyword.info.match_type, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date,segments.keyword.info.text FROM search_term_view WHERE segments.date = '2024-03-01'  AND campaign.status = 'ENABLED'";
-        
+
         // 地區
         string locationQuery = @"SELECT campaign_criterion.location.geo_target_constant, campaign.name, campaign_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM location_view WHERE segments.date = '2024-03-01' AND campaign.status = 'ENABLED'";
 
@@ -876,7 +932,7 @@ campaign.id, customer.id, segments.date FROM gender_view WHERE segments.date = '
 
         // 年齡
         string ageQuery = @"SELECT ad_group_criterion.age_range.type, campaign.name, ad_group.name, ad_group_criterion.system_serving_status, ad_group_criterion.bid_modifier, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, campaign.id, customer.id, segments.date FROM age_range_view  WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'";
-       
+
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
         {
@@ -923,10 +979,10 @@ campaign.id, customer.id, segments.date FROM gender_view WHERE segments.date = '
         GoogleAdsServiceClient googleAdsService = client.GetService(
         Services.V15.GoogleAdsService);
 
-       
+
         // 關鍵字
         string keyWordQuery = @"SELECT ad_group_criterion.keyword.text, campaign.name, ad_group.name, metrics.clicks, metrics.impressions, metrics.ctr, metrics.average_cpc, metrics.cost_micros, segments.date, campaign.id, customer.id FROM keyword_view WHERE segments.date BETWEEN '2024-02-21' AND '2024-02-28'  AND ad_group_criterion.status != 'REMOVED'";
-        
+
         Google.Protobuf.Collections.RepeatedField<GoogleAdsRow> results = new Google.Protobuf.Collections.RepeatedField<GoogleAdsRow>();
         try
         {
