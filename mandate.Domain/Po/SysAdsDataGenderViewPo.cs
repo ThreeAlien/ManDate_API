@@ -68,5 +68,5 @@ public class SysAdsDataGenderViewPo
     /// <summary>
     /// 
     /// </summary>
-    public DateTime? ColDate { get; set; }
+    public string? ColDate { get; set; }
 }

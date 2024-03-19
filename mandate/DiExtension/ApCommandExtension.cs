@@ -48,6 +48,7 @@ public static class ApCommandExtension
         service.AddScoped<IRequestHandler<GetAdsAccountRequest, GetAdsAccountResponse>, GetAdsAccountCommandHandler>();
         service.AddScoped<IRequestHandler<GetReportDetailRequest, GetReportDetailResponse>, GetReportDetailCommandHandler>();
         service.AddScoped<IRequestHandler<LoginRequest, LoginResponse>, LoginCommandHandler>();
+        service.AddScoped<IRequestHandler<GetAccessRoleRequest, GetAccessRoleResponse>, GetAccessRoleCommandHandler>();
         #region 報表匯出
         service.AddScoped<IRequestHandler<ReportExportGenderRequest, ReportExportGenderResponse>, ReportExportGenderCommandHandler>();
         service.AddScoped<IRequestHandler<ReportExportAgeRequest, ReportExportAgeResponse>, ReportExportAgeCommandHandler>();

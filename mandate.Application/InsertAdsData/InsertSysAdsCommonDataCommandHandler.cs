@@ -125,7 +125,7 @@ public class InsertSysAdsCommonDataCommandHandler : IRequestHandler<InsertSysAds
             ColCTR = ColCTR,
             ColCPC = ColCPC,
             ColCost = ColCost,
-            ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString()),
+            ColDate = googleAdsRow.Segments.Date.ToString(),
     };
         _context.SysAdsDataAgeView.Add(sysAdsDataAgeViewPo);
         await _context.SaveChangesAsync();
@@ -162,7 +162,7 @@ public class InsertSysAdsCommonDataCommandHandler : IRequestHandler<InsertSysAds
             ColCTR = ColCTR,
             ColCPC = ColCPC,
             ColCost = ColCost,
-            ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString()),
+            ColDate = googleAdsRow.Segments.Date.ToString(),
         };
         _context.SysAdsDataGenderView.Add(sysAdsDataGenderViewPo);
         await _context.SaveChangesAsync();
@@ -199,7 +199,7 @@ public class InsertSysAdsCommonDataCommandHandler : IRequestHandler<InsertSysAds
             ColCTR = ColCTR,
             ColCPC = ColCPC,
             ColCost = ColCost,
-            ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString()),
+            ColDate = googleAdsRow.Segments.Date.ToString(),
         };
         _context.SysAdsDataKeywordView.Add(sysAdsDataKeywordViewPo);
         await _context.SaveChangesAsync();
@@ -230,7 +230,7 @@ public class InsertSysAdsCommonDataCommandHandler : IRequestHandler<InsertSysAds
             ColCTR = ColCTR,
             ColCPC = ColCPC,
             ColCost = ColCost,
-            ColDate = Convert.ToDateTime(googleAdsRow.Segments.Date.ToString()),
+            ColDate = googleAdsRow.Segments.Date.ToString(),
         };
         _context.SysAdsDataLocationView.Add(sysAdsDataLocationViewPo);
         await _context.SaveChangesAsync();
