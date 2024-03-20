@@ -35,36 +35,34 @@ namespace mandate.Application.ReportInfo
 
         public async Task<GetReportResponse> Handle(GetReportRequest request, CancellationToken cancellationToken)
         {
-            List<SysReportPo> respData = await _context.SysReport.ToListAsync();
-
-            List<GetReportInfo> result = _context.SysReport
-                                        .Join(_context.SysSubClient, report => report.SubID, subClient => subClient.SubId, (report, subClient) => new { report, subClient.SubName, subClient.ClientId }).Select(x => new GetReportInfo
-                                        {
-                                            ReportID = x.report.ReportID,
-                                            ReportName = x.report.ReportName,
-                                            ClienId = x.ClientId,
-                                            SubClientName = x.SubName,
-                                            ReportGoalAds = x.report.ReportGoalAds,
-                                            ReportMedia = x.report.ReportMedia,
-                                            ReportStatus = x.report.ReportStatus,
-                                            ColumnID = x.report.ColumnID,
-                                            SubID = x.report.SubID,
-                                            EditDate = x.report.EditDate,
-                                            Editer = x.report.Editer,
-                                            Creater = x.report.Creater,
-                                            CreateDate = x.report.CreateDate,
-                                        }).OrderByDescending(y=>y.EditDate)
-                                        .ToList();
-
-            if (!String.IsNullOrEmpty(request.ReportName)) result = result.Where(x => x.ReportName.Contains(request.ReportName)).ToList();
-            if (!String.IsNullOrEmpty(request.ReportGoalAds)) result = result.Where(x => x.ReportGoalAds == request.ReportGoalAds).ToList();
-            if (!String.IsNullOrEmpty(request.ReportMedia)) result = result.Where(x => x.ReportMedia == request.ReportMedia).ToList();
-            if (!String.IsNullOrEmpty(request.StartDate)) result = result.Where(x => Convert.ToDateTime(request.StartDate) <= x.CreateDate).ToList();
-            if (!String.IsNullOrEmpty(request.EndDate)) result = result.Where(x => Convert.ToDateTime(request.EndDate).AddDays(1) > x.CreateDate).ToList();
+              List <GetReportInfo> respData = await _context.SysReport
+                .Where(x => string.IsNullOrEmpty(request.ReportName) || x.ReportName.Contains(request.ReportName.Trim()))
+                .Where(x => string.IsNullOrEmpty(request.ReportGoalAds) || x.ReportGoalAds == request.ReportGoalAds.Trim())
+                .Where(x => string.IsNullOrEmpty(request.ReportMedia) || x.ReportMedia == request.ReportMedia.Trim())
+                .Where(x => string.IsNullOrEmpty(request.StartDate) || x.CreateDate <= Convert.ToDateTime(request.StartDate))
+                .Where(x => string.IsNullOrEmpty(request.StartDate) || x.CreateDate <= Convert.ToDateTime(request.EndDate).AddDays(1))
+                .Join(_context.SysSubClient, report => report.SubID, subClient => subClient.SubId, (report, subClient) => new { report, subClient.SubName, subClient.ClientId }).Select(x => new GetReportInfo
+                {
+                    ReportID = x.report.ReportID,
+                    ReportName = x.report.ReportName,
+                    ClienId = x.ClientId,
+                    SubClientName = x.SubName,
+                    ReportGoalAds = x.report.ReportGoalAds,
+                    ReportMedia = x.report.ReportMedia,
+                    ReportStatus = x.report.ReportStatus,
+                    ColumnID = x.report.ColumnID,
+                    SubID = x.report.SubID,
+                    EditDate = x.report.EditDate,
+                    Editer = x.report.Editer,
+                    Creater = x.report.Creater,
+                    CreateDate = x.report.CreateDate,
+                })
+                .OrderByDescending(x => x.EditDate)
+                .ToListAsync();
 
             GetReportResponse response = new()
             {
-                Data = _mapper.Map<List<GetReportInfo>>(result)
+                Data = _mapper.Map<List<GetReportInfo>>(respData)
             };
 
             return response;
