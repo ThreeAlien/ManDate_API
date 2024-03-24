@@ -52,9 +52,10 @@ public class ReportExportGenderCommandHandler : IRequestHandler<ReportExportGend
                 string gender = group.Key;
                 int impressions = group.Sum(x => int.Parse(x.ColImpressions));
                 int clicks = group.Sum(x => int.Parse(x.ColClicks));
-                double ctr = group.Sum(x => double.Parse(x.ColCTR));
                 double cpc = group.Sum(x => double.Parse(x.ColCPC));
-                double cost = group.Sum(x => double.Parse(x.ColCost));
+                double ctr = (double)clicks / impressions;
+                double cost = clicks > 0 ? cpc * clicks : 0;
+               
 
                 return new ReportExportGenderVo()
                 {
