@@ -2,6 +2,7 @@
 using mandate.Domain.Models.Report;
 using mandate.Infrastructure;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace mandate.Application.ReportInfo;
 
@@ -31,49 +32,48 @@ public class GetReportDetailCommandHandler : IRequestHandler<GetReportDetailRequ
         GetReportDetailResponse response = new();
         try
         {
-            List<ReportDetailFields> result = _context.SysReportColumn
-                                                .Join(_context.SysReportContent, column => column.ContentId, content => content.ContentID, (column, content) => new { column, content.ContentName }).Select(x => new ReportDetailFields
-                                                {
-                                                    ReportNo = x.column.ReportNo,
-                                                    ContentName = x.ContentName,
-                                                    IsColAccount = x.column.IsColAccount,
-                                                    IsColCutomerID = x.column.IsColCutomerID,
-                                                    IsColCampaignName = x.column.IsColCampaignName,
-                                                    IsColAdGroupName = x.column.IsColAdGroupName,
-                                                    IsColAdFinalURL = x.column.IsColAdFinalURL,
-                                                    IsColHeadline = x.column.IsColHeadline,
-                                                    IsColHeadLine_1 = x.column.IsColHeadLine_1,
-                                                    IsColHeadLine_2 = x.column.IsColHeadLine_2,
-                                                    IsColDirections = x.column.IsColDirections,
-                                                    IsColDirections_1 = x.column.IsColDirections_1,
-                                                    IsColDirections_2 = x.column.IsColDirections_2,
-                                                    IsColAdName = x.column.IsColAdName,
-                                                    IsColSrchKeyWord = x.column.IsColSrchKeyWord,
-                                                    IsColConGoal = x.column.IsColConGoal,
-                                                    IsColConValue = x.column.IsColConValue,
-                                                    IsColConByDate = x.column.IsColConByDate,
-                                                    IsColConPerCost = x.column.IsColConPerCost,
-                                                    IsColCon = x.column.IsColCon,
-                                                    IsColConRate = x.column.IsColConRate,
-                                                    IsColClicks = x.column.IsColClicks,
-                                                    IsColImpressions = x.column.IsColImpressions,
-                                                    IsColCTR = x.column.IsColCTR,
-                                                    IsColCPC = x.column.IsColCPC,
-                                                    IsColCost = x.column.IsColCost,
-                                                    ContentId = x.column.ContentId,
-                                                    ColumnId = x.column.ColumnId,
-                                                    IsColAge = x.column.IsColAge,
-                                                    IsColGender = x.column.IsColGender,
-                                                    IsColConstant = x.column.IsColConstant,
-                                                    IsColConAction = x.column.IsColConAction,
-                                                    IsColCPA = x.column.IsColCPA,
-                                                    IsColStartDate = x.column.IsColStartDate,
-                                                    IsColEndDate = x.column.IsColEndDate,
-                                                    ContentSort = x.column.ContentSort,
-                                                    IsDefault = x.column.IsDefault,
-                                                }).ToList();
-
-            if (!String.IsNullOrEmpty(request.ColumnID)) result = result.Where(x => x.ColumnId == request.ColumnID).ToList();
+            List<ReportDetailFields> result = await _context.SysReportColumn
+                .Where(x => string.IsNullOrEmpty(request.ColumnID) || x.ColumnId == request.ColumnID.Trim())
+                .Join(_context.SysReportContent, column => column.ContentId, content => content.ContentID, (column, content) => new { column, content.ContentName }).Select(x => new ReportDetailFields
+                {
+                    ReportNo = x.column.ReportNo,
+                    ContentName = x.ContentName,
+                    IsColAccount = x.column.IsColAccount,
+                    IsColCutomerID = x.column.IsColCutomerID,
+                    IsColCampaignName = x.column.IsColCampaignName,
+                    IsColAdGroupName = x.column.IsColAdGroupName,
+                    IsColAdFinalURL = x.column.IsColAdFinalURL,
+                    IsColHeadline = x.column.IsColHeadline,
+                    IsColHeadLine_1 = x.column.IsColHeadLine_1,
+                    IsColHeadLine_2 = x.column.IsColHeadLine_2,
+                    IsColDirections = x.column.IsColDirections,
+                    IsColDirections_1 = x.column.IsColDirections_1,
+                    IsColDirections_2 = x.column.IsColDirections_2,
+                    IsColAdName = x.column.IsColAdName,
+                    IsColSrchKeyWord = x.column.IsColSrchKeyWord,
+                    IsColConGoal = x.column.IsColConGoal,
+                    IsColConValue = x.column.IsColConValue,
+                    IsColConByDate = x.column.IsColConByDate,
+                    IsColConPerCost = x.column.IsColConPerCost,
+                    IsColCon = x.column.IsColCon,
+                    IsColConRate = x.column.IsColConRate,
+                    IsColClicks = x.column.IsColClicks,
+                    IsColImpressions = x.column.IsColImpressions,
+                    IsColCTR = x.column.IsColCTR,
+                    IsColCPC = x.column.IsColCPC,
+                    IsColCost = x.column.IsColCost,
+                    ContentId = x.column.ContentId,
+                    ColumnId = x.column.ColumnId,
+                    IsColAge = x.column.IsColAge,
+                    IsColGender = x.column.IsColGender,
+                    IsColConstant = x.column.IsColConstant,
+                    IsColConAction = x.column.IsColConAction,
+                    IsColCPA = x.column.IsColCPA,
+                    IsColStartDate = x.column.IsColStartDate,
+                    IsColEndDate = x.column.IsColEndDate,
+                    ContentSort = x.column.ContentSort,
+                    IsDefault = x.column.IsDefault,
+                }).ToListAsync();
 
             response = new()
             {

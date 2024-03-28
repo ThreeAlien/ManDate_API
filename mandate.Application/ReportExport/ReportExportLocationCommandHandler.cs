@@ -39,11 +39,11 @@ public class ReportExportLocationCommandHandler : IRequestHandler<ReportExportLo
         ReportExportLocationResponse response = new();
         try
         {
-            List<SysAdsDataLocationViewPo> respData = await _context.SysAdsDataLocationView.ToListAsync();
-
-            if (!String.IsNullOrEmpty(request.SubId)) respData = respData.Where(x => x.CustomerID == request.SubId).ToList();
-            if (!String.IsNullOrEmpty(request.StartDate)) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) >= Convert.ToDateTime(request.StartDate)).ToList();
-            if (!String.IsNullOrEmpty(request.EndDate)) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) < Convert.ToDateTime(request.EndDate).AddDays(1)).ToList();
+            List<SysAdsDataLocationViewPo> respData = await _context.SysAdsDataLocationView
+                .Where(x => string.IsNullOrEmpty(request.SubId) || x.CustomerID == request.SubId.Trim())
+                .Where(x => string.IsNullOrEmpty(request.StartDate) || Convert.ToDateTime(x.ColDate) >= Convert.ToDateTime(request.StartDate))
+                .Where(x => string.IsNullOrEmpty(request.EndDate) || Convert.ToDateTime(x.ColDate) < Convert.ToDateTime(request.EndDate).AddDays(1))
+                .ToListAsync();
 
             List<ReportExportLocationVo> locationResponse = respData
             .GroupBy(g => g.ColConstant)

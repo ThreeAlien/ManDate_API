@@ -39,8 +39,8 @@ namespace mandate.Application.ReportInfo
                 .Where(x => string.IsNullOrEmpty(request.ReportName) || x.ReportName.Contains(request.ReportName.Trim()))
                 .Where(x => string.IsNullOrEmpty(request.ReportGoalAds) || x.ReportGoalAds == request.ReportGoalAds.Trim())
                 .Where(x => string.IsNullOrEmpty(request.ReportMedia) || x.ReportMedia == request.ReportMedia.Trim())
-                .Where(x => string.IsNullOrEmpty(request.StartDate) || x.CreateDate <= Convert.ToDateTime(request.StartDate))
-                .Where(x => string.IsNullOrEmpty(request.StartDate) || x.CreateDate <= Convert.ToDateTime(request.EndDate).AddDays(1))
+                .Where(x => string.IsNullOrEmpty(request.StartDate) || x.CreateDate >= Convert.ToDateTime(request.StartDate))
+                .Where(x => string.IsNullOrEmpty(request.EndDate) || x.CreateDate < Convert.ToDateTime(request.EndDate).AddDays(1))
                 .Join(_context.SysSubClient, report => report.SubID, subClient => subClient.SubId, (report, subClient) => new { report, subClient.SubName, subClient.ClientId }).Select(x => new GetReportInfo
                 {
                     ReportID = x.report.ReportID,
