@@ -40,8 +40,6 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
         ReportExportWithWeekOrDayResponse response = new();
         try
         {
-            List<SysAdsDataCampaignPo> respData = await _context.SysAdsDataCampaign.ToListAsync();
-
             #region request檢核
             if (request.Status.Length == 0 || string.IsNullOrEmpty(request.SubId))
             {
@@ -54,11 +52,10 @@ public class ReportExportWithWeekOrDayCommandHandler : IRequestHandler<ReportExp
             }
             #endregion
 
-            #region Data Filter
-            if (!String.IsNullOrEmpty(request.SubId)) respData = respData.Where(x => x.CustomerID == request.SubId).ToList();
-            if (!String.IsNullOrEmpty(request.StartDate)) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) >= Convert.ToDateTime(request.StartDate)).ToList();
-            if (!String.IsNullOrEmpty(request.EndDate)) respData = respData.Where(x => Convert.ToDateTime(x.ColDate) < Convert.ToDateTime(request.EndDate).AddDays(1)).ToList();
-            #endregion
+            List<SysAdsDataCampaignPo> respData = await _context.SysAdsDataCampaign
+                .Where(x => string.IsNullOrEmpty(request.SubId) || x.CustomerID == request.SubId.Trim())
+                .Where(x => string.IsNullOrEmpty(request.StartDate) || Convert.ToDateTime(x.ColDate) >= Convert.ToDateTime(request.StartDate))
+                .Where(x => string.IsNullOrEmpty(request.EndDate) || Convert.ToDateTime(x.ColDate) < Convert.ToDateTime(request.EndDate).AddDays(1)).ToListAsync();
 
             List<ReportExportWithWeekOrDayVo> reportResponse = new();
             if (request.Status.Contains(ReportExportStatus.Day))
